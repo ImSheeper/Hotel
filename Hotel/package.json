@@ -1,0 +1,23 @@
+{
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build"
+    },
+    "devDependencies": {
+        "autoprefixer": "^10.4.20",
+        "axios": "^1.6.4",
+        "laravel-vite-plugin": "^1.0",
+        "postcss": "^8.4.41",
+        "tailwindcss": "^3.4.10",
+        "vite": "^5.0"
+    },
+    "dependencies": {
+        "devextreme": "^24.1.6",
+        "devextreme-react": "^24.1.6",
+        "flatpickr": "^4.6.13",
+        "motion": "^10.18.0",
+        "tailwindcss-animated": "^1.1.2"
+    }
+}
