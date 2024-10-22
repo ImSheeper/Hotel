@@ -26,7 +26,7 @@ $(document).ready(function() {
             case 3:
                 var name = $(this).find('.className').text().trim();
                 $('.popText').text(`Edytuj użytkownika ${name}`);
-                $('.popTextDelete').text(`Czy na pewno chcesz usunąć użytkownika ${name}?`);
+                $('.popTextDelete').text(`Czy na pewno chcesz zablokować użytkownika ${name}?`);
 
                 // Wyszukiwanie użytkownika do wypełnienia danych sparsowanych z json'a
                 let user = personels.find(function(e) {
@@ -121,14 +121,14 @@ $(document).ready(function() {
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            url : "/personel",
+            url : "/personelDelete",
             data : {
                 data
             },
             method : 'POST',
             success : function(result){
                 console.log("Sukces: ", result);
-                //window.location.replace('/personel');
+                window.location.replace('/personel');
             },
             error: function(xhr, status, error) {
                 console.error("Wystąpił błąd:");
@@ -138,6 +138,14 @@ $(document).ready(function() {
             }
         });
     });
+
+    // Użytkownik zablokowany - style
+    $('.zablokowany').each(function() {
+        if($(this).text().trim() === "Tak") {
+            $(this).addClass('text-red-500');
+            $(this).parent().find('.class').addClass('text-red-500');
+        }
+    })
 });
 
 
@@ -153,6 +161,7 @@ $(document).ready(function() {
     });
 })
 
+// Animacje zamykania customowego menu
 function closeCustomMenu(pop1, pop2) {
     // Ukryj custom menu
     animate(

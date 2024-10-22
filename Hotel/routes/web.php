@@ -13,6 +13,8 @@ Route::get('/home', [HomeController::class, 'select'])->name('homeRoute');
 
 Route::get('/personel', [PersonelController::class, 'select'])->name('personelRoute');
 Route::post('/personel', [PersonelController::class, 'update'])->name('personelPost');
+Route::post('/personelDelete', [PersonelController::class, 'delete'])->name('personelPostDelete');
+
 
 Route::get('/personel/{login}/{month}/{year}', [GrafikController::class, 'select'])->name('personelParameterRoute');
 Route::post('/personel/{login}/{month}/{year}', [GrafikController::class, 'store'])->name('grafikStore');

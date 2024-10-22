@@ -36,46 +36,82 @@
             {{-- Main screen --}}
             <div class="flex flex-col bg-white grow mx-1 my-1 mr-2 mb-2 min-w-fit rounded-md overflow-auto items-center">
                 <div class="font-bold text-center mt-10 text-3xl">Wybierz grafik do edycji</div>
-                <div class="flex h-2/6 w-full justify-center animate-fade-down animate-delay-[1s] animate-ease-out">
 
-                    <div class="flex flex-col cursor-default mt-10 min-w-max max-w-[1000px] grow mx-10 h-full bg-gray-200 rounded-2xl pl-10 pr-10 pt-5 pb-5 overflow-auto shadow-lg">
-                        <div class="font-bold text-3xl mb-5">Personel</div>
-                        <div class="grid grid-cols-4 font-bold px-2 py-1">
+                <div class="flex min-h-max w-full justify-center animate-fade-down animate-delay-[1s] animate-ease-out my-5">
+                    <div class="flex flex-col cursor-default min-w-max max-w-[1000px] grow max-h-96 bg-gray-200 rounded-2xl pl-10 pr-10 pt-5 pb-5 overflow-auto shadow-lg">
+                        <div class="font-bold text-3xl mb-5">Aktywny personel</div>
+                        <div class="grid grid-cols-5 font-bold px-2 py-1">
                             <div class="name">Imię i nazwisko</div>
                             <div class="name">Stanowisko</div>
                             <div class="name">Status</div>
                             <div class="name">Czas pracy</div>
+                            <div class="name">Zablokowany</div>
                         </div>
                         @php
                          $i = 0;
                         @endphp
 
                         @foreach ($personels as $personel)
-                            <a href='{{ route('personelParameterRoute', ['login' => $personel->login, 'month' => $month, 'year' => $year]) }}' class="tableClass cursor-pointer grid grid-cols-4 transition-all duration-300 hover:bg-gray-300 px-2 py-1 rounded-md">
-                                <div class="className hidden"> {{ $personel->login }} </div>
-                                <div class="class"> {{ $personel->imie }}  {{ $personel->nazwisko }} </div>
-                                <div class="class"> {{ $personel->stanowiska->stanowisko }} </div>
-                                <div class="class"> {{ $statuses[$i] }} </div>
-                                <div class="class"> {{ $timeOfWork[$i] }}h </div>
-                            </a>
-                            @php
-                                $i++;
-                            @endphp
+                            @if ($personel->zablokowany === 0)
+                                <a href='{{ route('personelParameterRoute', ['login' => $personel->login, 'month' => $month, 'year' => $year]) }}' class="tableClass cursor-pointer grid grid-cols-5 transition-all duration-300 hover:bg-gray-300 px-2 py-1 rounded-md">
+                                    <div class="className hidden"> {{ $personel->login }} </div>
+                                    <div class="class"> {{ $personel->imie }}  {{ $personel->nazwisko }} </div>
+                                    <div class="class"> {{ $personel->stanowiska->stanowisko }} </div>
+                                    <div class="class"> {{ $statuses[$i] }} </div>
+                                    <div class="class"> {{ $timeOfWork[$i] }}h </div>
+                                    <div class="zablokowany"> {{ $personel->zablokowany ? 'Tak' : 'Nie'}} </div>
+                                </a>
+                                @php
+                                    $i++;
+                                @endphp 
+                            @endif
                         @endforeach
                     </div>
                 </div>
+
+                <div class="flex min-h-max w-full justify-center animate-fade-down animate-delay-[1s] animate-ease-out items-center my-5">
+                    <div class="font-bold shadow-lg bg-gray-200 h-44 w-44 rounded-2xl overflow-hidden content-center text-center animate-fade-down animate-delay-[0.2s] animate-ease-out mx-5">
+                        <div class="text-xl">Dodaj użytkownika</div>
+                    </div>
+                    <div class="flex flex-col cursor-default min-w-max max-w-[50%] grow max-h-96 bg-gray-200 rounded-2xl pl-10 pr-10 pt-5 pb-5 overflow-auto shadow-lg mx-5">
+                        <div class="font-bold text-3xl mb-5">Zablokowani użytkownicy</div>
+                        <div class="grid grid-cols-3 font-bold px-2 py-1">
+                            <div class="name">Imię i nazwisko</div>
+                            <div class="name">Stanowisko</div>
+                            <div class="name">Zablokowany</div>
+                        </div>
+                        @php
+                         $i = 0;
+                        @endphp
+
+                        @foreach ($personels as $personel)
+                            @if ($personel->zablokowany === 1)
+                                <a href='{{ route('personelParameterRoute', ['login' => $personel->login, 'month' => $month, 'year' => $year]) }}' class="tableClass cursor-pointer grid grid-cols-3 transition-all duration-300 hover:bg-gray-300 px-2 py-1 rounded-md">
+                                    <div class="className hidden"> {{ $personel->login }} </div>
+                                    <div class="class"> {{ $personel->imie }}  {{ $personel->nazwisko }} </div>
+                                    <div class="class"> {{ $personel->stanowiska->stanowisko }} </div>
+                                    <div class="zablokowany"> {{ $personel->zablokowany ? 'Tak' : 'Nie'}} </div>
+                                </a>
+                                @php
+                                    $i++;
+                                @endphp
+                            @endif
+                        @endforeach
+                    </div>
+                </div>
+
                 <div class="contextMenu hidden z-10 absolute bg-white px-2 py-2 shadow-md rounded-md opacity-0">
                     <a href='{{ route('personelParameterRoute', ['login' => $personel->login, 'month' => $month, 'year' => $year]) }}' class="menuRoute">
                         <div class="menuElement hover:bg-gray-100 transition-all duration-200 px-1 rounded-md cursor-pointer py-1">Zmień grafik</div>
                     </a>
                     <div class="menuElement hover:bg-gray-100 transition-all duration-200 px-1 rounded-md cursor-pointer py-1">Edytuj Użytkownika</div>
-                    <div class="menuElement hover:bg-gray-100 transition-all duration-200 px-1 rounded-md cursor-pointer py-1">Usuń użytkownika</div>
+                    <div class="menuElement hover:bg-gray-100 transition-all duration-200 px-1 rounded-md cursor-pointer py-1">Zablokuj użytkownika</div>
                 </div>
             </div>
         </div>
 
         {{-- popUp edit --}}
-        <div class="popPersonel bg-black bg-opacity-20 backdrop-blur-sm flex absolute invisible h-full w-full justify-center items-center opacity-100">
+        <div class="popPersonel bg-black bg-opacity-20 backdrop-blur-sm flex absolute invisible h-full w-full justify-center items-center opacity-0">
             <div class="pop2Personel flex flex-col bg-white w-[500px] min-h-max rounded-lg justify-center p-5">
                 <script>
                     let personels = @json($personels);
@@ -146,13 +182,13 @@
         </div>
 
         {{-- popup Delete --}}
-        <div class="popDelete bg-black bg-opacity-20 backdrop-blur-sm flex absolute invisible h-full w-full justify-center items-center opacity-100">
+        <div class="popDelete bg-black bg-opacity-20 backdrop-blur-sm flex absolute invisible h-full w-full justify-center items-center opacity-0">
             <div class="pop2Delete flex flex-col bg-white w-[500px] min-h-max rounded-lg justify-center p-5">
                 <script>
                     let personels = @json($personels);
                 </script>
 
-            <div class="popTextDelete text-2xl font-bold text-center">Usuń użytkownika [nazwa]</div>
+            <div class="popTextDelete text-2xl font-bold text-center">Zablokuj użytkownika [nazwa]</div>
 
             <div class="flex items-center justify-evenly px-10 w-full">
                 <div class="flex relative group rounded-2xl mb-4 mt-6">

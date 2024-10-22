@@ -172,7 +172,7 @@
                 </div>
             </div>
         </div>
-        <div class="pop bg-black bg-opacity-20 backdrop-blur-sm flex absolute invisible h-full w-full justify-center items-center opacity-100">
+        <div class="pop bg-black bg-opacity-20 backdrop-blur-sm flex absolute invisible h-full w-full justify-center items-center opacity-0">
             <div class="pop2 flex flex-col bg-white w-[500px] min-h-max rounded-lg items-center justify-center p-5">
                 <div class="text-2xl mb-5">Grafik został zaktualizowany.</div>
                 <div class="flex relative group h-12">

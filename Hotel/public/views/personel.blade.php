@@ -69,7 +69,7 @@
                         <div class="menuElement hover:bg-gray-100 transition-all duration-200 px-1 rounded-md cursor-pointer py-1">Zmień grafik</div>
                     </a>
                     <div class="menuElement hover:bg-gray-100 transition-all duration-200 px-1 rounded-md cursor-pointer py-1">Edytuj Użytkownika</div>
-                    <div class="menuElement hover:bg-gray-100 transition-all duration-200 px-1 rounded-md cursor-pointer py-1">Usuń użytkownika</div>
+                    <div class="menuElement hover:bg-gray-100 transition-all duration-200 px-1 rounded-md cursor-pointer py-1">Zablokuj użytkownika</div>
                 </div>
             </div>
         </div>
@@ -152,7 +152,7 @@
                     let personels = @json($personels);
                 </script>
 
-            <div class="popTextDelete text-2xl font-bold text-center">Usuń użytkownika [nazwa]</div>
+            <div class="popTextDelete text-2xl font-bold text-center">Zablokuj użytkownika [nazwa]</div>
             </div>
         </div>
 

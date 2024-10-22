@@ -32,11 +32,17 @@ class PersonelController extends Controller
         for($j = 0; $j < count($personel); $j++) {
             $jsonData = Storage::disk('public')->get('grafik/'.$personel[$j]->login.'/'.'-'.$personel[$j]->login.'-'.$month.'.'.$year.'.json'); // Zakładamy, że plik jest w storage/app/public
             $json = json_decode(json: $jsonData, associative: true);
-            $statuses[$j] = $json["data"][$day - 1]["status"];
+            
+            if($jsonData != null) {
+                $statuses[$j] = $json["data"][$day - 1]["status"];
 
-            $timeOfWork[$j] = 0;
-            for($i = 0; $i < count($json["data"]); $i++) {
-                if($json["data"][$i]["status"] === "Pracuje") $timeOfWork[$j] += $zmiana;
+                $timeOfWork[$j] = 0;
+                for($i = 0; $i < count($json["data"]); $i++) {
+                    if($json["data"][$i]["status"] === "Pracuje") $timeOfWork[$j] += $zmiana;
+                }
+            } else {
+                $statuses[$j] = 'Brak grafiku';
+                $timeOfWork[$j] = 0;
             }
         }
         
@@ -66,10 +72,18 @@ class PersonelController extends Controller
 
         $user->save();
 
-        return response()->json([
-            'message' => 'Dane przetworzone poprawnie!',
-            'data' => $request->all(),
-            'user' => $user
-        ]);
+        // return response()->json([
+        //     'message' => 'Dane przetworzone poprawnie!',
+        //     'data' => $request->all(),
+        //     'user' => $user
+        // ]);
+    }
+
+    public function delete(Request $request) {
+        $user = User::where('login', $request->data['login'])->firstOrFail();
+        
+        $user->zablokowany = 1;
+
+        $user->save();
     }
 }
