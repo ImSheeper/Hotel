@@ -35,7 +35,7 @@
 
             {{-- Main screen --}}
             <div class="flex flex-col bg-white grow mx-1 my-1 mr-2 mb-2 min-w-fit rounded-md overflow-auto items-center">
-                <div class="font-bold text-center mt-10 text-3xl">Wybierz grafik do edycji</div>
+                <div class="font-bold text-center mt-10 text-3xl">Zarządzaj personelem</div>
 
                 <div class="flex min-h-max w-full justify-center animate-fade-down animate-delay-[1s] animate-ease-out my-5">
                     <div class="flex flex-col cursor-default min-w-max max-w-[1000px] grow max-h-96 bg-gray-200 rounded-2xl pl-10 pr-10 pt-5 pb-5 overflow-auto shadow-lg">
@@ -57,8 +57,8 @@
                                     <div class="className hidden"> {{ $personel->login }} </div>
                                     <div class="class"> {{ $personel->imie }}  {{ $personel->nazwisko }} </div>
                                     <div class="class"> {{ $personel->stanowiska->stanowisko }} </div>
-                                    <div class="class"> {{ $statuses[$i] }} </div>
-                                    <div class="class"> {{ $timeOfWork[$i] }}h </div>
+                                    <div class="class"> {{ $statuses[$personel->imie] }} </div>
+                                    <div class="class"> {{ $timeOfWork[$personel->imie] }}h </div>
                                     <div class="zablokowany"> {{ $personel->zablokowany ? 'Tak' : 'Nie'}} </div>
                                 </a>
                                 @php
@@ -70,8 +70,8 @@
                 </div>
 
                 <div class="flex min-h-max w-full justify-center animate-fade-down animate-delay-[1s] animate-ease-out items-center my-5">
-                    <div class="font-bold shadow-lg bg-gray-200 h-44 w-44 rounded-2xl overflow-hidden content-center text-center animate-fade-down animate-delay-[0.2s] animate-ease-out mx-5">
-                        <div class="text-xl">Dodaj użytkownika</div>
+                    <div class="addUser font-bold shadow-lg bg-gray-200 h-44 w-44 rounded-2xl overflow-hidden content-center text-center animate-fade-down animate-delay-[0.2s] animate-ease-out mx-5">
+                        <div class="text-xl select-none cursor-pointer">Dodaj użytkownika</div>
                     </div>
                     <div class="flex flex-col cursor-default min-w-max max-w-[50%] grow max-h-96 bg-gray-200 rounded-2xl pl-10 pr-10 pt-5 pb-5 overflow-auto shadow-lg mx-5">
                         <div class="font-bold text-3xl mb-5">Zablokowani użytkownicy</div>
@@ -86,7 +86,7 @@
 
                         @foreach ($personels as $personel)
                             @if ($personel->zablokowany === 1)
-                                <a href='{{ route('personelParameterRoute', ['login' => $personel->login, 'month' => $month, 'year' => $year]) }}' class="tableClass cursor-pointer grid grid-cols-3 transition-all duration-300 hover:bg-gray-300 px-2 py-1 rounded-md">
+                                <a href='{{ route('personelParameterRoute', ['login' => $personel->login, 'month' => $month, 'year' => $year]) }}' class="tableClassBlocked cursor-pointer grid grid-cols-3 transition-all duration-300 hover:bg-gray-300 px-2 py-1 rounded-md">
                                     <div class="className hidden"> {{ $personel->login }} </div>
                                     <div class="class"> {{ $personel->imie }}  {{ $personel->nazwisko }} </div>
                                     <div class="class"> {{ $personel->stanowiska->stanowisko }} </div>
@@ -106,6 +106,11 @@
                     </a>
                     <div class="menuElement hover:bg-gray-100 transition-all duration-200 px-1 rounded-md cursor-pointer py-1">Edytuj Użytkownika</div>
                     <div class="menuElement hover:bg-gray-100 transition-all duration-200 px-1 rounded-md cursor-pointer py-1">Zablokuj użytkownika</div>
+                </div>
+
+                <div class="contextMenuBlocked hidden z-10 absolute bg-white px-2 py-2 shadow-md rounded-md opacity-0">
+                    <div class="menuElementBlocked hover:bg-gray-100 transition-all duration-200 px-1 rounded-md cursor-pointer py-1">Edytuj Użytkownika</div>
+                    <div class="menuElementBlocked hover:bg-gray-100 transition-all duration-200 px-1 rounded-md cursor-pointer py-1">Odblokuj użytkownika</div>
                 </div>
             </div>
         </div>
@@ -203,7 +208,6 @@
                         <button class="butNo absolute bg-gradient-to-r from-cyan-400 to-fuchsia-400 w-36 h-12 min-w-max rounded-2xl text-lg transition-all duration-200 opacity-0 group-hover:opacity-100 text-white">Nie   </button>
                     </div>
                 </div>
-            </div>
             </div>
         </div>
 

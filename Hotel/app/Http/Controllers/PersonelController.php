@@ -34,15 +34,15 @@ class PersonelController extends Controller
             $json = json_decode(json: $jsonData, associative: true);
             
             if($jsonData != null) {
-                $statuses[$j] = $json["data"][$day - 1]["status"];
+                $statuses[$personel[$j]->imie] = $json["data"][$day - 1]["status"];
 
-                $timeOfWork[$j] = 0;
+                $timeOfWork[$personel[$j]->imie] = 0;
                 for($i = 0; $i < count($json["data"]); $i++) {
-                    if($json["data"][$i]["status"] === "Pracuje") $timeOfWork[$j] += $zmiana;
+                    if($json["data"][$i]["status"] === "Pracuje") $timeOfWork[$personel[$j]->imie] += $zmiana;  //$timeOfWork[$j] += $zmiana;
                 }
             } else {
-                $statuses[$j] = 'Brak grafiku';
-                $timeOfWork[$j] = 0;
+                $statuses[$personel[$j]->imie] = 'Brak grafiku';
+                $timeOfWork[$personel[$j]->imie] = 0;
             }
         }
         
@@ -59,18 +59,31 @@ class PersonelController extends Controller
     }
 
     public function update(Request $request) {
-        $user = User::where('login', $request->data['login'])->firstOrFail();
+        $user = User::where('login', $request->data['login'])->first();
         $stanowisko = Stanowiska::where('stanowisko', $request->data['stanowisko'])->firstOrFail();
 
-        $user->imie = $request->data['imie'];
-        $user->nazwisko = $request->data['nazwisko'];
-        $user->email = $request->data['email'];
-        $user->nrTel = $request->data['nrTel'];
-        $user->stanowisko = $stanowisko->id;
-        $user->login = $request->data['login'];
-        if($request->data['password'] != null) $user->password = bcrypt($request->data['password']);
-
-        $user->save();
+        if($user) {
+            $user->imie = $request->data['imie'];
+            $user->nazwisko = $request->data['nazwisko'];
+            $user->email = $request->data['email'];
+            $user->nrTel = $request->data['nrTel'];
+            $user->stanowisko = $stanowisko->id;
+            $user->login = $request->data['login'];
+            if($request->data['password'] != null) $user->password = bcrypt($request->data['password']);
+    
+            $user->save();
+        } else {
+            $user = new user;
+            $user->imie = $request->data['imie'];
+            $user->nazwisko = $request->data['nazwisko'];
+            $user->email = $request->data['email'];
+            $user->nrTel = $request->data['nrTel'];
+            $user->stanowisko = $stanowisko->id;
+            $user->login = $request->data['login'];
+            $user->password = bcrypt($request->data['password']);
+    
+            $user->save();
+        }
 
         // return response()->json([
         //     'message' => 'Dane przetworzone poprawnie!',
@@ -79,10 +92,15 @@ class PersonelController extends Controller
         // ]);
     }
 
+    // Obsługa również odblokowywania, ale nie chciało mi się nazwy wszędzie podmieniać - może kiedyś
     public function delete(Request $request) {
         $user = User::where('login', $request->data['login'])->firstOrFail();
         
-        $user->zablokowany = 1;
+        if($user->zablokowany === 0) {
+            $user->zablokowany = 1;
+        } else {
+            $user->zablokowany = 0;
+        }
 
         $user->save();
     }

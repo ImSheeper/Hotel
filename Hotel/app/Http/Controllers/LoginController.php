@@ -13,8 +13,6 @@ class LoginController extends Controller
     public function selectuser() {
         $returnValue = User::orderBy('id', 'asc')->get();
 
-        //dd($returnValue);
-
         return view('login', [
             'values' => $returnValue
         ]);
@@ -25,6 +23,14 @@ class LoginController extends Controller
             'login' => ['required'],
             'password' => ['required']
         ]);
+
+        $isBlocked = User::where('login', $credentials['login'])->first();
+
+        if($isBlocked->zablokowany === 1) {
+            return back()->withErrors([
+                'error' => 'Użytkownik jest zablokowany.'
+            ]);
+        }
 
         if(Auth::attempt($credentials)) {
             $request->session()->regenerate();

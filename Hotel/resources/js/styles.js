@@ -15,6 +15,7 @@ $(document).ready(function() {
     //W dół jest obsługa customowego prawego kliknięcia na tabeli personel - laravel nie ogarniał co klikam, customowa obsługa była wymagana
     //Do poprawy są jeszcze style
     //right click menu na tabeli personel
+    // Do zminimalizowania poniższe dwie funkcje
     $(".tableClass").bind("contextmenu", function (event) {
         event.preventDefault();
 
@@ -25,9 +26,6 @@ $(document).ready(function() {
         switch(event.which) {
             case 3:
                 var name = $(this).find('.className').text().trim();
-                $('.popText').text(`Edytuj użytkownika ${name}`);
-                $('.popTextDelete').text(`Czy na pewno chcesz zablokować użytkownika ${name}?`);
-
                 // Wyszukiwanie użytkownika do wypełnienia danych sparsowanych z json'a
                 let user = personels.find(function(e) {
                     return e.login === name;
@@ -43,7 +41,12 @@ $(document).ready(function() {
                     $('.data').eq(5).val(user.login);
                 }
 
+                $('.popText').text(`Edytuj użytkownika ${name}`);
+                $('.popTextDelete').text(`Czy na pewno chcesz zablokować użytkownika ${user.imie} ${user.nazwisko} (${name})?`);
+
                 $(".menuRoute").attr("href", 'personel/' + name + '/' + month + '/' + year);
+
+                // Tabela aktywnego personelu
                 $(".contextMenu").removeClass('hidden').addClass('visible').finish().css({
                     top: event.pageY + "px",
                     left: event.pageX + "px"
@@ -57,11 +60,59 @@ $(document).ready(function() {
         }
     });
 
+    // Wypełnianie danych do edycji - można było zrobić lepiej
+    $(".tableClassBlocked").bind("contextmenu", function (event) {
+        event.preventDefault();
+
+        var currentDate = new Date();
+        var year = currentDate.getFullYear();
+        var month = currentDate.getMonth() + 1;
+        
+        switch(event.which) {
+            case 3:
+                var name = $(this).find('.className').text().trim();
+                // Wyszukiwanie użytkownika do wypełnienia danych sparsowanych z json'a
+                let user = personels.find(function(e) {
+                    return e.login === name;
+                });
+                console.log(user);
+
+                if(user) {
+                    $('.data').eq(0).val(user.imie);
+                    $('.data').eq(1).val(user.nazwisko);
+                    $('.data').eq(2).val(user.email);
+                    $('.data').eq(3).val(user.nrTel);
+                    $('.data').eq(4).val(user.stanowiska.stanowisko);
+                    $('.data').eq(5).val(user.login);
+                }
+
+                $('.popText').text(`Edytuj użytkownika ${name}`);
+                $('.popTextDelete').text(`Czy na pewno chcesz odblokować użytkownika ${user.imie} ${user.nazwisko} (${name})?`);
+
+                $(".menuRoute").attr("href", 'personel/' + name + '/' + month + '/' + year);
+                // Tabela zablokowanego personelu
+                $(".contextMenuBlocked").removeClass('hidden').addClass('visible').finish().css({
+                    top: event.pageY + "px",
+                    left: event.pageX + "px"
+                })
+                animate(
+                    $('.contextMenuBlocked'),
+                    { opacity: 1},
+                    { duration: 0.2 }
+                )
+        }
+    });
+
+    // Zamykanie menu aktywnych i zablokowanych
     $(document).bind("mousedown", function (e) {
         if (!$(e.target).parents(".contextMenu").length > 0) {
             //Ukryj menu
             animate(
                 $('.contextMenu'),
+                { opacity: 0, duration: 0.2 }
+            )
+            animate(
+                $('.contextMenuBlocked'),
                 { opacity: 0, duration: 0.2 }
             )
 
@@ -70,9 +121,13 @@ $(document).ready(function() {
             $('.contextMenu').removeClass('visible').delay(200).queue(function() {
                 $(this).addClass('hidden');
             });
+            $('.contextMenuBlocked').removeClass('visible').delay(200).queue(function() {
+                $(this).addClass('hidden');
+            });
         }
     });
 
+    // Wyślij ajax z edycją pracownika
     $('.sendAjax').on('click', function() {
         var data = {
             'imie' : $('.data').eq(0).val(),
@@ -110,7 +165,8 @@ $(document).ready(function() {
     // Obsługa usuwania pracownika
     $('.butYes').on('click', function() {
         var name = $('.popTextDelete').text().split(" ").pop();
-        name = name.slice(0, -1);
+        name = name.split("(").pop();
+        name = name.slice(0, -2);
 
         // Obsługa AJAX - TODO: dodać obsługę w kontrolerze i routingu
         var data = {
@@ -145,7 +201,50 @@ $(document).ready(function() {
             $(this).addClass('text-red-500');
             $(this).parent().find('.class').addClass('text-red-500');
         }
-    })
+    });
+
+    // PopUp na dodawanie użytkownika
+    $('.addUser').on('click', function() {
+        $('.popText').text(`Dodaj nowego użytkownika`);
+        $('.data').eq(5).prop('disabled', false).addClass('bg-white');
+
+        // Wyczyść dane z poprzednich formularzy
+        $('.data').eq(0).val('');
+        $('.data').eq(1).val('');
+        $('.data').eq(2).val('');
+        $('.data').eq(3).val('');
+        $('.data').eq(4).val('');
+        $('.data').eq(5).val('');
+        $('.data').eq(6).val('');
+
+        $('.popPersonel').removeClass('invisible').addClass('visible');
+        animate(
+            $('.popPersonel'),
+            { opacity: 1 },
+            { duration: 0.2, easing: "ease-out" }
+        );
+
+        // Znowu buguje - do poprawy
+        $(document).on('click', function(event) {
+            if(!$(event.target).closest('.pop2Personel').length && !$(event.target).is('.addUser')
+                && !$(event.target).closest('.pop2Personel').length && !$(event.target).is('.menuElement')
+                && !$(event.target).closest('.pop2Personel').length && !$(event.target).is('.menuElementBlocked')
+                || $(event.target).is('.close') && !$(event.target).is('.but')) {
+                animate(
+                    $('.popPersonel'),
+                    { opacity: 0 },
+                    { duration: 0.2, easing: "ease-out" }
+                );
+                
+                setTimeout(function() {
+                    $('.popPersonel').removeClass('visible').addClass('invisible');
+
+                    // Ponownie zrób login disabled
+                    $('.data').eq(5).prop('disabled', true).removeClass('bg-white');
+                }, 200);
+            }
+        });
+    });
 });
 
 
@@ -153,16 +252,24 @@ $(document).ready(function() {
 // Animate popUp - otwieranie popup
 $(document).ready(function() {
     $('.menuElement').eq(1).on('click', function() {
-        closeCustomMenu('.popPersonel', '.pop2Personel');
+        manageCustomMenu('.popPersonel', '.pop2Personel', '.menuElement', '.menuElementBlocked');
     });
 
     $('.menuElement').eq(2).on('click', function() {
-        closeCustomMenu('.popDelete', '.pop2Delete');
+        manageCustomMenu('.popDelete', '.pop2Delete', '.menuElement', '.menuElementBlocked');
+    });
+
+    $('.menuElementBlocked').eq(0).on('click', function() {
+        manageCustomMenu('.popPersonel', '.pop2Personel', '.menuElementBlocked', '.menuElement');
+    });
+
+    $('.menuElementBlocked').eq(1).on('click', function() {
+        manageCustomMenu('.popDelete', '.pop2Delete', '.menuElementBlocked', '.menuElement');    
     });
 })
 
-// Animacje zamykania customowego menu
-function closeCustomMenu(pop1, pop2) {
+// Animacje zamykania i otwierania customowego menu
+function manageCustomMenu(pop1, pop2, menuElement, menuElementBlocked) {
     // Ukryj custom menu
     animate(
         $('.contextMenu'),
@@ -182,7 +289,10 @@ function closeCustomMenu(pop1, pop2) {
     );
 
     $(document).on('click', function(event) {
-        if(!$(event.target).closest(pop2).length && !$(event.target).is('.menuElement') || $(event.target).is('.close') && !$(event.target).is('.but')) {
+        if(!$(event.target).closest(pop2).length && !$(event.target).is(menuElementBlocked) 
+            && !$(event.target).closest(pop2).length && !$(event.target).is(menuElement)
+            && !$(event.target).closest('.pop2Personel').length && !$(event.target).is('.addUser')
+            || $(event.target).is('.close') && !$(event.target).is('.but')) {
             animate(
                 $(pop1),
                 { opacity: 0 },
@@ -190,7 +300,7 @@ function closeCustomMenu(pop1, pop2) {
             );
             
             setTimeout(function() {
-                $(pop1).removeClass('visible').addClass('fade-out invisible');
+                $(pop1).removeClass('visible').addClass('invisible');
             }, 200);
         }
 
@@ -203,7 +313,7 @@ function closeCustomMenu(pop1, pop2) {
             );
             
             setTimeout(function() {
-                $(pop1).removeClass('visible').addClass('fade-out invisible');
+                $(pop1).removeClass('visible').addClass('invisible');
             }, 200);
         })
     });
