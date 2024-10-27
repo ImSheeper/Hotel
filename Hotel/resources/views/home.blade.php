@@ -23,7 +23,7 @@
     <div class="background flex h-screen overflow-hidden">
 
         {{-- include left menu from templates --}}
-        @include('\Templates\sidebarTemplate')
+        @include('Templates.sidebarTemplate')
 
         {{-- Right flex --}}
         <div class="flex flex-col h-full w-full ml-1 md:ml-0 overflow-hidden">

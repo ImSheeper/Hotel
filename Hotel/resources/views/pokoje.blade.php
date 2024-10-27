@@ -27,12 +27,12 @@
     <div class="background flex h-screen overflow-hidden">
 
         {{-- include left menu from templates --}}
-        @include('\Templates\sidebarTemplate')
+        @include('Templates.sidebarTemplate')
 
         {{-- Right flex --}}
         <div class="flex flex-col h-full w-full ml-1 md:ml-0 overflow-hidden">
             {{-- Top menu --}}
-            @include('Templates\topMenuTemplate')
+            @include('Templates.topMenuTemplate')
 
             {{-- Main screen --}}
             <div class="flex flex-col bg-white grow mx-1 my-1 mr-2 mb-2 min-w-fit rounded-md overflow-auto items-center">
