@@ -21,7 +21,7 @@
                     </button>
                 </a>
 
-                <a href='{{ route('homeRoute') }}' class="flex w-full h-10 mb-2">
+                <a href='{{ route('pokojeRoute') }}' class="flex w-full h-10 mb-2">
                     <button class="relative w-full flex h-10 mx-2 my-1 px-4 items-center p-2 text-start hover:text-white group animate-fade-right animate-delay-[0.3s] animate-ease-out" value="pokoje">
                         <div class="absolute rounded-md inset-0 z-0 bg-gradient-to-r opacity-0 transition duration-500 group-hover:opacity-100 from-cyan-400 to-fuchsia-400"></div>
                         <img src={{ url('/icons/Pokoje.svg') }} class="z-10 transition duration-500 opacity-100 group-hover:opacity-0 h-6">
