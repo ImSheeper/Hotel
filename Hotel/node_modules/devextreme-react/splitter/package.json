@@ -1,0 +1,6 @@
+{
+  "sideEffects": false,
+  "main": "../cjs/splitter.js",
+  "module": "../esm/splitter.js",
+  "typings": "../cjs/splitter.d.ts"
+}

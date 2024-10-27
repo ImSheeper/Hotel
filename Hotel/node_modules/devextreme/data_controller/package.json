@@ -1,0 +1,5 @@
+{
+  "sideEffects": false,
+  "main": "../cjs/data_controller.js",
+  "module": "../esm/data_controller.js"
+}

@@ -1,0 +1,39 @@
+@use "../sizes" as *;
+@use "colors" as *;
+
+// adduse
+
+$material-checkbox-icon-font-size: null !default;
+$material-checkbox-ripple-size: null !default;
+
+$material-checkbox-border-width: 2px !default;
+$material-checkbox-border-radius: null !default;
+
+$material-checkbox-arrow-icon-size: 1em !default;
+$material-checkbox-arrow-font-size: null !default;
+$material-checkbox-indeterminate-icon-border-radius: 0 !default;
+
+$material-checkbox-indeterminate-icon-height: null !default;
+$material-checkbox-indeterminate-icon-width: null !default;
+
+@if $size == "default" {
+  $material-checkbox-icon-font-size: 18px !default;
+  $material-checkbox-ripple-size: 2.222223em !default;
+
+  $material-checkbox-border-radius: $base-border-radius - 2px !default;
+
+  $material-checkbox-arrow-font-size: 0.888889em !default;
+  $material-checkbox-indeterminate-icon-height: 0.111112em !default;
+  $material-checkbox-indeterminate-icon-width: 0.666667em !default;
+}
+
+@else if $size == "compact" {
+  $material-checkbox-icon-font-size: 16px !default;
+  $material-checkbox-ripple-size: 2em !default;
+
+  $material-checkbox-border-radius: $base-border-radius !default;
+
+  $material-checkbox-arrow-font-size: 0.875em !default;
+  $material-checkbox-indeterminate-icon-height: 0.125em !default;
+  $material-checkbox-indeterminate-icon-width: 0.625em !default;
+}

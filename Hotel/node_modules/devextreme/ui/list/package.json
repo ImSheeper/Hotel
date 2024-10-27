@@ -1,0 +1,30 @@
+{
+  "sideEffects": [
+    "../../esm/events/click.js",
+    "../../esm/events/core/emitter.feedback.js",
+    "../../esm/events/hover.js",
+    "../../esm/__internal/ui/list/modules/m_selection.js",
+    "../../esm/__internal/ui/list/m_list.edit.decorator.selection.js",
+    "../../esm/ui/themes.js",
+    "../../esm/__internal/ui/list/modules/m_deleting.js",
+    "../../esm/__internal/ui/list/modules/m_deleting.context.js",
+    "../../esm/__internal/ui/list/modules/m_context.js",
+    "../../esm/__internal/ui/list/m_list.edit.decorator.context.js",
+    "../../esm/__internal/ui/list/modules/m_deleting.slideButton.js",
+    "../../esm/__internal/ui/list/m_list.edit.decorator.switchable.button.js",
+    "../../esm/__internal/ui/list/modules/m_deleting.slideItem.js",
+    "../../esm/__internal/ui/list/m_list.edit.decorator.switchable.slide.js",
+    "../../esm/ui/toolbar/ui.toolbar.base.js",
+    "../../esm/__internal/ui/list/modules/m_deleting.static.js",
+    "../../esm/__internal/ui/list/m_list.edit.decorator.static.js",
+    "../../esm/__internal/ui/list/modules/m_deleting.swipe.js",
+    "../../esm/__internal/ui/list/m_list.edit.decorator.swipe.js",
+    "../../esm/__internal/ui/list/modules/m_deleting.toggle.js",
+    "../../esm/__internal/ui/list/modules/m_dragging.js",
+    "../../esm/__internal/ui/list/m_list.edit.decorator.reorder.js",
+    "../../esm/__internal/ui/list/modules/m_search.js"
+  ],
+  "main": "../../cjs/ui/list.js",
+  "module": "../../esm/ui/list.js",
+  "typings": "../list.d.ts"
+}

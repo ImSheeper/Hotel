@@ -1,0 +1,5 @@
+{
+  "sideEffects": false,
+  "main": "../../cjs/core/trial_panel.js",
+  "module": "../../esm/core/trial_panel.js"
+}

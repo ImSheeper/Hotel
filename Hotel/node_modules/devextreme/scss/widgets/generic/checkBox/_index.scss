@@ -1,0 +1,101 @@
+@use "sass:color";
+@use "colors" as *;
+@use "../colors" as *;
+@use "sizes" as *;
+@use "../sizes" as *;
+@use "../../base/icons" as *;
+@use "../../base/checkBox";
+@use "../../base/checkBox/mixins" as *;
+
+// adduse
+
+
+$generic-checkbox-disable-opacity: 0.4;
+
+.dx-checkbox {
+  line-height: 0;
+
+  &.dx-state-readonly {
+    .dx-checkbox-icon {
+      border-color: $checkbox-readonly-border-color;
+      background-color: $checkbox-readonly-bg;
+    }
+  }
+
+  &.dx-state-hover {
+    .dx-checkbox-icon {
+      border-color: $checkbox-hover-border-color;
+    }
+  }
+
+  &.dx-state-focused {
+    .dx-checkbox-icon {
+      border-color: $checkbox-border-color-focused;
+    }
+  }
+
+  &.dx-state-active {
+    .dx-checkbox-icon {
+      background-color: $checkbox-active-icon-bg;
+    }
+  }
+}
+
+.dx-checkbox-icon {
+  width: $generic-checkbox-arrow-icon-size;
+  height: $generic-checkbox-arrow-icon-size;
+  font-size: $generic-checkbox-icon-font-size;
+  border-radius: $generic-checkbox-border-radius;
+  border-width: $generic-checkbox-border-width;
+  border-style: solid;
+  border-color: $checkbox-border-color;
+  background-color: $checkbox-bg;
+
+  .dx-checkbox-checked & {
+    @include dx-icon(check);
+
+    color: $checkbox-checked-color;
+    font-size: $generic-checkbox-icon-font-size;
+
+    @include dx-checkbox-icon-centered($generic-checkbox-arrow-icon-size, $generic-checkbox-arrow-icon-size, $generic-checkbox-arrow-font-size);
+  }
+}
+
+@include dx-checkbox-icon-indeterminate(
+  $checkbox-indeterminate-bg,
+  $checkbox-checked-color,
+  $generic-checkbox-indeterminate-icon-size,
+  $generic-checkbox-indeterminate-icon-size,
+  $generic-checkbox-indeterminate-icon-border-radius,
+);
+
+.dx-state-disabled {
+  &.dx-checkbox,
+  .dx-checkbox {
+    opacity: 1;
+
+    .dx-checkbox-icon {
+      opacity: $generic-checkbox-disable-opacity;
+    }
+  }
+
+  .dx-checkbox-text {
+    opacity: $generic-checkbox-disable-opacity;
+  }
+}
+
+.dx-invalid {
+  .dx-checkbox-container {
+    .dx-checkbox-icon {
+      border-color: $checkbox-invalid-faded-border-color;
+    }
+  }
+
+  &.dx-state-focused {
+    .dx-checkbox-container {
+      .dx-checkbox-icon {
+        border-color: $checkbox-invalid-focused-border-color;
+      }
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "sideEffects": [
+    "../../../esm/__internal/ui/html_editor/converters/m_delta.js",
+    "../../../esm/events/click.js",
+    "../../../esm/events/core/emitter.feedback.js",
+    "../../../esm/events/hover.js",
+    "../../../esm/ui/toolbar.js",
+    "../../../esm/ui/popup/ui.popup.js",
+    "../../../esm/ui/toolbar/ui.toolbar.base.js",
+    "../../../esm/__internal/ui/form/m_form.layout_manager.js",
+    "../../../esm/ui/text_box.js",
+    "../../../esm/ui/number_box.js",
+    "../../../esm/ui/check_box.js",
+    "../../../esm/ui/themes.js",
+    "../../../esm/ui/date_box.js",
+    "../../../esm/__internal/ui/list/modules/m_selection.js",
+    "../../../esm/__internal/ui/list/m_list.edit.decorator.selection.js",
+    "../../../esm/ui/button.js",
+    "../../../esm/ui/validation_summary.js",
+    "../../../esm/ui/validation_group.js",
+    "../../../esm/ui/select_box.js",
+    "../../../esm/__internal/ui/color_box/m_color_view.js"
+  ],
+  "main": "../../../cjs/ui/html_editor/ui.html_editor.js",
+  "module": "../../../esm/ui/html_editor/ui.html_editor.js"
+}
