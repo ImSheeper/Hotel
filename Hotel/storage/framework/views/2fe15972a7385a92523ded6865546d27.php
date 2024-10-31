@@ -8,7 +8,6 @@
   <title>Personel</title>
   <?php echo app('Illuminate\Foundation\Vite')('resources/css/app.css'); ?>
   <?php echo app('Illuminate\Foundation\Vite')('resources/js/styles.js'); ?>
-  <?php echo app('Illuminate\Foundation\Vite')('resource/js/animations.js'); ?>
   
     <style>
         body, html {

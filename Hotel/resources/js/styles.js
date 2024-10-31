@@ -1,17 +1,6 @@
 import { animate } from "motion"
 
 $(document).ready(function() {
-    //oznaczenie menu jako szare
-    var path = location.pathname;
-    var name = location.pathname.split('/').slice(-1)[0];
-
-    if(path.includes('personel')) name = 'grafik';
-    $('.menu').find('button').each(function() {
-        if(name === $(this).val()) {
-            $(this).addClass('bg-gray-200 rounded-md');
-        }
-    })
-
     //W dół jest obsługa customowego prawego kliknięcia na tabeli personel - laravel nie ogarniał co klikam, customowa obsługa była wymagana
     //Do poprawy są jeszcze style
     //right click menu na tabeli personel
