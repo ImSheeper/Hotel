@@ -8,9 +8,17 @@ $(document).ready(function() {
         switch(event.which) {
             case 3:
                 var data = $(this).find('.pokoje').text().split(' ').filter(Boolean);
-                data.forEach(function(index) {
-                    $('.data').eq(index).val(data[index]);
-                });
+                console.log(data);
+                $('.data').eq(0).val(data[0]);
+                $('.data').eq(1).val(data[1]);
+                data[2] === "Wolne" ? $('.data').eq(2).val(0) : $('.data').eq(2).val(1);
+                data[3] === "Brudny" ? $('.data').eq(3).val(0) : $('.data').eq(3).val(1);
+                data[4] === "Aktywny" ? $('.data').eq(4).val(0) : $('.data').eq(4).val(1);
+
+
+                // data.forEach(function(element, index) {
+                //     $('.data').eq(index).val(data[index]);
+                // }); 
                 
                 $('.popText').text(`Edytuj pokój ${data[0]}`);
                 $('.popTextDelete').text(`Wykluczyć pokój ${data[0]}?`);
@@ -22,6 +30,44 @@ $(document).ready(function() {
                 })
                 animate(
                     $('.contextMenu'),
+                    { opacity: 1},
+                    { duration: 0.2 }
+                )
+                break;
+        }
+    });
+});
+
+$(document).ready(function() {
+    // Show contextMenu
+    $(".tableClassBlocked").bind("contextmenu", function (event) {
+        event.preventDefault();
+        
+        switch(event.which) {
+            case 3:
+                var data = $(this).find('.pokoje').text().split(' ').filter(Boolean);
+                console.log(data);
+                $('.data').eq(0).val(data[0]);
+                $('.data').eq(1).val(data[1]);
+                data[2] === "Wolne" ? $('.data').eq(2).val(0) : $('.data').eq(2).val(1);
+                data[3] === "Brudny" ? $('.data').eq(3).val(0) : $('.data').eq(3).val(1);
+                data[4] === "Aktywny" ? $('.data').eq(4).val(0) : $('.data').eq(4).val(1);
+
+
+                // data.forEach(function(element, index) {
+                //     $('.data').eq(index).val(data[index]);
+                // }); 
+                
+                $('.popText').text(`Edytuj pokój ${data[0]}`);
+                $('.popTextDelete').text(`Aktywować pokój ${data[0]}?`);
+
+                // Tabela aktywnego personelu
+                $(".contextMenuBlocked").removeClass('hidden').addClass('visible').finish().css({
+                    top: event.pageY + "px",
+                    left: event.pageX + "px"
+                })
+                animate(
+                    $('.contextMenuBlocked'),
                     { opacity: 1},
                     { duration: 0.2 }
                 )
@@ -66,13 +112,13 @@ $(document).ready(function() {
         manageCustomMenu('.popDelete', '.pop2Delete', '.menuElement', '.menuElementBlocked');
     });
 
-    // $('.menuElementBlocked').eq(0).on('click', function() {
-    //     manageCustomMenu('.popPersonel', '.pop2Personel', '.menuElementBlocked', '.menuElement');
-    // });
+    $('.menuElementBlocked').eq(0).on('click', function() {
+        manageCustomMenu('.popPersonel', '.pop2Personel', '.menuElementBlocked', '.menuElement');
+    });
 
-    // $('.menuElementBlocked').eq(1).on('click', function() {
-    //     manageCustomMenu('.popDelete', '.pop2Delete', '.menuElementBlocked', '.menuElement');    
-    // });
+    $('.menuElementBlocked').eq(1).on('click', function() {
+        manageCustomMenu('.popDelete', '.pop2Delete', '.menuElementBlocked', '.menuElement');    
+    });
 })
 
 // Animacje zamykania i otwierania customowego menu
@@ -125,4 +171,66 @@ function manageCustomMenu(pop1, pop2, menuElement, menuElementBlocked) {
         })
     });
 }
+
+// Wyślij ajax z edycją pokoju
+$('.sendAjax').on('click', function() {
+
+    var data = {
+        'id' : $('.data').eq(0).val(),
+        'pietro' : $('.data').eq(1).val(),
+        'status' : $('.data').eq(2).val(),
+        'czysty' : $('.data').eq(3).val(),
+        'wykluczony' : $('.data').eq(4).val()
+    };
+    
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        url : "/pokojePost",
+        data : {
+            data
+        },
+        method : 'POST',
+        success : function(result){
+            console.log("Sukces: ", result);
+            window.location.replace('/pokoje');
+        },
+        error: function(xhr, status, error) {
+            console.error("Wystąpił błąd:");
+            console.error("Status: ", status);
+            console.error("Błąd: ", error);
+            console.error("Odpowiedź serwera: ", xhr.responseText);
+        }
+    });
+});
+
+// Wyślij ajax z wykluczeniem/przywróceniem pokoju
+$('.butYes').on('click', function() {
+
+    var data = {
+        'id' : $('.data').eq(0).val()
+    };
+    
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        url : "/pokojePostDeactivate",
+        data : {
+            data
+        },
+        method : 'POST',
+        success : function(result){
+            console.log("Sukces: ", result);
+            window.location.replace('/pokoje');
+        },
+        error: function(xhr, status, error) {
+            console.error("Wystąpił błąd:");
+            console.error("Status: ", status);
+            console.error("Błąd: ", error);
+            console.error("Odpowiedź serwera: ", xhr.responseText);
+        }
+    });
+});
 
