@@ -16,6 +16,7 @@ Route::get('/home', [HomeController::class, 'select'])->name('homeRoute');
 Route::get('/pokoje', [PokojeController::class, 'select'])->name('pokojeRoute');
 Route::post('/pokojePost', [PokojeController::class, 'store'])->name('pokojePost');
 Route::post('/pokojePostDeactivate', [PokojeController::class, 'deactivate'])->name('pokojePostDeactivate');
+Route::post('/pokojePostDelete', [PokojeController::class, 'delete'])->name('pokojePostDelete');
 
 Route::get('/personel', [PersonelController::class, 'select'])->name('personelRoute');
 Route::post('/personel', [PersonelController::class, 'update'])->name('personelPost');

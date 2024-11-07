@@ -212,27 +212,6 @@ $(document).ready(function() {
             { opacity: 1 },
             { duration: 0.2, easing: "ease-out" }
         );
-
-        // Znowu buguje - do poprawy
-        $(document).on('click', function(event) {
-            if(!$(event.target).closest('.pop2Personel').length && !$(event.target).is('.addUser')
-                && !$(event.target).closest('.pop2Personel').length && !$(event.target).is('.menuElement')
-                && !$(event.target).closest('.pop2Personel').length && !$(event.target).is('.menuElementBlocked')
-                || $(event.target).is('.close') && !$(event.target).is('.but')) {
-                animate(
-                    $('.popPersonel'),
-                    { opacity: 0 },
-                    { duration: 0.2, easing: "ease-out" }
-                );
-                
-                setTimeout(function() {
-                    $('.popPersonel').removeClass('visible').addClass('invisible');
-
-                    // Ponownie zrób login disabled
-                    $('.data').eq(5).prop('disabled', true).removeClass('bg-white');
-                }, 200);
-            }
-        });
     });
 });
 
