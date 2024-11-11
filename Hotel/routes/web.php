@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\GrafikController;
 use App\Http\Controllers\PokojeController;
+use App\Http\Controllers\MagazynController;
 use App\Http\Controllers\PersonelController;
 
 Route::get('/', [LoginController::class, 'selectUser'])->name('loginRoute');
@@ -26,3 +27,4 @@ Route::post('/personelDelete', [PersonelController::class, 'delete'])->name('per
 Route::get('/personel/{login}/{month}/{year}', [GrafikController::class, 'select'])->name('personelParameterRoute');
 Route::post('/personel/{login}/{month}/{year}', [GrafikController::class, 'store'])->name('grafikStore');
 
+Route::get('/magazyn', [MagazynController::class, 'select'])->name('magazynRoute');
