@@ -28,3 +28,4 @@ Route::get('/personel/{login}/{month}/{year}', [GrafikController::class, 'select
 Route::post('/personel/{login}/{month}/{year}', [GrafikController::class, 'store'])->name('grafikStore');
 
 Route::get('/magazyn', [MagazynController::class, 'select'])->name('magazynRoute');
+Route::post('/magazynPost', [MagazynController::class, 'update'])->name('magazynPostRoute');

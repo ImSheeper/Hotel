@@ -26,4 +26,25 @@ class MagazynController extends Controller
             'magazyn' => $magazyn
         ]);
     }
+
+    public function update(Request $request) {
+        $produkt = Produkt::where('nazwa', $request->data['nazwa'])->first();
+        $magazyn = Magazyn::where('id', $produkt->id)->first();
+
+        if($magazyn) {
+            $magazyn->ilosc = (int) $request->data['ilosc'];
+
+            $magazyn->save();
+         }
+
+        $magazyn = Magazyn::get();
+        $produkt = Produkt::get();
+
+        return response()->json([
+            'message' => 'Dane przetworzone poprawnie!',
+            'data' => $request->all(),
+            'magazyn' => $magazyn,
+            'produkt' => $produkt
+        ]);
+    }
 }

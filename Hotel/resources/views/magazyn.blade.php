@@ -7,7 +7,7 @@
 
   <title>Personel</title>
   @vite('resources/css/app.css')
-  @vite('resources/js/pokojeStyles.js')
+  @vite('resources/js/magazynStyles.js')
   
     <style>
         body, html {
@@ -46,64 +46,35 @@
                         <div class="magazynContainer">
                             @foreach ($magazyn as $item)
                             <div class="tableClass cursor-pointer grid grid-cols-2 transition-all duration-300 hover:bg-gray-300 px-2 py-1 rounded-md">
-                                <div class="data">{{ $item->produkt->nazwa }}</div>
-                                <div class="data">{{ $item->ilosc }}</div>
+                                <div class="magazyn">{{ $item->produkt->nazwa }} </div>
+                                <div class="magazyn">{{ $item->ilosc }} </div>
                             </div>
                             @endforeach
                         </div>
                     </div>
+                    <div class="font-bold shadow-lg mx-10 bg-gray-200 h-44 w-44 rounded-2xl overflow-hidden content-center text-center my-5 md:my-10 animate-fade-down animate-delay-[0.2s] animate-ease-out">
+                        <div class="text-xl">Uzupełnij zapasy</div>
+                    </div>
                 </div>
-        </div>
+            </div>
         
          {{-- popUp edit --}}
-        <div class="popPersonel bg-black bg-opacity-20 backdrop-blur-sm flex absolute invisible h-full w-full justify-center items-center opacity-0">
-            <div class="pop2Personel flex flex-col bg-white w-[500px] min-h-max rounded-lg justify-center p-5">
-                <div class="popText text-2xl font-bold text-center">Edytuj pokój [numer]</div>
+        <div class="popMagazyn bg-black bg-opacity-20 backdrop-blur-sm flex absolute invisible h-full w-full justify-center items-center opacity-0">
+            <div class="pop2Magazyn flex flex-col bg-white w-[500px] min-h-max rounded-lg justify-center p-5">
+                <div class="popText text-2xl font-bold text-center">Edytuj produkt [nazwa]</div>
 
                 <img src={{ url('/icons/Account.svg') }} class="h-24 mt-2 p-2">
 
                 <div class="flex justify-between w-full mt-2">
                     <div class="flex justify-center flex-col w-[50%] p-2">
-                        <div class="mb-1 text-gray-700">Pokój</div>
-                        <input type="text" placeholder="Pokój" class="data border-2 rounded-lg p-1 bg-gray-200" disabled>
+                        <div class="mb-1 text-gray-700">Produkt</div>
+                        <input type="text" placeholder="Produkt" class="data border-2 rounded-lg p-1 bg-gray-200" disabled>
                     </div>
                     <div class="flex justify-center flex-col w-[50%] p-2">
-                        <div class="mb-1 text-gray-700">Piętro</div>
-                        <input type="text" placeholder="Piętro" class="data border-2 rounded-lg p-1">
+                        <div class="mb-1 text-gray-700">Ilość</div>
+                        <input type="text" placeholder="Ilość" class="data border-2 rounded-lg p-1">
                     </div>
                 </div>
-
-                <div class="flex justify-around w-full mt-2">
-                    <div class="flex justify-center flex-col w-full p-2">
-                        <div class="mb-1 text-gray-700">Status</div>
-                        {{-- <input type="text" placeholder="Status" class="data border-2 rounded-lg p-1 w-full"> --}}
-                        <select name="Status" id="Status" class="data border-2 rounded-lg p-1 w-full bg-white">
-                            <option value="1"> Zajęte </option>
-                            <option value="0"> Wolne </option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="flex justify-around w-full mt-2">
-                    <div class="flex justify-center flex-col w-full p-2">
-                        <div class="mb-1 text-gray-700">Czysty</div>
-                        {{-- <input type="text" placeholder="Czysty" class="data border-2 rounded-lg p-1 w-full"> --}}
-                        <select name="Czysty" id="Czysty" class="data border-2 rounded-lg p-1 w-full bg-white">
-                            <option value="0"> Brudny </option>
-                            <option value="1"> Czysty </option>
-                        </select>
-                    </div>
-                </div>
-
-                {{-- <div class="flex justify-around w-full mt-2">
-                    <div class="flex justify-center flex-col w-full p-2">
-                        <div class="mb-1 text-gray-700">Wykluczony</div>
-                        <select name="Wykluczony" id="Wykluczony" class="data border-2 rounded-lg p-1 w-full bg-white">
-                            <option value="1"> Wykluczony </option>
-                            <option value="0"> Aktywny </option>
-                        </select>
-                    </div>
-                </div> --}}
 
                 <div class="flex flex-col items-center justify-center w-full">
                     <div class="flex relative group rounded-2xl mb-4 mt-6">
@@ -113,12 +84,11 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
 
         {{-- popup Delete --}}
-        <div class="popDelete bg-black bg-opacity-20 backdrop-blur-sm flex absolute invisible h-full w-full justify-center items-center opacity-0">
+        {{-- <div class="popDelete bg-black bg-opacity-20 backdrop-blur-sm flex absolute invisible h-full w-full justify-center items-center opacity-0">
             <div class="pop2Delete flex flex-col bg-white w-[500px] min-h-max rounded-lg justify-center p-5">
 
                 <div class="popTextDelete text-2xl font-bold text-center">Wykluczyć pokój [nazwa]?</div>
@@ -138,10 +108,10 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
         {{-- popup Delete2 --}}
-        <div class="popDeleteRoom bg-black bg-opacity-20 backdrop-blur-sm flex absolute invisible h-full w-full justify-center items-center opacity-0">
+        {{-- <div class="popDeleteRoom bg-black bg-opacity-20 backdrop-blur-sm flex absolute invisible h-full w-full justify-center items-center opacity-0">
             <div class="pop2DeleteRoom flex flex-col bg-white w-[500px] min-h-max rounded-lg justify-center p-5">
 
                 <div class="popTextDeleteRoom text-2xl font-bold text-center">Wykluczyć pokój [nazwa]?</div>
@@ -161,11 +131,15 @@
                     </div>
                 </div>
             </div>
+        </div> --}}
+
+        <div class="contextMenu hidden z-10 absolute bg-white px-2 py-2 shadow-md rounded-md opacity-0">
+            <div class="menuElement hover:bg-gray-200 transition-all duration-200 px-1 rounded-md cursor-pointer py-1">Edytuj produkt</div>
         </div>
 
-        {{-- <script>
-            let pokoje = @json($pokoje);
-        </script> --}}
+        <script>
+            let magazyn = @json($magazyn);
+        </script>
     </div>
 </body>
 </html>
