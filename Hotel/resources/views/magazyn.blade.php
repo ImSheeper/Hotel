@@ -52,27 +52,45 @@
                             @endforeach
                         </div>
                     </div>
-                    <div class="font-bold shadow-lg mx-10 bg-gray-200 h-44 w-44 rounded-2xl overflow-hidden content-center text-center my-5 md:my-10 animate-fade-down animate-delay-[0.2s] animate-ease-out">
-                        <div class="text-xl">Uzupełnij zapasy</div>
+                    <div class="addZapas font-bold shadow-lg mx-10 bg-gray-200 h-44 w-44 rounded-2xl overflow-hidden content-center text-center my-5 md:my-10 animate-fade-down animate-delay-[0.2s] animate-ease-out">
+                        <div class="text-xl">Edytuj produkty</div>
                     </div>
                 </div>
+
+                <div class="contextMenu hidden z-10 absolute bg-white px-2 py-2 shadow-md rounded-md opacity-0">
+                    <div class="menuElement hover:bg-gray-200 transition-all duration-200 px-1 rounded-md cursor-pointer py-1">Edytuj produkt</div>
+                </div>
             </div>
-        
+        </div>
+
          {{-- popUp edit --}}
         <div class="popMagazyn bg-black bg-opacity-20 backdrop-blur-sm flex absolute invisible h-full w-full justify-center items-center opacity-0">
             <div class="pop2Magazyn flex flex-col bg-white w-[500px] min-h-max rounded-lg justify-center p-5">
                 <div class="popText text-2xl font-bold text-center">Edytuj produkt [nazwa]</div>
 
-                <img src={{ url('/icons/Account.svg') }} class="h-24 mt-2 p-2">
-
                 <div class="flex justify-between w-full mt-2">
-                    <div class="flex justify-center flex-col w-[50%] p-2">
+
+                    <div class="flex justify-center flex-col w-[33%] p-2">
                         <div class="mb-1 text-gray-700">Produkt</div>
-                        <input type="text" placeholder="Produkt" class="data border-2 rounded-lg p-1 bg-gray-200" disabled>
+                        <select name="Produkt" id="Produkt" class="data border-2 rounded-lg p-1 w-full bg-white">
+                            @foreach ($produkt as $item)
+                                <option value={{ $item->nazwa }}> {{ $item->nazwa }} </option>
+                            @endforeach
+                        </select>
                     </div>
-                    <div class="flex justify-center flex-col w-[50%] p-2">
+
+                    <div class="flex justify-center flex-col w-[33%] p-2">
+                        <div class="mb-1 text-gray-700">Akcja</div>
+                        <select name="Status" id="Status" class="data border-2 rounded-lg p-1 w-full bg-white">
+                            <option value="1"> Zwiększ o </option>
+                            <option value="0"> Zmniejsz o </option>
+                            <option value="2"> Dokładnie </option>
+                        </select>
+                    </div>
+
+                    <div class="flex justify-center flex-col w-[33%] p-2">
                         <div class="mb-1 text-gray-700">Ilość</div>
-                        <input type="text" placeholder="Ilość" class="data border-2 rounded-lg p-1">
+                        <input type="number" placeholder="Ilość" class="data border-2 rounded-lg p-1">
                     </div>
                 </div>
 
@@ -87,28 +105,42 @@
             </div>
         </div>
 
-        {{-- popup Delete --}}
-        {{-- <div class="popDelete bg-black bg-opacity-20 backdrop-blur-sm flex absolute invisible h-full w-full justify-center items-center opacity-0">
-            <div class="pop2Delete flex flex-col bg-white w-[500px] min-h-max rounded-lg justify-center p-5">
+        <div class="popUzupelnij bg-black bg-opacity-20 backdrop-blur-sm flex absolute invisible h-full w-full justify-center items-center opacity-0">
+            <div class="pop2Uzupelnij flex flex-col bg-white w-[500px] min-h-max rounded-lg justify-center p-5">
+                <div class="popText text-2xl font-bold text-center">Edytuj produkty</div>
 
-                <div class="popTextDelete text-2xl font-bold text-center">Wykluczyć pokój [nazwa]?</div>
+                <div class="flex justify-between w-full mt-2">
 
-                <div class="flex items-center justify-evenly px-10 w-full">
-                    <div class="flex relative group rounded-2xl mb-4 mt-6">
-                        <div class="flex relative group h-12 mx-5">
-                            <button class="butYes bg-gray-200 w-36 h-12 min-w-max rounded-2xl text-lg opcaity-100 transition-all duration-200 group-hover:opacity-0">Tak</button>
-                            <button class="butYes absolute bg-gradient-to-r from-red-400 to-orange-400 w-36 h-12 min-w-max rounded-2xl text-lg transition-all duration-200 opacity-0 group-hover:opacity-100 text-white">Tak</button>
-                        </div>
+                    <div class="flex justify-center flex-col w-[50%] p-2">
+                        <div class="mb-1 text-gray-700">Akcja</div>
+                        <select name="Status" id="Status" class="dataProdukt border-2 rounded-lg p-1 w-full bg-white">
+                            <option value="1"> Dodaj </option>
+                            <option value="0"> Usuń </option>
+                        </select>
                     </div>
+
+                    <div class="flex justify-center flex-col w-[50%] p-2">
+                        <div class="mb-1 text-gray-700">Produkt</div>
+                        <input type="text" placeholder="Nowy produkt" class="dataProdukt border-2 rounded-lg p-1">
+                        <select name="Produkt2" id="Produkt2" class="dataProdukt hidden border-2 rounded-lg p-1 w-full bg-white">             
+                            @foreach ($produkt as $item)
+                                <option value={{ $item->nazwa }}> {{ $item->nazwa }} </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="flex flex-col items-center justify-center w-full">
                     <div class="flex relative group rounded-2xl mb-4 mt-6">
-                        <div class="flex relative group h-12 mx-5">
-                            <button class="butNo bg-gray-200 w-36 h-12 min-w-max rounded-2xl text-lg opcaity-100 transition-all duration-200 group-hover:opacity-0">Nie</button>
-                            <button class="butNo absolute bg-gradient-to-r from-cyan-400 to-fuchsia-400 w-36 h-12 min-w-max rounded-2xl text-lg transition-all duration-200 opacity-0 group-hover:opacity-100 text-white">Nie   </button>
+                        <div class="flex relative group h-12">
+                            <button class="sendAjaxProdukt bg-gray-200 w-36 h-12 min-w-max rounded-2xl text-lg opcaity-100 transition-all duration-200 group-hover:opacity-0">Zapisz</button>
+                            <button class="sendAjaxProdukt absolute bg-gradient-to-r from-cyan-400 to-fuchsia-400 w-36 h-12 min-w-max rounded-2xl text-lg transition-all duration-200 opacity-0 group-hover:opacity-100 text-white">Zapisz</button>
                         </div>
                     </div>
                 </div>
             </div>
-        </div> --}}
+        </div>
 
         {{-- popup Delete2 --}}
         {{-- <div class="popDeleteRoom bg-black bg-opacity-20 backdrop-blur-sm flex absolute invisible h-full w-full justify-center items-center opacity-0">
@@ -132,10 +164,6 @@
                 </div>
             </div>
         </div> --}}
-
-        <div class="contextMenu hidden z-10 absolute bg-white px-2 py-2 shadow-md rounded-md opacity-0">
-            <div class="menuElement hover:bg-gray-200 transition-all duration-200 px-1 rounded-md cursor-pointer py-1">Edytuj produkt</div>
-        </div>
 
         <script>
             let magazyn = @json($magazyn);
