@@ -12,6 +12,6 @@ class Magazyn extends Model
     protected $table = 'magazyn';
 
     public function produkt() {
-        return $this->belongsTo(Produkt::class, 'id');
+        return $this->belongsTo(Produkt::class, 'nazwa_produktu');
     }
 }

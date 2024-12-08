@@ -30,3 +30,5 @@ Route::post('/personel/{login}/{month}/{year}', [GrafikController::class, 'store
 Route::get('/magazyn', [MagazynController::class, 'select'])->name('magazynRoute');
 Route::post('/magazynPost', [MagazynController::class, 'update'])->name('magazynPostRoute');
 Route::post('/magazynPostProdukt', [MagazynController::class, 'updateProdukt'])->name('magazynPostProduktRoute');
+Route::post('/magazynPostDodaj', [MagazynController::class, 'add'])->name('magazynPostDodajRoute');
+Route::post('/magazynPostDelete', [MagazynController::class, 'delete'])->name('magazynPostDeleteRoute');

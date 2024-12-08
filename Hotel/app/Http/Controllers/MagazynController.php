@@ -6,12 +6,18 @@ use App\Models\Hotel;
 use App\Models\Magazyn;
 use App\Models\Produkt;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MagazynController extends Controller
 {
     public function select(Request $request) {
         $hotelInfos = Hotel::get();
-        $magazyn = Magazyn::get();
+        $magazyn = Magazyn::select('data_waznosci', DB::raw('nazwa_produktu, data_waznosci, SUM(ilosc) as ilosc'))
+        ->groupBy('data_waznosci')
+        ->groupBy('nazwa_produktu')
+        ->get();
+    
+
         $produkt = Produkt::get();
 
         $loginData = $request->session()->get('login');
@@ -31,7 +37,7 @@ class MagazynController extends Controller
 
     public function update(Request $request) {
         $produkt = Produkt::where('nazwa', $request->data['nazwa'])->first();
-        $magazyn = Magazyn::where('id', $produkt->id)->first();
+        $magazyn = Magazyn::where('nazwa_produktu', $produkt->id)->first();
 
         $action = (int) $request->data['akcja'];
         $ilosc = (int) $request->data['ilosc'];
@@ -53,7 +59,11 @@ class MagazynController extends Controller
             // Tutaj dodawanie nowego elementu do bazy?
          }
 
-        $magazyn = Magazyn::get();
+         $magazyn = Magazyn::select('data_waznosci', DB::raw('nazwa_produktu, data_waznosci, SUM(ilosc) as ilosc'))
+         ->groupBy('data_waznosci')
+         ->groupBy('nazwa_produktu')
+         ->get();
+     
         $produkt = Produkt::get();
 
         return response()->json([
@@ -73,6 +83,8 @@ class MagazynController extends Controller
 
         switch($action) {
             case 0:
+                $produktId = Produkt::where('nazwa', $nazwaDelete)->first();
+                $magazyn = Magazyn::where('nazwa_produktu', $produktId['id'])->delete();
                 $produkt = Produkt::where('nazwa', $nazwaDelete)->delete();
                 break;
             case 1:
@@ -82,7 +94,11 @@ class MagazynController extends Controller
                 break;
         }
 
-        $magazyn = Magazyn::get();
+        $magazyn = Magazyn::select('data_waznosci', DB::raw('nazwa_produktu, data_waznosci, SUM(ilosc) as ilosc'))
+        ->groupBy('data_waznosci')
+        ->groupBy('nazwa_produktu')
+        ->get();
+    
         $produkt = Produkt::get();
 
         return response()->json([
@@ -90,6 +106,58 @@ class MagazynController extends Controller
             'data' => $request->all(),
             'magazyn' => $magazyn,
             'produkt' => $produkt
+        ]);
+    }
+
+    public function add(Request $request) {
+        $produkt = Produkt::where('nazwa', $request->data['nazwa'])->first();
+        $magazyn = Magazyn::where('nazwa_produktu', $produkt->id)->first();
+
+        $nazwa = $produkt->id;
+        $ilosc = (int) $request->data['ilosc'];
+        $date = $request->data['date'];
+
+        $magazyn = new Magazyn();
+        $magazyn->nazwa_produktu = $nazwa;
+        $magazyn->ilosc = $ilosc;
+        $magazyn->data_waznosci = $date; 
+        $magazyn->save();
+
+        $magazyn = Magazyn::select('data_waznosci', DB::raw('nazwa_produktu, data_waznosci, SUM(ilosc) as ilosc'))
+        ->groupBy('data_waznosci')
+        ->groupBy('nazwa_produktu')
+        ->get();
+    
+        $produkt = Produkt::get();
+
+        return response()->json([
+            'message' => 'Dane przetworzone poprawnie!',
+            'data' => $request->all(),
+            'magazyn' => $magazyn,
+            'produkt' => $produkt
+        ]);
+    }
+
+    public function delete(Request $request) {
+        $produkt = Produkt::where('nazwa', $request->data['nazwa'])->first();
+        $magazyn = Magazyn::
+        where('nazwa_produktu', $produkt->id)
+        ->where('data_waznosci', $request->data['date'])
+        ->delete();
+
+        $magazyn = Magazyn::select('data_waznosci', DB::raw('nazwa_produktu, data_waznosci, SUM(ilosc) as ilosc'))
+        ->groupBy('data_waznosci')
+        ->groupBy('nazwa_produktu')
+        ->get();
+    
+        $produkt = Produkt::get();
+
+        return response()->json([
+            'message' => 'Dane przetworzone poprawnie!',
+            'data' => $request->all(),
+            'magazyn' => $magazyn,
+            'produkt' => $produkt,
+            'requestdata' => $request->data['date']
         ]);
     }
 }

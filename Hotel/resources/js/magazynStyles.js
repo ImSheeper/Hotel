@@ -1,5 +1,7 @@
 import { animate, glide } from "motion"
 
+var selectedData = {};
+
 $(document).ready(function() {
     // Delegacja zdarzenia contextmenu na dynamicznie dodane elementy .tableClass
     $(".magazynContainer").on("contextmenu", ".tableClass", function(event) {
@@ -7,15 +9,19 @@ $(document).ready(function() {
         
         var data = $(this).find('.magazyn').text().split(' ').filter(Boolean);
         console.log(data); // Sprawdź, czy dane są prawidłowo pobierane
+
+        selectedData = {
+            nazwa: data[0],
+            ilosc: data[1],
+            date: data[2]
+        };
         
         // Wypełnianie danych w polach
-        $('.data').eq(0).val(data[0]);
-        $('.data').eq(1).val(data[1]);
+        $('.data').eq(0).val(selectedData.nazwa);
+        $('.data').eq(1).val(selectedData.ilosc);
 
-        $('.popText').text(`Edytuj produkt ${data[0]}`);
-        // $('.popTextDelete').text(`Wykluczyć pokój ${data[0]}?`);
-        // $('.popTextDeleteRoom').text(`Czy na pewno usunąć pokój ${data[0]}?`);
-        // console.log('event', $(this).text());
+        $('.popText').text(`Edytuj produkt ${selectedData.nazwa}`);
+        $('.popTextUsun').text(`Czy na pewno usunąć produkt ${selectedData.nazwa}?`);
 
         // Wyświetlanie customowego menu kontekstowego
         $(".contextMenu").removeClass('hidden').css({
@@ -49,6 +55,10 @@ $(document).ready(function() {
     $('.menuElement').eq(0).on('click', function() {
         manageCustomMenu('.popMagazyn', '.pop2Magazyn', '.menuElement', '.menuElementBlocked');
     });
+
+    $('.menuElement').eq(1).on('click', function() {
+        manageCustomMenu('.popUsun', '.pop2Usun', '.menuElement', '.menuElementBlocked');
+    });
 })
 
 // Animacje zamykania i otwierania customowego menu
@@ -75,8 +85,8 @@ function manageCustomMenu(pop1, pop2, menuElement, menuElementBlocked) {
         if(!$(event.target).closest(pop2).length 
             && !$(event.target).is(menuElement)
             && !$(event.target).is('.addZapas')
+            && !$(event.target).is('.Dodaj')
             || $(event.target).is('.close') && !$(event.target).is('.but')) {
-                console.log('test');
             animate(
                 $(pop1),
                 { opacity: 0 },
@@ -200,11 +210,13 @@ function refresh(result) {
     const magazynContainer = $('.magazynContainer');
     const produktContainer = $('#Produkt');
     const produktContainer2 = $('#Produkt2');
+    const produktContainer3 = $('#Produkt3');
     
     $('.tableClass').remove();
     //$('.produktItem').remove();
     produktContainer.empty();
     produktContainer2.empty();
+    produktContainer3.empty();
 
     // edit
     animate(
@@ -236,15 +248,95 @@ function refresh(result) {
         
         produktContainer.append(prodHTML);
         produktContainer2.append(prodHTML);
+        produktContainer3.append(prodHTML);
     });
 
-    result.produkt.forEach((prod, index) => {
+    console.log('magazyn', result.magazyn);
+    console.log('produkt', result.produkt);
+
+    result.magazyn.forEach((mag, index) => {
+        result.produkt.forEach(prod => {
+            if(prod.id == mag.nazwa_produktu) mag.nazwa_produktu = prod.nazwa;
+        });
+
         const magHTML = `
-            <div class="tableClass cursor-pointer grid grid-cols-2 transition-all duration-300 hover:bg-gray-300 px-2 py-1 rounded-md">
-                <div class="magazyn">${prod.nazwa} </div>
-                <div class="magazyn">${result.magazyn[index].ilosc} </div>
+            <div class="tableClass cursor-pointer grid grid-cols-3 transition-all duration-300 hover:bg-gray-300 px-2 py-1 rounded-md">
+                <div class="magazyn">${mag.nazwa_produktu} </div>
+                <div class="magazyn">${mag.ilosc} </div>
+                <div class="magazyn">${mag.data_waznosci} </div>
             </div>
         `;
         magazynContainer.append(magHTML);
     });
 }
+
+$('.Dodaj').on('click', function() {
+    manageCustomMenu('.popDodaj', '.pop2Dodaj', '.menuElement');
+});
+
+$('.AjaxDodaj').on('click', function() {
+    var data = {
+        'nazwa' : $('.dataDodaj').eq(0).val(),
+        'ilosc' : $('.dataDodaj').eq(1).val(),
+        'date' : $('.dataDodaj').eq(2).val()
+    };
+    
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        url : "/magazynPostDodaj",
+        data : {
+            data
+        },
+        method : 'POST',
+        success : function(result){
+            console.log("Sukces: ", result);
+            console.log(result.pokoje);
+            // window.location.replace('/pokoje');
+
+            refresh(result);
+        },
+        error: function(xhr, status, error) {
+            console.error("Wystąpił błąd:");
+            console.error("Status: ", status);
+            console.error("Błąd: ", error);
+            console.error("Odpowiedź serwera: ", xhr.responseText);
+        }
+    });
+});
+
+// Dodać zanikanie popup po usunięciu
+$('.butYes').on('click', function() {
+    var data = {
+        'nazwa' : selectedData.nazwa,
+        'ilosc' : selectedData.ilosc,
+        'date' : selectedData.date
+    };
+
+    console.log(selectedData);
+    
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        url : "/magazynPostDelete",
+        data : {
+            data
+        },
+        method : 'POST',
+        success : function(result){
+            console.log("Sukces: ", result);
+            console.log(result.pokoje);
+            // window.location.replace('/pokoje');
+
+            refresh(result);
+        },
+        error: function(xhr, status, error) {
+            console.error("Wystąpił błąd:");
+            console.error("Status: ", status);
+            console.error("Błąd: ", error);
+            console.error("Odpowiedź serwera: ", xhr.responseText);
+        }
+    });
+});

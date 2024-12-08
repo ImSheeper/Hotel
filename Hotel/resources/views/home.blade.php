@@ -32,42 +32,151 @@
 
             {{-- Main screen --}}
             <div class="flex flex-col bg-white grow mx-1 my-1 mr-2 mb-2 min-w-fit rounded-md overflow-auto">
-                <div class="flex flex-wrap justify-center my-5 md:my-10">
-                    <div class="font-bold shadow-lg mx-10 bg-gray-200 h-44 w-44 rounded-2xl overflow-hidden content-center text-center my-5 md:my-10 animate-fade-down animate-delay-[0.2s] animate-ease-out">
-                        <div class="text-6xl">35</div>
-                        <div class="text-xl">Brudne pokoje</div>
-                    </div>
-                    <div class="font-bold shadow-lg mx-10 bg-gray-200 h-44 w-44 rounded-2xl overflow-hidden content-center text-center my-5 md:my-10 animate-fade-down animate-delay-[0.4s] animate-ease-out">
-                        <div class="text-6xl">21</div>
-                        <div class="text-xl">Czyste pokoje</div>
-                    </div>
-                    <div class="font-bold shadow-lg mx-10 bg-gray-200 h-44 w-44 rounded-2xl overflow-hidden content-center text-center my-5 md:my-10 animate-fade-down animate-delay-[0.6s] animate-ease-out">
-                        <div class="text-6xl">12</div>
-                        <div class="text-xl">Ilość w magazynie</div>
-                    </div>
-                    <div class="font-bold shadow-lg mx-10 bg-gray-200 h-44 w-44 rounded-2xl overflow-hidden content-center text-center my-5 md:my-10 animate-fade-down animate-delay-[0.8s] animate-ease-out">
-                        <div class="text-6xl">20</div>
-                        <div class="text-xl">Pracowników</div>
+                
+                {{-- Top --}}
+                <div class="flex flex-col grow h-1/2 max-h-1/2 max-w-1/2">
+                    <div class="flex w-full h-full">
+                        {{-- Left --}}
+                        <div class="flex flex-col w-1/3 h-full p-5 min-w-[200px] max-w-[200px]">
+                            <div class="flex flex-col bg-[#FFCACA] shadow-lg h-1/3 min-h-[100px] mb-5 rounded-md justify-center items-center">
+                                <div class="text-5xl font-bold">{{ $roomsDirty }}</div>
+                                <div class="text-md mt-2">Brudne pokoje</div>
+                            </div>
+                            <div class="flex flex-col bg-[#FFDCB5] shadow-lg h-1/3 min-h-[100px] mb-5 rounded-md justify-center items-center">
+                                <div class="text-5xl font-bold">{{ $magazynMissing }}</div>
+                                <div class="text-md mt-2">Deficyt produktów</div>
+                            </div>
+                            <div class="flex flex-col bg-[#C0D4FF] shadow-lg h-1/3 min-h-[100px] rounded-md justify-center items-center">
+                                <div class="text-5xl font-bold">{{ $roomsTaken }}</div>
+                                <div class="text-md mt-2">Zajęte pokoje</div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex flex-col w-2/3 h-full pr-5 pt-5 pb-5">
+                            <div class="bg-[#F4F2FF] rounded-md shadow-lg overflow-auto p-5 h-full min-w-max">
+                                <div class="flex items-center mb-5">
+                                    <img src={{ url('/icons/Personel.svg') }} class="z-10 transition duration-500 opacity-100 group-hover:opacity-0 h-6">
+                                    <div class="font-bold text-2xl px-2">Pracowników dzisiaj ({{ $statusesCount }})</div>
+                                </div>
+                                
+                                <hr class="border-t border-gray-600 mb-5">
+                                <div class="grid grid-cols-2 font-bold px-2 py-1 text-sm">
+                                    <div class="name">Imię i nazwisko</div>
+                                    <div class="name">Stanowisko</div>
+                                </div>
+                                @foreach ($personels as $personel)
+                                    @if ($statuses[$personel->imie] === 'Pracuje')
+                                        <a href='' class="tableClass cursor-pointer grid grid-cols-2 transition-all duration-300 hover:bg-gray-300 px-2 py-1 rounded-md text-sm">
+                                            <div class="className hidden"> {{ $personel->login }} </div>
+                                            <div class="class"> {{ $personel->imie }}  {{ $personel->nazwisko }} </div>
+                                            <div class="class"> {{ $personel->stanowiska->stanowisko }} </div>
+                                        </a>
+                                    @endif
+                                @endforeach
+                            </div>
+                        </div>
+
+                        {{-- Right --}}
+                        <div class="flex flex-col w-1/3 h-full p-5 pl-0 min-w-max">
+                            <div class="flex flex-col bg-[#F4F2FF] shadow-lg rounded-md grow p-5 overflow-auto">
+                                <div class="flex items-center mb-5">
+                                    <img src={{ url('/icons/Account.svg') }} class="z-10 transition duration-500 opacity-100 group-hover:opacity-0 h-6">
+                                    <div class="font-bold text-2xl px-2">Moje konto</div>
+                                </div>
+                                <hr class="border-t border-gray-600 mb-5 h-1">
+
+                                <img src={{ url('/icons/Account.svg') }} class="z-10 transition duration-500 opacity-100 group-hover:opacity-0 h-20 mb-5">
+                                <div class="span"><b>Imię:</b> {{ $currentUser->imie }}</div>
+                                <div class="span"><b>Nazwisko:</b> {{ $currentUser->nazwisko }}</div>
+                                <div class="span"><b>Login:</b> {{ $login }}</div>
+                                <div class="span"><b>Numer telefonu:</b> {{ $currentUser->nrTel }}</div>
+                                <div class="span"><b>E-mail:</b> {{ $currentUser->email }}</div>
+                                <div class="span"><b>Stanowisko:</b> {{ $currentUser->stanowiska->stanowisko }}</div>                      
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col w-2/3 h-full pr-5 pt-5 pb-5">
+                            <div class="bg-[#F4F2FF] rounded-md shadow-lg overflow-auto p-5 h-full min-w-[300px]">
+                                <div class="flex items-center mb-5">
+                                    <img src={{ url('/icons/Magazyn.svg') }} class="z-10 transition duration-500 opacity-100 group-hover:opacity-0 h-5">
+                                    <div class="font-bold text-2xl px-2">Magazyn</div>
+                                </div>
+                                
+                                <hr class="border-t border-gray-600 mb-5">
+                                <div class="grid grid-cols-3 font-bold px-2 py-1 gap-x-px">
+                                    <div class="name">Nazwa</div>
+                                    <div class="name">Ilość</div>
+                                    <div class="name">Data ważności</div>
+                                </div>
+                                <div class="magazynContainer">
+                                    @foreach ($magazyn as $item)
+                                    <div class="tableClass cursor-pointer grid grid-cols-3 transition-all duration-300 hover:bg-gray-300 px-2 py-1 rounded-md text-sm gap-x-px">
+                                        <div class="magazyn">{{ $item->produkt->nazwa }} </div>
+                                        <div class="magazyn">{{ $item->ilosc }} </div>
+                                        <div class="magazyn">{{ $item->data_waznosci }} </div>
+                                    </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
-                <div class="flex h-2/6 w-full justify-center animate-fade-down animate-delay-[1s] animate-ease-out">
-                    <div class="flex flex-col min-w-max max-w-[1000px] grow mx-10 h-full bg-gray-200 rounded-2xl pl-10 pp-10 pt-5 pb-5 overflow-auto shadow-lg">
-                        <div class="font-bold text-3xl mb-5">Personel</div>
-                        <div class="grid grid-cols-3 font-bold">
-                            <div class="class">Imię i nazwisko</div>
-                            <div class="class">Stanowisko</div>
-                            <div class="class">Status</div>
+                
+                {{-- Sub --}}
+                <div class="flex flex-col grow h-1/2 max-h-1/2 max-w-1/2">
+                    <div class="flex w-full h-full">
+                        {{-- Left --}}       
+                        <div class="flex flex-col w-full h-full pr-5 pb-5 pl-5">
+                            <div class="bg-[#F4F2FF] rounded-md shadow-lg overflow-auto p-5 h-full min-w-max">
+                                <div class="flex items-center mb-5">
+                                    <img src={{ url('/icons/Pokoje.svg') }} class="z-10 transition duration-500 opacity-100 group-hover:opacity-0 h-6">
+                                    <div class="font-bold text-2xl px-2">Pokoje</div>
+                                </div>
+                                
+                                <hr class="border-t border-gray-600 mb-5">
+                                <div class="grid grid-cols-5 font-bold px-2 py-1 text-sm">
+                                    <div class="name">Pokój</div>
+                                    <div class="name">Piętro</div>
+                                    <div class="name">Status</div>
+                                    <div class="name">Czysty</div>
+                                    <div class="name">Wykluczony</div>
+                                </div>
+                                <div class="roomsContainerBlocked">
+                                    @foreach ($rooms as $room)
+                                        @if($room->wykluczone === 0)
+                                            <a class="tableClassBlocked cursor-pointer grid grid-cols-5 transition-all duration-300 hover:bg-gray-300 px-2 py-1 rounded-md text-sm">
+                                            <div class="pokoje"> {{ $room->id }} </div>
+                                            <div class="pokoje"> {{ $room->pietro }} </div>
+                                            <div class="pokoje"> {{ $room->status ? 'Zajęte' : 'Wolne' }} </div>
+                                            <div class="pokoje"> {{ $room->czyste ? 'Czysty' : 'Brudny' }} </div>
+                                            <div class="pokoje"> {{ $room->wykluczone ? 'Wykluczony' : 'Aktywny' }} </div>
+                                            </a>
+                                        @endif
+                                    @endforeach
+                                </div>
+                            </div>
                         </div>
-                        @foreach ($personels as $personel)
-                        <div class="grid grid-cols-3">
-                            <div class="class"> {{ $personel->login }} </div>
-                            <div class="class"> {{ $personel->stanowisko }} </div>
-                            <div class="class"> {{ $personel->status }} </div>
+
+                        {{-- Right --}}
+                        <div class="flex flex-col w-full h-full pr-5 pb-5">
+                            <div class="bg-[#F4F2FF] rounded-md shadow-lg overflow-auto p-5 h-full min-w-[300px]">
+                                <div class="flex items-center mb-5">
+                                    <img src={{ url('/icons/Magazyn.svg') }} class="z-10 transition duration-500 opacity-100 group-hover:opacity-0 h-5">
+                                    <div class="font-bold text-2xl px-2">Grafik</div>
+                                </div>
+                                
+                                <hr class="border-t border-gray-600 mb-5">
+
+                                <span>Prace trwają!</span>
+                            </div>
                         </div>
-                        @endforeach
+
                     </div>
                 </div>
+
             </div>
+
         </div>
     </div>
 </body>
