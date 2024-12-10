@@ -8,6 +8,7 @@ use App\Http\Controllers\GrafikController;
 use App\Http\Controllers\PokojeController;
 use App\Http\Controllers\MagazynController;
 use App\Http\Controllers\PersonelController;
+use App\Http\Controllers\GrafikWholeController;
 
 Route::get('/', [LoginController::class, 'selectUser'])->name('loginRoute');
 Route::post('/', [LoginController::class, 'store'])->name('loginStore');
@@ -32,3 +33,5 @@ Route::post('/magazynPost', [MagazynController::class, 'update'])->name('magazyn
 Route::post('/magazynPostProdukt', [MagazynController::class, 'updateProdukt'])->name('magazynPostProduktRoute');
 Route::post('/magazynPostDodaj', [MagazynController::class, 'add'])->name('magazynPostDodajRoute');
 Route::post('/magazynPostDelete', [MagazynController::class, 'delete'])->name('magazynPostDeleteRoute');
+
+Route::get('/grafikWhole/{month}/{year}', [GrafikWholeController::class, 'select'])->name('grafikRoute');

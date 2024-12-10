@@ -1,9 +1,9 @@
 <div class="flex w-full h-20">
-    <div class="flex md:hidden flex-col grow md: bg-white mx-1 my-1 mt-2 rounded-md items-center justify-center overflow-hidden min-w-16">
+    <div class="flex lg:hidden flex-col grow lg: bg-white mx-1 my-1 mt-2 rounded-md items-center justify-center overflow-hidden min-w-16">
         <img src=<?php echo e(url('/icons/BurgerMenu.svg')); ?> class="h-8 bg-white rounded-md mx-2 animate-fade-right animate-delay-[0.1s] animate-ease-out">
     </div>
     <?php $__currentLoopData = $hotelInfos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $info): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-    <div class="flex flex-col w-full md:grow bg-white mx-1 my-1 mt-2 rounded-md items-center justify-center overflow-hidden min-w-max">
+    <div class="flex flex-col w-full lg:grow bg-white mx-1 my-1 mt-2 rounded-md items-center justify-center overflow-hidden min-w-max">
         <div class="font-bold text-3xl mx-2 animate-fade-right animate-delay-[0.5s] animate-ease-out"> <?php echo e($info->hotel_name); ?> </div>
         <div class="text-gray-500 mx-2 animate-fade-right animate-delay-[0.5s] animate-ease-out"> <?php echo e($info->street_name); ?> </div>
     </div>
