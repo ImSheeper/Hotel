@@ -88,10 +88,13 @@ class GrafikWholeController extends Controller
         $urlData = $month . '.' . $year;
 
         foreach($jsonData as $file) {
-            if (str_contains($file, '12.2024')) {
+            if (str_contains($file, $urlData)) {
                 $filteredFiles[] = $file;
             }
         }
+
+        // Błąd jest taki, że url data zmienia się z miesiącem i rokiem. Trzeba tworzyć jsona
+        // w folderze jeżeli nie znajdzie go
 
         foreach ($filteredFiles as $file) {
             $content = Storage::disk('public')->get($file);
@@ -112,7 +115,7 @@ class GrafikWholeController extends Controller
 
         $uniqueData = array_unique($data);
         sort($uniqueData);
-        dd($uniqueData);
+        //dd($uniqueData);
 
         return view('grafikWhole', [
             'hotelInfos' => $hotelInfos,
@@ -125,7 +128,8 @@ class GrafikWholeController extends Controller
             'login' => $login,
             'date' => $date,
             'datePrevious' => $datePrevious,
-            'dateNext' => $dateNext
+            'dateNext' => $dateNext,
+            'uniqueData' => $uniqueData
         ]);
     }
 }

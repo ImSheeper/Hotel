@@ -118,7 +118,7 @@
 
                             @endif --}}
 
-                        @isset($grafik)
+                        {{-- @isset($grafik)
                             @for ($i = 0; $i < count($grafik); $i++)
                                 @foreach ($grafik[$i]['data'] as $graf)
 
@@ -162,7 +162,35 @@
                                     </div>
                                 </div>
                             @endfor
-                        @endisset
+                        @endisset --}}
+
+                        {{-- ____________________ --}}
+                    @isset($grafik)
+                            @foreach ($grafik[0]['data'] as $graf)
+                                    @if (in_array($graf['dzisiejszy dzien'], $uniqueData))
+                                        <div class="json overflow-hidden select-none flex flex-col bg-red-400 h-32 shadow-md w-32 rounded-full mx-2 my-2 justify-center items-center">
+                                            <div class="document font-bold hidden">{{ $graf["rok"] }}</div>
+                                            <div class="document font-bold hidden">{{ $graf["numer dni"] }}</div>
+                                            <div class="document font-bold hidden">{{ $graf["miesiąc"] }}</div>
+                                            <div class="document text-3xl">{{ $graf["dzisiejszy dzien"] }}</div>
+                                            <div class="document font-bold hidden">{{ $graf["nazwa dnia"] }}</div>
+                                            <div class="flex overflow-hidden">
+                                                <div class="document">{{ $graf["status"] }}</div>
+                                            </div>                                            </div>
+                                    @else
+                                        <div class="json overflow-hidden select-none flex flex-col bg-green-400 h-32 shadow-md w-32 rounded-full mx-2 my-2 justify-center items-center">
+                                            <div class="document font-bold hidden">{{ $graf["rok"] }}</div>
+                                            <div class="document font-bold hidden">{{ $graf["numer dni"] }}</div>
+                                            <div class="document font-bold hidden">{{ $graf["miesiąc"] }}</div>
+                                            <div class="document text-3xl">{{ $graf["dzisiejszy dzien"] }}</div>
+                                            <div class="document font-bold hidden">{{ $graf["nazwa dnia"] }}</div>
+                                            <div class="flex overflow-hidden">
+                                                <div class="document">{{ $graf["status"] }}</div>
+                                            </div>
+                                        </div>
+                                    @endif
+                            @endforeach
+                    @endisset
                     </div>
                 </div>
 

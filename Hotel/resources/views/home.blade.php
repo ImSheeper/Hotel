@@ -122,7 +122,7 @@
                 
                 {{-- Sub --}}
                         {{-- Left --}}       
-                        <div class="flex flex-col h-full  w-1/2 basis-[400px] grow">
+                        <div class="flex flex-col h-full  w-1/2 basis-[600px] grow">
                             <div class="bg-[#F4F2FF] rounded-md shadow-lg overflow-auto p-5 h-full">
                                 <div class="flex items-center mb-5">
                                     <img src={{ url('/icons/Pokoje.svg') }} class="z-10 transition duration-500 opacity-100 group-hover:opacity-0 h-6">
@@ -154,16 +154,43 @@
                         </div>
 
                         {{-- Right --}}
-                        <div class="flex flex-col w-1/2 h-full  basis-[300px] grow">
+                        <div class="flex flex-col w-1/2 h-full  basis-[600px] grow">
                             <div class="bg-[#F4F2FF] rounded-md shadow-lg overflow-auto p-5 h-full">
                                 <div class="flex items-center mb-5">
-                                    <img src={{ url('/icons/Magazyn.svg') }} class="z-10 transition duration-500 opacity-100 group-hover:opacity-0 h-5">
-                                    <div class="font-bold text-2xl px-2">Grafik</div>
+                                    <img src={{ url('/icons/calendar.svg') }} class="z-10 transition duration-500 opacity-100 group-hover:opacity-0 h-5">
+                                    <div class="font-bold text-2xl px-2">Grafik na {{ $currentMonth }} {{ $year }}</div>
                                 </div>
                                 
                                 <hr class="border-t border-gray-600 mb-5">
 
-                                <span>Prace trwają!</span>
+                                <div class="grid grid-cols-7 z-10">
+                                    @isset($grafik)
+                                        @foreach ($grafik[0]['data'] as $graf)
+                                                @if (in_array($graf['dzisiejszy dzien'], $uniqueData))
+                                                    <div class="json overflow-hidden select-none flex flex-col bg-red-400 h-20 shadow-md w-20 rounded-full mx-2 my-2 justify-center items-center">
+                                                        <div class="document font-bold hidden">{{ $graf["rok"] }}</div>
+                                                        <div class="document font-bold hidden">{{ $graf["numer dni"] }}</div>
+                                                        <div class="document font-bold hidden">{{ $graf["miesiąc"] }}</div>
+                                                        <div class="document text-xl">{{ $graf["dzisiejszy dzien"] }}</div>
+                                                        <div class="document font-bold hidden">{{ $graf["nazwa dnia"] }}</div>
+                                                        <div class="flex overflow-hidden">
+                                                            <div class="document text-sm">{{ $graf["status"] }}</div>
+                                                        </div>                                            </div>
+                                                @else
+                                                    <div class="json overflow-hidden select-none flex flex-col bg-green-400 h-20 shadow-md w-20 rounded-full mx-2 my-2 justify-center items-center">
+                                                        <div class="document font-bold hidden">{{ $graf["rok"] }}</div>
+                                                        <div class="document font-bold hidden">{{ $graf["numer dni"] }}</div>
+                                                        <div class="document font-bold hidden">{{ $graf["miesiąc"] }}</div>
+                                                        <div class="document text-xl">{{ $graf["dzisiejszy dzien"] }}</div>
+                                                        <div class="document font-bold hidden">{{ $graf["nazwa dnia"] }}</div>
+                                                        <div class="flex overflow-hidden">
+                                                            <div class="document text-sm">{{ $graf["status"] }}</div>
+                                                        </div>
+                                                    </div>
+                                                @endif
+                                        @endforeach
+                                    @endisset
+                                </div>
                             </div>
                         </div>
 

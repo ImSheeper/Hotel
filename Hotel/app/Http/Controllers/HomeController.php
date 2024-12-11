@@ -96,6 +96,11 @@ class HomeController extends Controller
         ->groupBy('nazwa_produktu')
         ->get();
 
+        // Najdłuższa sekcja do grafiku
+        $grafikController = new GrafikWholeController();
+        $response = $grafikController->select($request);
+        $grafikViewData = $response->getData();
+
         return view('home', [
             'hotelInfos' => $hotelInfos,
             'login' => $loginData,
@@ -109,7 +114,12 @@ class HomeController extends Controller
             'currentUser' => $currentUser,
             'stanowiska' => $stanowiska,
             'magazyn' => $magazyn,
-            'rooms' => $pokoje
+            'rooms' => $pokoje,
+            'month' => $grafikViewData['month'],
+            'year' => $grafikViewData['year'],
+            'grafik' => $grafikViewData['grafik'],
+            'uniqueData' => $grafikViewData['uniqueData'],
+            'currentMonth' => $grafikViewData['date']
         ]);
     }
 }

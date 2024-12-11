@@ -12,7 +12,7 @@
         <div class="bg-white grow m-1 ml-2 mb-2 mt-0 rounded-b-md overflow-auto">
             <div class="menu flex flex-col mt-2">
 
-                <a href='{{ route('homeRoute') }}' class="flex w-full h-10 mb-2">
+                <a href='{{ route('homeRoute', ['month' => $month, 'year' => $year]) }}' class="flex w-full h-10 mb-2">
                     <button class="relative w-full flex h-10 mx-2 my-1 px-4 items-center p-2 text-start group animate-fade-right animate-delay-[0.2s] animate-ease-out" value="home">
                         <div class="absolute rounded-md inset-0 z-0 bg-gradient-to-r opacity-0 transition-opacity duration-500 group-hover:opacity-100 from-cyan-400 to-fuchsia-400"></div>
                         <img src={{ url('/icons/StronaGlowna.svg') }} class="z-10 transition duration-500 opacity-100 group-hover:opacity-0 h-6">
@@ -48,7 +48,17 @@
                     </button>
                 </a>
 
-                <a href='{{ route('homeRoute') }}' class="flex w-full h-10 mb-2">
+                {{-- HARDCODE NA MIESIAC I ROK W RAMACH TESTU --}}
+                <a href='{{ route('grafikRoute', ['month' => $month, 'year' => $year]) }}' class="flex w-full h-10 mb-2">
+                    <button class="relative w-full flex h-10 mx-2 my-1 px-4 items-center p-2 text-start hover:text-white group animate-fade-right animate-delay-[0.6s] animate-ease-out" value="magazyn">
+                        <div class="absolute rounded-md inset-0 z-0 bg-gradient-to-r opacity-0 transition duration-500 group-hover:opacity-100 from-cyan-400 to-fuchsia-400"></div>
+                        <img src={{ url('/icons/calendar.svg') }} class="z-10 transition duration-500 opacity-100 group-hover:opacity-0 h-6">
+                        <img src={{ url('/icons/calendar-white.svg') }} class="z-10 transition duration-500 absolute opacity-0 group-hover:opacity-100 h-6">
+                        <div class="p-2 z-10 transition duration-500 group-hover:text-white">Grafik</div>
+                    </button>
+                </a>
+
+                <a href='{{ route('homeRoute', ['month' => $month, 'year' => $year]) }}' class="flex w-full h-10 mb-2">
                     <button class="relative w-full flex h-10 mx-2 my-1 px-4 items-center p-2 text-start hover:text-white group animate-fade-right animate-delay-[0.5s] animate-ease-out" value="analiza">
                         <div class="absolute rounded-md inset-0 z-0 bg-gradient-to-r opacity-0 transition duration-500 group-hover:opacity-100 from-cyan-400 to-fuchsia-400"></div>
                         <img src={{ url('/icons/Analiza.svg') }} class="z-10 transition duration-500 opacity-100 group-hover:opacity-0 h-6">
@@ -57,7 +67,7 @@
                     </button>
                 </a>
 
-                <a href='{{ route('homeRoute') }}' class="flex w-full h-10 mb-2">
+                <a href='{{ route('homeRoute', ['month' => $month, 'year' => $year]) }}' class="flex w-full h-10 mb-2">
                     <button class="relative w-full flex h-10 mx-2 my-1 px-4 items-center p-2 text-start hover:text-white group animate-fade-right animate-delay-[0.7s] animate-ease-out" value="konfiguracja">
                         <div class="absolute rounded-md inset-0 z-0 bg-gradient-to-r opacity-0 transition duration-500 group-hover:opacity-100 from-cyan-400 to-fuchsia-400"></div>
                         <img src={{ url('/icons/Settings.svg') }} class="z-10 transition duration-500 opacity-100 group-hover:opacity-0 h-6">

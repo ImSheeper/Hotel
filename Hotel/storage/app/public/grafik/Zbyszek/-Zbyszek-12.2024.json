@@ -30,7 +30,7 @@
             "miesiąc": "12",
             "dzisiejszy dzien": "4",
             "nazwa dnia": "Środa",
-            "status": "Pracuje"
+            "status": "Wolne"
         },
         {
             "rok": "2024",
@@ -38,7 +38,7 @@
             "miesiąc": "12",
             "dzisiejszy dzien": "5",
             "nazwa dnia": "Czwartek",
-            "status": "Pracuje"
+            "status": "Wolne"
         },
         {
             "rok": "2024",
@@ -46,7 +46,7 @@
             "miesiąc": "12",
             "dzisiejszy dzien": "6",
             "nazwa dnia": "Piątek",
-            "status": "Pracuje"
+            "status": "Wolne"
         },
         {
             "rok": "2024",
@@ -62,7 +62,7 @@
             "miesiąc": "12",
             "dzisiejszy dzien": "8",
             "nazwa dnia": "Niedziela",
-            "status": "Pracuje"
+            "status": "Wolne"
         },
         {
             "rok": "2024",
