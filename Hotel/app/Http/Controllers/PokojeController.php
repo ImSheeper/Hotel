@@ -12,11 +12,82 @@ class PokojeController extends Controller
         $rooms = Pokoje::get();
         $hotelInfos = Hotel::get();
         $login = $request->session()->get('login');
+        $pokoje = Pokoje::get();
 
         return view('pokoje', [
             'rooms' => $rooms,
             'hotelInfos' => $hotelInfos,
-            'login' => $login
+            'login' => $login,
+            'pokoje' => $pokoje
+        ]);
+    }
+
+    public function store(Request $request) {
+        $pokoj = Pokoje::where('id', $request->data['id'])->first();
+
+        if($pokoj) {
+            $pokoj->pietro = (int) $request->data['pietro'];
+            $pokoj->status = (int) $request->data['status'];
+            $pokoj->czyste = (int) $request->data['czysty'];
+
+            $pokoj->save();
+        } else {
+            $pokoj = new pokoje;
+
+            $pokoj->id = (int) $request->data['id'];
+            $pokoj->pietro = (int) $request->data['pietro'];
+            $pokoj->status = (int) $request->data['status'];
+            $pokoj->czyste = (int) $request->data['czysty'];
+            $pokoj->wykluczone = 0;
+
+            $pokoj->save();
+        }
+
+        $pokoje = Pokoje::get();
+
+        return response()->json([
+            'message' => 'Dane przetworzone poprawnie!',
+            'data' => $request->all(),
+            'pokoj' => $pokoj,
+            'pokoje' => $pokoje
+        ]);
+    }
+
+    public function deactivate(Request $request) {
+        $pokoj = Pokoje::where('id', $request->data['id'])->first();
+        $pokoje = Pokoje::get();
+
+        if($pokoj) {
+            $pokoj->wykluczone ? $pokoj->wykluczone = 0 : $pokoj->wykluczone = 1;
+            
+            $pokoj->save();
+        }
+
+        $pokoje = Pokoje::get();
+
+        return response()->json([
+            'message' => 'Dane przetworzone poprawnie!',
+            'data' => $request->all(),
+            'pokoj' => $pokoj,
+            'pokoje' => $pokoje
+        ]);
+    }
+
+    public function delete(Request $request) {
+        $pokoj = Pokoje::where('id', $request->data['id'])->first();
+        $pokoje = Pokoje::get();
+
+        if($pokoj) {            
+            $pokoj->delete();
+        }
+
+        $pokoje = Pokoje::get();
+
+        return response()->json([
+            'message' => 'Dane przetworzone poprawnie!',
+            'data' => $request->all(),
+            'pokoj' => $pokoj,
+            'pokoje' => $pokoje
         ]);
     }
 }

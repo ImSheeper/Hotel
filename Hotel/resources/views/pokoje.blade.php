@@ -7,9 +7,7 @@
 
   <title>Personel</title>
   @vite('resources/css/app.css')
-  @vite('resources/js/styles.js')
-  @vite('resource/js/animations.js')
-  @vite('resource/js/pokojeStyles.js')
+  @vite('resources/js/pokojeStyles.js')
   
     <style>
         body, html {
@@ -27,12 +25,12 @@
     <div class="background flex h-screen overflow-hidden">
 
         {{-- include left menu from templates --}}
-        @include('\Templates\sidebarTemplate')
+        @include('Templates.sidebarTemplate')
 
         {{-- Right flex --}}
         <div class="flex flex-col h-full w-full ml-1 md:ml-0 overflow-hidden">
             {{-- Top menu --}}
-            @include('Templates\topMenuTemplate')
+            @include('Templates.topMenuTemplate')
 
             {{-- Main screen --}}
             <div class="flex flex-col bg-white grow mx-1 my-1 mr-2 mb-2 min-w-fit rounded-md overflow-auto items-center">
@@ -48,16 +46,16 @@
                             <div class="name">Czysty</div>
                             <div class="name">Wykluczony</div>
                         </div>
-                        <div class="grid grid-cols-5 px-2 py-1">
+                        <div class="roomsContainer">
                             @foreach ($rooms as $room)
                                 @if($room->wykluczone === 0)
-                                    {{-- <a href='{{ route('personelParameterRoute', ['login' => $personel->login, 'month' => $month, 'year' => $year]) }}' class="tableClass cursor-pointer grid grid-cols-5 transition-all duration-300 hover:bg-gray-300 px-2 py-1 rounded-md"> --}}
-                                    <div class="pokoje"> {{ $room->id_numer_pokoju }} </div>
+                                    <a class="tableClass cursor-pointer grid grid-cols-5 transition-all duration-300 hover:bg-gray-300 px-2 py-1 rounded-md">
+                                    <div class="pokoje"> {{ $room->id }} </div>
                                     <div class="pokoje"> {{ $room->pietro }} </div>
                                     <div class="pokoje"> {{ $room->status ? 'Zajęte' : 'Wolne' }} </div>
                                     <div class="pokoje"> {{ $room->czyste ? 'Czysty' : 'Brudny' }} </div>
                                     <div class="pokoje"> {{ $room->wykluczone ? 'Wykluczony' : 'Aktywny' }} </div>
-                                    {{-- </a> --}}
+                                    </a>
                                 @endif
                             @endforeach
                         </div>
@@ -74,36 +72,153 @@
                             <div class="name">Czysty</div>
                             <div class="name">Wykluczony</div>
                         </div>
-                        <div class="grid grid-cols-5 px-2 py-1">
+                        <div class="roomsContainerBlocked">
                             @foreach ($rooms as $room)
                                 @if($room->wykluczone === 1)
-                                    {{-- <a href='{{ route('personelParameterRoute', ['login' => $personel->login, 'month' => $month, 'year' => $year]) }}' class="tableClass cursor-pointer grid grid-cols-5 transition-all duration-300 hover:bg-gray-300 px-2 py-1 rounded-md"> --}}
-                                    <div class="pokoje"> {{ $room->id_numer_pokoju }} </div>
+                                    <a class="tableClassBlocked cursor-pointer grid grid-cols-5 transition-all duration-300 hover:bg-gray-300 px-2 py-1 rounded-md">
+                                    <div class="pokoje"> {{ $room->id }} </div>
                                     <div class="pokoje"> {{ $room->pietro }} </div>
                                     <div class="pokoje"> {{ $room->status ? 'Zajęte' : 'Wolne' }} </div>
                                     <div class="pokoje"> {{ $room->czyste ? 'Czysty' : 'Brudny' }} </div>
                                     <div class="pokoje"> {{ $room->wykluczone ? 'Wykluczony' : 'Aktywny' }} </div>
-                                    {{-- </a> --}}
+                                    </a>
                                 @endif
                             @endforeach
                         </div>
                     </div>
                 </div>
 
+                <div class="flex min-h-max w-full justify-center animate-fade-down animate-delay-[1s] animate-ease-out items-center my-5">
+                    <div class="addPokoj font-bold shadow-lg bg-gray-200 h-44 w-44 rounded-2xl overflow-hidden content-center text-center animate-fade-down animate-delay-[0.2s] animate-ease-out mx-5 cursor-pointer">
+                        <div class="addPokoj text-xl select-none">Dodaj pokój</div>
+                    </div>
+                </div>
+
                 <div class="contextMenu hidden z-10 absolute bg-white px-2 py-2 shadow-md rounded-md opacity-0">
-                    {{-- <a href='{{ route('personelParameterRoute', ['login' => $personel->login, 'month' => $month, 'year' => $year]) }}' class="menuRoute"> --}}
-                        <div class="menuElement hover:bg-gray-100 transition-all duration-200 px-1 rounded-md cursor-pointer py-1">Zmień grafik</div>
-                    {{-- </a> --}}
-                    <div class="menuElement hover:bg-gray-100 transition-all duration-200 px-1 rounded-md cursor-pointer py-1">Edytuj Użytkownika</div>
-                    <div class="menuElement hover:bg-gray-100 transition-all duration-200 px-1 rounded-md cursor-pointer py-1">Zablokuj użytkownika</div>
+                    <div class="menuElement hover:bg-gray-200 transition-all duration-200 px-1 rounded-md cursor-pointer py-1">Edytuj Pokój</div>
+                    <div class="menuElement hover:bg-gray-200 transition-all duration-200 px-1 rounded-md cursor-pointer py-1">Wyklucz pokój</div>
+                    <div class="menuElement hover:bg-gray-200 transition-all duration-200 px-1 rounded-md cursor-pointer py-1">Usuń pokój</div>
                 </div>
 
                 <div class="contextMenuBlocked hidden z-10 absolute bg-white px-2 py-2 shadow-md rounded-md opacity-0">
-                    <div class="menuElementBlocked hover:bg-gray-100 transition-all duration-200 px-1 rounded-md cursor-pointer py-1">Edytuj Użytkownika</div>
-                    <div class="menuElementBlocked hover:bg-gray-100 transition-all duration-200 px-1 rounded-md cursor-pointer py-1">Odblokuj użytkownika</div>
+                    <div class="menuElementBlocked hover:bg-gray-200 transition-all duration-200 px-1 rounded-md cursor-pointer py-1">Edytuj Pokój</div>
+                    <div class="menuElementBlocked hover:bg-gray-200 transition-all duration-200 px-1 rounded-md cursor-pointer py-1">Przywróć pokój</div>
+                    <div class="menuElementBlocked hover:bg-gray-200 transition-all duration-200 px-1 rounded-md cursor-pointer py-1">Usuń pokój</div>
                 </div>
             </div>
         </div>
+        
+         {{-- popUp edit --}}
+        <div class="popPersonel bg-black bg-opacity-20 backdrop-blur-sm flex absolute invisible h-full w-full justify-center items-center opacity-0">
+            <div class="pop2Personel flex flex-col bg-white w-[500px] min-h-max rounded-lg justify-center p-5">
+                <div class="popText text-2xl font-bold text-center">Edytuj pokój [numer]</div>
+
+                <img src={{ url('/icons/Account.svg') }} class="h-24 mt-2 p-2">
+
+                <div class="flex justify-between w-full mt-2">
+                    <div class="flex justify-center flex-col w-[50%] p-2">
+                        <div class="mb-1 text-gray-700">Pokój</div>
+                        <input type="text" placeholder="Pokój" class="data border-2 rounded-lg p-1 bg-gray-200" disabled>
+                    </div>
+                    <div class="flex justify-center flex-col w-[50%] p-2">
+                        <div class="mb-1 text-gray-700">Piętro</div>
+                        <input type="text" placeholder="Piętro" class="data border-2 rounded-lg p-1">
+                    </div>
+                </div>
+
+                <div class="flex justify-around w-full mt-2">
+                    <div class="flex justify-center flex-col w-full p-2">
+                        <div class="mb-1 text-gray-700">Status</div>
+                        {{-- <input type="text" placeholder="Status" class="data border-2 rounded-lg p-1 w-full"> --}}
+                        <select name="Status" id="Status" class="data border-2 rounded-lg p-1 w-full bg-white">
+                            <option value="1"> Zajęte </option>
+                            <option value="0"> Wolne </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="flex justify-around w-full mt-2">
+                    <div class="flex justify-center flex-col w-full p-2">
+                        <div class="mb-1 text-gray-700">Czysty</div>
+                        {{-- <input type="text" placeholder="Czysty" class="data border-2 rounded-lg p-1 w-full"> --}}
+                        <select name="Czysty" id="Czysty" class="data border-2 rounded-lg p-1 w-full bg-white">
+                            <option value="0"> Brudny </option>
+                            <option value="1"> Czysty </option>
+                        </select>
+                    </div>
+                </div>
+
+                {{-- <div class="flex justify-around w-full mt-2">
+                    <div class="flex justify-center flex-col w-full p-2">
+                        <div class="mb-1 text-gray-700">Wykluczony</div>
+                        <select name="Wykluczony" id="Wykluczony" class="data border-2 rounded-lg p-1 w-full bg-white">
+                            <option value="1"> Wykluczony </option>
+                            <option value="0"> Aktywny </option>
+                        </select>
+                    </div>
+                </div> --}}
+
+                <div class="flex flex-col items-center justify-center w-full">
+                    <div class="flex relative group rounded-2xl mb-4 mt-6">
+                        <div class="flex relative group h-12">
+                            <button class="sendAjax bg-gray-200 w-36 h-12 min-w-max rounded-2xl text-lg opcaity-100 transition-all duration-200 group-hover:opacity-0">Zapisz</button>
+                            <button class="sendAjax absolute bg-gradient-to-r from-cyan-400 to-fuchsia-400 w-36 h-12 min-w-max rounded-2xl text-lg transition-all duration-200 opacity-0 group-hover:opacity-100 text-white">Zapisz</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        {{-- popup Delete --}}
+        <div class="popDelete bg-black bg-opacity-20 backdrop-blur-sm flex absolute invisible h-full w-full justify-center items-center opacity-0">
+            <div class="pop2Delete flex flex-col bg-white w-[500px] min-h-max rounded-lg justify-center p-5">
+
+                <div class="popTextDelete text-2xl font-bold text-center">Wykluczyć pokój [nazwa]?</div>
+
+                <div class="flex items-center justify-evenly px-10 w-full">
+                    <div class="flex relative group rounded-2xl mb-4 mt-6">
+                        <div class="flex relative group h-12 mx-5">
+                            <button class="butYes bg-gray-200 w-36 h-12 min-w-max rounded-2xl text-lg opcaity-100 transition-all duration-200 group-hover:opacity-0">Tak</button>
+                            <button class="butYes absolute bg-gradient-to-r from-red-400 to-orange-400 w-36 h-12 min-w-max rounded-2xl text-lg transition-all duration-200 opacity-0 group-hover:opacity-100 text-white">Tak</button>
+                        </div>
+                    </div>
+                    <div class="flex relative group rounded-2xl mb-4 mt-6">
+                        <div class="flex relative group h-12 mx-5">
+                            <button class="butNo bg-gray-200 w-36 h-12 min-w-max rounded-2xl text-lg opcaity-100 transition-all duration-200 group-hover:opacity-0">Nie</button>
+                            <button class="butNo absolute bg-gradient-to-r from-cyan-400 to-fuchsia-400 w-36 h-12 min-w-max rounded-2xl text-lg transition-all duration-200 opacity-0 group-hover:opacity-100 text-white">Nie   </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- popup Delete2 --}}
+        <div class="popDeleteRoom bg-black bg-opacity-20 backdrop-blur-sm flex absolute invisible h-full w-full justify-center items-center opacity-0">
+            <div class="pop2DeleteRoom flex flex-col bg-white w-[500px] min-h-max rounded-lg justify-center p-5">
+
+                <div class="popTextDeleteRoom text-2xl font-bold text-center">Wykluczyć pokój [nazwa]?</div>
+
+                <div class="flex items-center justify-evenly px-10 w-full">
+                    <div class="flex relative group rounded-2xl mb-4 mt-6">
+                        <div class="flex relative group h-12 mx-5">
+                            <button class="butYesDelete bg-gray-200 w-36 h-12 min-w-max rounded-2xl text-lg opcaity-100 transition-all duration-200 group-hover:opacity-0">Tak</button>
+                            <button class="butYesDelete absolute bg-gradient-to-r from-red-400 to-orange-400 w-36 h-12 min-w-max rounded-2xl text-lg transition-all duration-200 opacity-0 group-hover:opacity-100 text-white">Tak</button>
+                        </div>
+                    </div>
+                    <div class="flex relative group rounded-2xl mb-4 mt-6">
+                        <div class="flex relative group h-12 mx-5">
+                            <button class="butNo bg-gray-200 w-36 h-12 min-w-max rounded-2xl text-lg opcaity-100 transition-all duration-200 group-hover:opacity-0">Nie</button>
+                            <button class="butNo absolute bg-gradient-to-r from-cyan-400 to-fuchsia-400 w-36 h-12 min-w-max rounded-2xl text-lg transition-all duration-200 opacity-0 group-hover:opacity-100 text-white">Nie   </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            let pokoje = @json($pokoje);
+        </script>
     </div>
 </body>
 </html>

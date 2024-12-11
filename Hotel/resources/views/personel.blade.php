@@ -8,7 +8,6 @@
   <title>Personel</title>
   @vite('resources/css/app.css')
   @vite('resources/js/styles.js')
-  @vite('resource/js/animations.js')
   
     <style>
         body, html {
@@ -26,12 +25,12 @@
     <div class="background flex h-screen overflow-hidden">
 
         {{-- include left menu from templates --}}
-        @include('\Templates\sidebarTemplate')
+        @include('Templates.sidebarTemplate')
 
         {{-- Right flex --}}
         <div class="flex flex-col h-full w-full ml-1 md:ml-0 overflow-hidden">
             {{-- Top menu --}}
-            @include('Templates\topMenuTemplate')
+            @include('Templates.topMenuTemplate')
 
             {{-- Main screen --}}
             <div class="flex flex-col bg-white grow mx-1 my-1 mr-2 mb-2 min-w-fit rounded-md overflow-auto items-center">
@@ -70,8 +69,8 @@
                 </div>
 
                 <div class="flex min-h-max w-full justify-center animate-fade-down animate-delay-[1s] animate-ease-out items-center my-5">
-                    <div class="addUser font-bold shadow-lg bg-gray-200 h-44 w-44 rounded-2xl overflow-hidden content-center text-center animate-fade-down animate-delay-[0.2s] animate-ease-out mx-5">
-                        <div class="text-xl select-none cursor-pointer">Dodaj użytkownika</div>
+                    <div class="addUser font-bold shadow-lg bg-gray-200 h-44 w-44 rounded-2xl overflow-hidden content-center text-center animate-fade-down animate-delay-[0.2s] animate-ease-out mx-5 cursor-pointer">
+                        <div class="addUser text-xl select-none">Dodaj użytkownika</div>
                     </div>
                     <div class="flex flex-col cursor-default min-w-max max-w-[50%] grow max-h-96 bg-gray-200 rounded-2xl pl-10 pr-10 pt-5 pb-5 overflow-auto shadow-lg mx-5">
                         <div class="font-bold text-3xl mb-5">Zablokowani użytkownicy</div>
@@ -102,15 +101,15 @@
 
                 <div class="contextMenu hidden z-10 absolute bg-white px-2 py-2 shadow-md rounded-md opacity-0">
                     <a href='{{ route('personelParameterRoute', ['login' => $personel->login, 'month' => $month, 'year' => $year]) }}' class="menuRoute">
-                        <div class="menuElement hover:bg-gray-100 transition-all duration-200 px-1 rounded-md cursor-pointer py-1">Zmień grafik</div>
+                        <div class="menuElement hover:bg-gray-200 transition-all duration-200 px-1 rounded-md cursor-pointer py-1">Zmień grafik</div>
                     </a>
-                    <div class="menuElement hover:bg-gray-100 transition-all duration-200 px-1 rounded-md cursor-pointer py-1">Edytuj Użytkownika</div>
-                    <div class="menuElement hover:bg-gray-100 transition-all duration-200 px-1 rounded-md cursor-pointer py-1">Zablokuj użytkownika</div>
+                    <div class="menuElement hover:bg-gray-200 transition-all duration-200 px-1 rounded-md cursor-pointer py-1">Edytuj Użytkownika</div>
+                    <div class="menuElement hover:bg-gray-200 transition-all duration-200 px-1 rounded-md cursor-pointer py-1">Zablokuj użytkownika</div>
                 </div>
 
                 <div class="contextMenuBlocked hidden z-10 absolute bg-white px-2 py-2 shadow-md rounded-md opacity-0">
-                    <div class="menuElementBlocked hover:bg-gray-100 transition-all duration-200 px-1 rounded-md cursor-pointer py-1">Edytuj Użytkownika</div>
-                    <div class="menuElementBlocked hover:bg-gray-100 transition-all duration-200 px-1 rounded-md cursor-pointer py-1">Odblokuj użytkownika</div>
+                    <div class="menuElementBlocked hover:bg-gray-200 transition-all duration-200 px-1 rounded-md cursor-pointer py-1">Edytuj Użytkownika</div>
+                    <div class="menuElementBlocked hover:bg-gray-200 transition-all duration-200 px-1 rounded-md cursor-pointer py-1">Odblokuj użytkownika</div>
                 </div>
             </div>
         </div>
@@ -193,19 +192,20 @@
                     let personels = @json($personels);
                 </script>
 
-            <div class="popTextDelete text-2xl font-bold text-center">Zablokuj użytkownika [nazwa]</div>
+                <div class="popTextDelete text-2xl font-bold text-center">Zablokuj użytkownika [nazwa]</div>
 
-            <div class="flex items-center justify-evenly px-10 w-full">
-                <div class="flex relative group rounded-2xl mb-4 mt-6">
-                    <div class="flex relative group h-12 mx-5">
-                        <button class="butYes bg-gray-200 w-36 h-12 min-w-max rounded-2xl text-lg opcaity-100 transition-all duration-200 group-hover:opacity-0">Tak</button>
-                        <button class="butYes absolute bg-gradient-to-r from-red-400 to-orange-400 w-36 h-12 min-w-max rounded-2xl text-lg transition-all duration-200 opacity-0 group-hover:opacity-100 text-white">Tak</button>
+                <div class="flex items-center justify-evenly px-10 w-full">
+                    <div class="flex relative group rounded-2xl mb-4 mt-6">
+                        <div class="flex relative group h-12 mx-5">
+                            <button class="butYes bg-gray-200 w-36 h-12 min-w-max rounded-2xl text-lg opcaity-100 transition-all duration-200 group-hover:opacity-0">Tak</button>
+                            <button class="butYes absolute bg-gradient-to-r from-red-400 to-orange-400 w-36 h-12 min-w-max rounded-2xl text-lg transition-all duration-200 opacity-0 group-hover:opacity-100 text-white">Tak</button>
+                        </div>
                     </div>
-                </div>
-                <div class="flex relative group rounded-2xl mb-4 mt-6">
-                    <div class="flex relative group h-12 mx-5">
-                        <button class="butNo bg-gray-200 w-36 h-12 min-w-max rounded-2xl text-lg opcaity-100 transition-all duration-200 group-hover:opacity-0">Nie</button>
-                        <button class="butNo absolute bg-gradient-to-r from-cyan-400 to-fuchsia-400 w-36 h-12 min-w-max rounded-2xl text-lg transition-all duration-200 opacity-0 group-hover:opacity-100 text-white">Nie   </button>
+                    <div class="flex relative group rounded-2xl mb-4 mt-6">
+                        <div class="flex relative group h-12 mx-5">
+                            <button class="butNo bg-gray-200 w-36 h-12 min-w-max rounded-2xl text-lg opcaity-100 transition-all duration-200 group-hover:opacity-0">Nie</button>
+                            <button class="butNo absolute bg-gradient-to-r from-cyan-400 to-fuchsia-400 w-36 h-12 min-w-max rounded-2xl text-lg transition-all duration-200 opacity-0 group-hover:opacity-100 text-white">Nie   </button>
+                        </div>
                     </div>
                 </div>
             </div>
