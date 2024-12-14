@@ -86,36 +86,33 @@ class GrafikWholeController extends Controller
         //$jsonData = Storage::disk('public')->get('grafik/'.$login.'/'.'-'.$login.'-'.$month.'.'.$year.'.json'); // Zakładamy, że plik jest w storage/app/public
         $jsonData = Storage::disk('public')->allFiles();
         $urlData = $month . '.' . $year;
+        $isFile = false;
 
         foreach($jsonData as $file) {
-            if (str_contains($file, $urlData)) {
+            if (preg_match('/\b' . preg_quote($urlData, '/') . '\b/', $file)) {
                 $filteredFiles[] = $file;
+                $isFile = true;
             }
         }
 
-        // Błąd jest taki, że url data zmienia się z miesiącem i rokiem. Trzeba tworzyć jsona
-        // w folderze jeżeli nie znajdzie go
-
-        foreach ($filteredFiles as $file) {
-            $content = Storage::disk('public')->get($file);
-            $json[] = json_decode($content, true);
-        }
-
-        //dd($json);
-        //dd($json[0]['data'][0]);
-        //dd(count($json));
-        //$json = json_decode(json: $jsonData, associative: true);
-        for($i = 0; $i < count($json); $i++) {
-            foreach ($json[$i]['data'] as $graf) {
-                if ($graf["status"] === "Pracuje") {
-                    $data[] = $graf['dzisiejszy dzien'];
+        if ($isFile) {
+            foreach ($filteredFiles as $file) {
+                $content = Storage::disk('public')->get($file);
+                $json[] = json_decode($content, true);
+            }
+            for($i = 0; $i < count($json); $i++) {
+                foreach ($json[$i]['data'] as $graf) {
+                    if ($graf["status"] === "Pracuje") {
+                        $data[] = $graf['dzisiejszy dzien'];
+                    }
                 }
             }
+            $uniqueData = array_unique($data);
+            sort($uniqueData);
+        } else {
+            $json = null;
+            $uniqueData = null;
         }
-
-        $uniqueData = array_unique($data);
-        sort($uniqueData);
-        //dd($uniqueData);
 
         return view('grafikWhole', [
             'hotelInfos' => $hotelInfos,

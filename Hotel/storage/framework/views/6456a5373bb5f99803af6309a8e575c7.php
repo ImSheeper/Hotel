@@ -7,7 +7,7 @@
 
   <title>Grafik użytkownika <?php echo e($login); ?></title>
   <?php echo app('Illuminate\Foundation\Vite')('resources/css/app.css'); ?>
-  <?php echo app('Illuminate\Foundation\Vite')('resources/js/animations.js'); ?>
+  <?php echo app('Illuminate\Foundation\Vite')('resources/js/animationsGrafik.js'); ?>
   <?php echo app('Illuminate\Foundation\Vite')('resources/js/dates.js'); ?>
   <?php echo app('Illuminate\Foundation\Vite')('resources/js/afterClickArrow.js'); ?>
   
@@ -48,7 +48,7 @@
 
             
             <div class="flex flex-col bg-white grow mx-1 my-1 mr-2 mb-2 min-w-fit rounded-md overflow-auto items-center w-min-max">
-                <div class="font-bold text-center mt-10 text-3xl">Grafik użytkownika <?php echo e($login); ?></div>
+                <div class="font-bold text-center mt-10 text-3xl">Grafik pracowników</div>
                 <div class="flex h-min-max w-full justify-center animate-fade-down animate-delay-[1s] animate-ease-out mt-10 flex-wrap">
                     
                     <div class="flex absolute h-full w-full items-center z-0">
@@ -67,16 +67,58 @@
                     </div>
 
                     <div class="grid grid-cols-7 z-10">
-                        <div class="flex w-min-max col-span-7 items-center group max-w-[50%]">
+                        <div class="flex col-span-7 items-center group">
                             <img src=<?php echo e(url('icons/calendar.svg')); ?> class="h-12 ml-2">
                             <input value="<?php echo e($year); ?>-<?php echo e($month); ?>" class="date text-5xl h-24 font-bold ml-2 leading-loose capitalize group border-none outline-none"></input>
                         </div>
 
+                        <?php if(isset($grafik)): ?>
+                            <?php 
+                                $file = $grafik[0]['data'][0]['nazwa dnia'];
+                            ?>
+                        <?php else: ?>
+                            <?php
+                                $file = $dayNames[1];
+                            ?>
+                        <?php endif; ?>
 
+                        <?php
+                            $dni = array(
+                                1 => "Poniedziałek",
+                                2 => "Wtorek",
+                                3 => "Środa",
+                                4 => "Czwartek",
+                                5 => "Piątek",
+                                6 => "Sobota",
+                                7 => "Niedziela",
+                            );
+                        ?>
                         
+                        <?php $__currentLoopData = $dni; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $dzien): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <div class="document-animation font-bold mx-2 my-2 text-center text-xl select-none"><?php echo e($dzien); ?></div>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
-                        
-                    <?php if(isset($grafik)): ?>
+                        <?php if($file != "Poniedziałek"): ?>
+                            <?php
+                                foreach($dni as $klucz => $dzien) {
+                                    if($file == $dzien) $currentDay = $klucz;
+                                }
+                                
+                                $fieldsToAdd = 0;
+                                for($currentDay; $currentDay > 1; $currentDay--) {
+                                    $fieldsToAdd++;
+                                }
+                            ?>
+
+                            <?php for($i = 1; $i <= $fieldsToAdd; $i++): ?>
+                            <div class="json flex flex-col bg-gray-300 h-32 shadow-md w-32 rounded-3xl mx-2 my-2 pointer-events-none">
+                                <div class="document-animation font-bold"></div>
+                            </div>                           
+                            <?php endfor; ?>
+
+                        <?php endif; ?>
+
+                        <?php if(isset($grafik)): ?>
                             <?php $__currentLoopData = $grafik[0]['data']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $graf): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <?php if(in_array($graf['dzisiejszy dzien'], $uniqueData)): ?>
                                         <div class="json overflow-hidden select-none flex flex-col bg-red-400 h-32 shadow-md w-32 rounded-full mx-2 my-2 justify-center items-center">
@@ -101,26 +143,23 @@
                                         </div>
                                     <?php endif; ?>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                    <?php endif; ?>
-                    </div>
-                </div>
+                    
+                            <?php else: ?>
+                            <?php for($i = 1; $i <= $days; $i++): ?>
+                                <div class="json overflow-hidden select-none flex flex-col bg-gray-200 h-32 shadow-md w-32 rounded-full mx-2 my-2 justify-center items-center">
+                                    <div class="document font-bold hidden"><?php echo e($year); ?></div>
+                                    <div class="document font-bold hidden"><?php echo e($days); ?></div>
+                                    <div class="document font-bold hidden"><?php echo e($month); ?></div>
 
-                <div class="flex flex-col items-center justify-center w-full">
-                    <div class="flex relative group rounded-2xl mb-10 mt-10">
-                        <div class="flex relative group h-12">
-                            <button class="but bg-gray-200 w-36 h-12 min-w-max rounded-2xl text-lg opcaity-100 transition-all duration-200 group-hover:opacity-0">Zapisz</button>
-                            <button class="but absolute bg-gradient-to-r from-cyan-400 to-fuchsia-400 w-36 h-12 min-w-max rounded-2xl text-lg transition-all duration-200 opacity-0 group-hover:opacity-100 text-white">Zapisz</button>
-                        </div>
+                                    <div class="document text-3xl"><?php echo e($i); ?></div>
+                                    <div class="document font-bold hidden"><?php echo e($dayNames[$i]); ?></div>
+                                    <div class="flex overflow-hidden">
+                                        <div class="document visible">Status</div>
+                                    </div>
+                                </div>
+                            <?php endfor; ?>
+                        <?php endif; ?>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="pop bg-black bg-opacity-20 backdrop-blur-sm flex absolute invisible h-full w-full justify-center items-center opacity-0">
-            <div class="pop2 flex flex-col bg-white w-[500px] min-h-max rounded-lg items-center justify-center p-5">
-                <div class="text-2xl mb-5">Grafik został zaktualizowany.</div>
-                <div class="flex relative group h-12">
-                    <button class="close bg-gray-200 w-36 h-10 min-w-max rounded-2xl text-lg opcaity-100 transition-all duration-200 group-hover:opacity-0 shadow-lg">Zamknij</button>
-                    <button class="close absolute bg-gradient-to-r from-cyan-400 to-fuchsia-400 w-36 h-10 min-w-max rounded-2xl text-lg transition-all duration-200 opacity-0 group-hover:opacity-100 text-white">Zamknij</button>
                 </div>
             </div>
         </div>

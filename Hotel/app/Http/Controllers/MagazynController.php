@@ -27,11 +27,17 @@ class MagazynController extends Controller
             ]);
         }
 
+        date_default_timezone_set('UTC');
+        $year = date('Y');
+        $month = date('m');
+
         return view('magazyn', [
             'hotelInfos' => $hotelInfos,
             'login' => $loginData,
             'magazyn' => $magazyn,
-            'produkt' => $produkt
+            'produkt' => $produkt,
+            'month' => $month,
+            'year' => $year
         ]);
     }
 

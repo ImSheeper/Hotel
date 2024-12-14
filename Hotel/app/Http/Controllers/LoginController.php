@@ -36,7 +36,11 @@ class LoginController extends Controller
             $request->session()->regenerate();
             $request->session()->put('login', $credentials['login']);
             
-            return redirect(route('homeRoute'));
+            date_default_timezone_set('UTC');
+            $year = date('Y');
+            $month = date('m');
+
+            return redirect(route('homeRoute', ['month' => $month, 'year' => $year]));
         }
 
         return back()->withErrors([

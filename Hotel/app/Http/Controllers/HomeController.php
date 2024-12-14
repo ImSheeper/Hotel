@@ -96,10 +96,41 @@ class HomeController extends Controller
         ->groupBy('nazwa_produktu')
         ->get();
 
-        // Najdłuższa sekcja do grafiku
-        $grafikController = new GrafikWholeController();
-        $response = $grafikController->select($request);
-        $grafikViewData = $response->getData();
+
+        // pobranie nazwy aktualnego miesiąca
+        $date = Carbon::createFromFormat('m', $month)->locale('pl');
+        $date = $date->translatedFormat('F');
+
+        // pobranie pliku grafiku
+        $jsonData = Storage::disk('public')->allFiles();
+        $urlData = $month . '.' . $year;
+        $isFile = false;
+
+        foreach($jsonData as $file) {
+            if (preg_match('/\b' . preg_quote($urlData, '/') . '\b/', $file)) {
+                $filteredFiles[] = $file;
+                $isFile = true;
+            }
+        }
+
+        if ($isFile) {
+            foreach ($filteredFiles as $file) {
+                $content = Storage::disk('public')->get($file);
+                $json[] = json_decode($content, true);
+            }
+            for($i = 0; $i < count($json); $i++) {
+                foreach ($json[$i]['data'] as $graf) {
+                    if ($graf["status"] === "Pracuje") {
+                        $data[] = $graf['dzisiejszy dzien'];
+                    }
+                }
+            }
+            $uniqueData = array_unique($data);
+            sort($uniqueData);
+        } else {
+            $json = null;
+            $uniqueData = null;
+        }
 
         return view('home', [
             'hotelInfos' => $hotelInfos,
@@ -115,11 +146,11 @@ class HomeController extends Controller
             'stanowiska' => $stanowiska,
             'magazyn' => $magazyn,
             'rooms' => $pokoje,
-            'month' => $grafikViewData['month'],
-            'year' => $grafikViewData['year'],
-            'grafik' => $grafikViewData['grafik'],
-            'uniqueData' => $grafikViewData['uniqueData'],
-            'currentMonth' => $grafikViewData['date']
+            'month' => $month,
+            'year' => $year,
+            'grafik' => $json,
+            'uniqueData' => $uniqueData,
+            'currentMonth' => $date
         ]);
     }
 }
