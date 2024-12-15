@@ -14,11 +14,17 @@ class PokojeController extends Controller
         $login = $request->session()->get('login');
         $pokoje = Pokoje::get();
 
+        date_default_timezone_set('UTC');
+        $year = date('Y');
+        $month = date('m');
+
         return view('pokoje', [
             'rooms' => $rooms,
             'hotelInfos' => $hotelInfos,
             'login' => $login,
-            'pokoje' => $pokoje
+            'pokoje' => $pokoje,
+            'month' => $month,
+            'year' => $year
         ]);
     }
 

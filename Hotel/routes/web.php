@@ -13,7 +13,7 @@ use App\Http\Controllers\GrafikWholeController;
 Route::get('/', [LoginController::class, 'selectUser'])->name('loginRoute');
 Route::post('/', [LoginController::class, 'store'])->name('loginStore');
 
-Route::get('/home', [HomeController::class, 'select'])->name('homeRoute');
+Route::get('/home/{month}/{year}', [HomeController::class, 'select'])->name('homeRoute');
 
 Route::get('/pokoje', [PokojeController::class, 'select'])->name('pokojeRoute');
 Route::post('/pokojePost', [PokojeController::class, 'store'])->name('pokojePost');

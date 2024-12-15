@@ -86,33 +86,33 @@ class GrafikWholeController extends Controller
         //$jsonData = Storage::disk('public')->get('grafik/'.$login.'/'.'-'.$login.'-'.$month.'.'.$year.'.json'); // Zakładamy, że plik jest w storage/app/public
         $jsonData = Storage::disk('public')->allFiles();
         $urlData = $month . '.' . $year;
+        $isFile = false;
 
         foreach($jsonData as $file) {
-            if (str_contains($file, '12.2024')) {
+            if (preg_match('/\b' . preg_quote($urlData, '/') . '\b/', $file)) {
                 $filteredFiles[] = $file;
+                $isFile = true;
             }
         }
 
-        foreach ($filteredFiles as $file) {
-            $content = Storage::disk('public')->get($file);
-            $json[] = json_decode($content, true);
-        }
-
-        //dd($json);
-        //dd($json[0]['data'][0]);
-        //dd(count($json));
-        //$json = json_decode(json: $jsonData, associative: true);
-        for($i = 0; $i < count($json); $i++) {
-            foreach ($json[$i]['data'] as $graf) {
-                if ($graf["status"] === "Pracuje") {
-                    $data[] = $graf['dzisiejszy dzien'];
+        if ($isFile) {
+            foreach ($filteredFiles as $file) {
+                $content = Storage::disk('public')->get($file);
+                $json[] = json_decode($content, true);
+            }
+            for($i = 0; $i < count($json); $i++) {
+                foreach ($json[$i]['data'] as $graf) {
+                    if ($graf["status"] === "Pracuje") {
+                        $data[] = $graf['dzisiejszy dzien'];
+                    }
                 }
             }
+            $uniqueData = array_unique($data);
+            sort($uniqueData);
+        } else {
+            $json = null;
+            $uniqueData = null;
         }
-
-        $uniqueData = array_unique($data);
-        sort($uniqueData);
-        dd($uniqueData);
 
         return view('grafikWhole', [
             'hotelInfos' => $hotelInfos,
@@ -125,7 +125,8 @@ class GrafikWholeController extends Controller
             'login' => $login,
             'date' => $date,
             'datePrevious' => $datePrevious,
-            'dateNext' => $dateNext
+            'dateNext' => $dateNext,
+            'uniqueData' => $uniqueData
         ]);
     }
 }
