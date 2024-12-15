@@ -8,7 +8,6 @@
   <title>Personel</title>
   <?php echo app('Illuminate\Foundation\Vite')('resources/css/app.css'); ?>
   <?php echo app('Illuminate\Foundation\Vite')('resources/js/styles.js'); ?>
-  
     <style>
         body, html {
             color: rgb(31 41 55);

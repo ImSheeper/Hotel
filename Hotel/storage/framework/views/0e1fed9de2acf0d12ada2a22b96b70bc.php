@@ -32,8 +32,6 @@
 
             
             <div class="flex flex-col bg-white grow mx-1 my-1 mr-2 mb-2 min-w-fit rounded-md overflow-auto">
-                
-                
                 <div class="flex flex-col grow h-full w-full">
                     <div class="flex w-full h-1/2 flex-wrap p-5 gap-5">
                         
@@ -259,7 +257,6 @@
                 </div>
 
             </div>
-
         </div>
     </div>
 </body>
