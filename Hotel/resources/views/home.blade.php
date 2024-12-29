@@ -187,7 +187,7 @@
                                     @endphp
                                     
                                     @foreach ($dni as $dzien)
-                                        <div class="document-animation font-bold mx-2 my-2 text-center text-sm select-none">{{ $dzien }}</div>
+                                        <div class="document-animation font-bold mx-2 my-2 text-center text-[0.5rem] md:text-sm select-none">{{ $dzien }}</div>
                                     @endforeach
             
                                     @if($file != "Poniedziałek")
@@ -203,7 +203,7 @@
                                         @endphp
             
                                         @for ($i = 1; $i <= $fieldsToAdd; $i++)
-                                        <div class="json flex flex-col bg-gray-300 h-20 shadow-md w-20 rounded-3xl mx-2 my-2 pointer-events-none">
+                                        <div class="json flex flex-col bg-gray-300 shadow-md md:h-20 md:w-20 w-12 h-12 rounded-3xl mx-2 my-2 pointer-events-none">
                                             <div class="document-animation font-bold"></div>
                                         </div>                           
                                         @endfor
@@ -213,24 +213,24 @@
                                     @isset($grafik)
                                         @foreach ($grafik[0]['data'] as $graf)
                                                 @if (in_array($graf['dzisiejszy dzien'], $uniqueData))
-                                                <div class="json overflow-hidden select-none flex flex-col bg-red-400 h-20 shadow-md w-20 rounded-full mx-2 my-2 justify-center items-center">
+                                                <div class="json overflow-hidden select-none flex flex-col bg-red-400 shadow-md md:h-20 md:w-20 w-12 h-12 rounded-full mx-2 my-2 justify-center items-center">
                                                     <div class="document font-bold hidden">{{ $graf["rok"] }}</div>
                                                         <div class="document font-bold hidden">{{ $graf["numer dni"] }}</div>
                                                         <div class="document font-bold hidden">{{ $graf["miesiąc"] }}</div>
-                                                        <div class="document text-xl">{{ $graf["dzisiejszy dzien"] }}</div>
+                                                        <div class="document text-md md:text-xl">{{ $graf["dzisiejszy dzien"] }}</div>
                                                         <div class="document font-bold hidden">{{ $graf["nazwa dnia"] }}</div>
                                                         <div class="flex overflow-hidden">
-                                                            <div class="document text-sm">{{ $graf["status"] }}</div>
+                                                            <div class="document text-[0.5rem] md:text-sm">{{ $graf["status"] }}</div>
                                                         </div>                                            </div>
                                                 @else
-                                                <div class="json overflow-hidden select-none flex flex-col bg-green-400 h-20 shadow-md w-20 rounded-full mx-2 my-2 justify-center items-center">
+                                                <div class="json overflow-hidden select-none flex flex-col bg-green-400 shadow-md md:h-20 md:w-20 w-12 h-12 rounded-full mx-2 my-2 justify-center items-center">
                                                     <div class="document font-bold hidden">{{ $graf["rok"] }}</div>
                                                         <div class="document font-bold hidden">{{ $graf["numer dni"] }}</div>
                                                         <div class="document font-bold hidden">{{ $graf["miesiąc"] }}</div>
-                                                        <div class="document text-xl">{{ $graf["dzisiejszy dzien"] }}</div>
+                                                        <div class="document text-md md:text-xl">{{ $graf["dzisiejszy dzien"] }}</div>
                                                         <div class="document font-bold hidden">{{ $graf["nazwa dnia"] }}</div>
                                                         <div class="flex overflow-hidden">
-                                                            <div class="document text-sm">{{ $graf["status"] }}</div>
+                                                            <div class="document text-[0.5rem] md:text-sm">{{ $graf["status"] }}</div>
                                                         </div>
                                                     </div>
                                                 @endif
@@ -246,7 +246,7 @@
                                                 <div class="document text-xl">{{ $i }}</div>
                                                 <div class="document font-bold hidden">{{ $dayNames[$i] }}</div>
                                                 <div class="flex overflow-hidden">
-                                                    <div class="document visible text-sm">Status</div>
+                                                    <div class="document visible text-[0.5rem] md:text-sm">Status</div>
                                                 </div>
                                             </div>
                                         @endfor

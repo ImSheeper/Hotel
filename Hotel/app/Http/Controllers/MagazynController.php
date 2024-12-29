@@ -43,7 +43,9 @@ class MagazynController extends Controller
 
     public function update(Request $request) {
         $produkt = Produkt::where('nazwa', $request->data['nazwa'])->first();
-        $magazyn = Magazyn::where('nazwa_produktu', $produkt->id)->first();
+        $magazyn = Magazyn::where('nazwa_produktu', $produkt->id)
+        ->where('data_waznosci', $request->data['date'])
+        ->first();
 
         $action = (int) $request->data['akcja'];
         $ilosc = (int) $request->data['ilosc'];
