@@ -82,7 +82,7 @@
                         <div class="mb-1 text-gray-700">Produkt</div>
                         <select name="Produkt" id="Produkt" class="data border-2 rounded-lg p-1 w-full bg-white">
                             @foreach ($produkt as $item)
-                                <option value={{ $item->nazwa }}> {{ $item->nazwa }} </option>
+                                <option value="{{ $item->nazwa }}"> {{ $item->nazwa }} </option>
                             @endforeach
                         </select>
                     </div>
@@ -120,7 +120,7 @@
 
                 <div class="flex justify-between w-full mt-2">
 
-                    <div class="flex justify-center flex-col w-[50%] p-2">
+                    <div class="flex justify-center flex-col w-[33%] p-2">
                         <div class="mb-1 text-gray-700">Akcja</div>
                         <select name="Status" id="Status" class="dataProdukt border-2 rounded-lg p-1 w-full bg-white">
                             <option value="1"> Dodaj </option>
@@ -128,16 +128,36 @@
                         </select>
                     </div>
 
-                    <div class="flex justify-center flex-col w-[50%] p-2">
+                    
+                    <div class="flex justify-center flex-col w-[33%] p-2">
                         <div class="mb-1 text-gray-700">Produkt</div>
                         <input type="text" placeholder="Nowy produkt" class="dataProdukt border-2 rounded-lg p-1">
                         <select name="Produkt2" id="Produkt2" class="dataProdukt hidden border-2 rounded-lg p-1 w-full bg-white">             
                             @foreach ($produkt as $item)
-                                <option value={{ $item->nazwa }}> {{ $item->nazwa }} </option>
+                            <option value={{ $item->nazwa }}> {{ $item->nazwa }} </option>
                             @endforeach
                         </select>
                     </div>
+                    
+                    <div class="flex justify-center flex-col w-[33%] p-2">
+                        <div class="mb-1 text-gray-700">Magazyn</div>
+                        @if (str_contains($userStanowisko, 'Menedżer'))
+                            <select name="Status" id="Status" class="dataProdukt border-2 rounded-lg p-1 w-full bg-gray-200" disabled>    
+                        @else
+                            <select name="Status" id="Status" class="dataProdukt border-2 rounded-lg p-1 w-full bg-white">
+                        @endif
 
+                        @if ($userStanowisko === 'Menedżer Hotelu')
+                            <option value="Hotel"> Hotel </option>
+                        @elseif ($userStanowisko === 'Menedżer Kuchni')
+                            <option value="Kuchnia"> Kuchnia </option>
+                        @else
+                            <option value="Hotel"> Hotel </option>
+                            <option value="Kuchnia"> Kuchnia </option>
+                        @endif
+                        
+                        </select>
+                    </div>
                 </div>
 
                 <div class="flex flex-col items-center justify-center w-full">

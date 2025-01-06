@@ -11,14 +11,28 @@ use Illuminate\Support\Facades\DB;
 class MagazynController extends Controller
 {
     public function select(Request $request) {
-        $hotelInfos = Hotel::get();
+        $userStanowisko = app('App\Http\Controllers\GetUserRoles')->select($request);
+
+        if($userStanowisko === 'Menedżer Kuchni') {
+            $type = 'Kuchnia';
+        } else if ($userStanowisko === 'Menedżer Hotelu') {
+            $type = 'Hotel';
+        } else {
+            $type = '';
+        }
+
+        
         $magazyn = Magazyn::select('data_waznosci', DB::raw('nazwa_produktu, data_waznosci, SUM(ilosc) as ilosc'))
         ->groupBy('data_waznosci')
-        ->groupBy('nazwa_produktu')
-        ->get();
-    
-
-        $produkt = Produkt::get();
+        ->groupBy('nazwa_produktu');
+        
+        if($type != '') $magazyn->where('rodzaj', $type);
+        $magazyn = $magazyn->get();
+        
+        if($type != '') $produkt = Produkt::where('rodzaj', $type)->get();
+        else $produkt = Produkt::get();
+        
+        $hotelInfos = Hotel::get();
 
         $loginData = $request->session()->get('login');
         if($loginData == null) {
@@ -30,8 +44,6 @@ class MagazynController extends Controller
         date_default_timezone_set('UTC');
         $year = date('Y');
         $month = date('m');
-
-        $userStanowisko = app('App\Http\Controllers\GetUserRoles')->select($request);
 
         return view('magazyn', [
             'hotelInfos' => $hotelInfos,
@@ -45,8 +57,14 @@ class MagazynController extends Controller
     }
 
     public function update(Request $request) {
+        $date = $request->data['date'];
+
         $produkt = Produkt::where('nazwa', $request->data['nazwa'])->first();
-        $magazyn = Magazyn::where('nazwa_produktu', $produkt->id)->first();
+        
+        $magazyn = Magazyn::
+        where('nazwa_produktu', $produkt->id)
+        ->where('data_waznosci', $date)
+        ->first();
 
         $action = (int) $request->data['akcja'];
         $ilosc = (int) $request->data['ilosc'];
@@ -68,12 +86,26 @@ class MagazynController extends Controller
             // Tutaj dodawanie nowego elementu do bazy?
          }
 
-         $magazyn = Magazyn::select('data_waznosci', DB::raw('nazwa_produktu, data_waznosci, SUM(ilosc) as ilosc'))
-         ->groupBy('data_waznosci')
-         ->groupBy('nazwa_produktu')
-         ->get();
-     
-        $produkt = Produkt::get();
+        $userStanowisko = app('App\Http\Controllers\GetUserRoles')->select($request);
+
+        if($userStanowisko === 'Menedżer Kuchni') {
+            $type = 'Kuchnia';
+        } else if ($userStanowisko === 'Menedżer Hotelu') {
+            $type = 'Hotel';
+        } else {
+            $type = '';
+        }
+
+        
+        $magazyn = Magazyn::select('data_waznosci', DB::raw('nazwa_produktu, data_waznosci, SUM(ilosc) as ilosc'))
+        ->groupBy('data_waznosci')
+        ->groupBy('nazwa_produktu');
+        
+        if($type != '') $magazyn->where('rodzaj', $type);
+        $magazyn = $magazyn->get();
+        
+        if($type != '') $produkt = Produkt::where('rodzaj', $type)->get();
+        else $produkt = Produkt::get();
 
         return response()->json([
             'message' => 'Dane przetworzone poprawnie!',
@@ -89,6 +121,7 @@ class MagazynController extends Controller
         $action = (int) $request->data['akcja'];
         $nazwaAdd = $request->data['nazwaAdd'];
         $nazwaDelete = $request->data['nazwaDelete'];
+        $magazynAdd = $request->data['magazyn'];
 
         switch($action) {
             case 0:
@@ -99,6 +132,7 @@ class MagazynController extends Controller
             case 1:
                 $produkt = new Produkt();
                 $produkt->nazwa = $nazwaAdd;
+                $produkt->rodzaj = $magazynAdd;
                 $produkt->save();
                 break;
         }

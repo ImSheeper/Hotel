@@ -123,7 +123,8 @@ $('.sendAjax').on('click', function() {
     var data = {
         'nazwa' : $('.data').eq(0).val(),
         'akcja' : $('.data').eq(1).val(),
-        'ilosc' : $('.data').eq(2).val()
+        'ilosc' : $('.data').eq(2).val(),
+        'date' : selectedData.date
     };
     
     $.ajax({
@@ -173,6 +174,7 @@ $('.sendAjaxProdukt').on('click', function() {
         'nazwaAdd' : $('.dataProdukt').eq(1).val(),
         'nazwaDelete' : $('.dataProdukt').eq(2).val(),
         'akcja' : $('.dataProdukt').eq(0).val(),
+        'magazyn' : $('.dataProdukt').eq(3).val()
     };
     
     $.ajax({

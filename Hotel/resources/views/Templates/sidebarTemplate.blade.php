@@ -43,7 +43,7 @@
                     </a>
                 @endif
 
-                @if (str_contains($userStanowisko, 'Menedżer'))
+                @if (str_contains($userStanowisko, 'Menedżer') || $userStanowisko === 'Właściciel Hotelu')
                     <a href='{{ route('magazynRoute') }}' class="flex w-full h-10 mb-2">
                         <button class="relative w-full flex h-10 mx-2 my-1 px-4 items-center p-2 text-start hover:text-white group animate-fade-right animate-delay-[0.6s] animate-ease-out" value="magazyn">
                             <div class="absolute rounded-md inset-0 z-0 bg-gradient-to-r opacity-0 transition duration-500 group-hover:opacity-100 from-cyan-400 to-fuchsia-400"></div>
