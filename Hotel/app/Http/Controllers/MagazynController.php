@@ -31,13 +31,16 @@ class MagazynController extends Controller
         $year = date('Y');
         $month = date('m');
 
+        $userStanowisko = app('App\Http\Controllers\GetUserRoles')->select($request);
+
         return view('magazyn', [
             'hotelInfos' => $hotelInfos,
             'login' => $loginData,
             'magazyn' => $magazyn,
             'produkt' => $produkt,
             'month' => $month,
-            'year' => $year
+            'year' => $year,
+            'userStanowisko' => $userStanowisko
         ]);
     }
 

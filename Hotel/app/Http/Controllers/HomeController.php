@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use DateTime;
+
 
 class HomeController extends Controller
 {
@@ -106,6 +108,11 @@ class HomeController extends Controller
         $urlData = $month . '.' . $year;
         $isFile = false;
 
+        if($month[0] === '0') {            
+            $month = substr($month, 1);
+            $urlData = $month . '.' . $year;
+        }
+
         foreach($jsonData as $file) {
             if (preg_match('/\b' . preg_quote($urlData, '/') . '\b/', $file)) {
                 $filteredFiles[] = $file;
@@ -132,6 +139,45 @@ class HomeController extends Controller
             $uniqueData = null;
         }
 
+        $days = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+        $dateNamesPolish = [
+            "Poniedziałek",
+            "Wtorek",
+            "Środa",
+            "Czwartek",
+            "Piątek",
+            "Sobota",
+            "Niedziela"
+        ];
+
+        //Angielskie nazwy dni
+        $dateNamesEnglish = [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday"
+        ];
+        
+        //Tworzenie formatu - nie pamiętam już po co
+        $j = 0;
+        for($i = 1; $i <= $days; $i++) {
+            $dateForDiv = new DateTime("$year-$month-$i");
+            $dayNames[$i] = $dateForDiv->format('l');
+        }
+
+        //tłumaczenie na polski
+        foreach($dayNames as $index => $day) {
+            if(($key = array_search($day, $dateNamesEnglish)) !== false) {
+                //Staurday
+                $dayNames[$index] = $dateNamesPolish[$key];
+            }
+        }
+        
+        $userStanowisko = app('App\Http\Controllers\GetUserRoles')->select($request);
+
         return view('home', [
             'hotelInfos' => $hotelInfos,
             'login' => $loginData,
@@ -150,7 +196,10 @@ class HomeController extends Controller
             'year' => $year,
             'grafik' => $json,
             'uniqueData' => $uniqueData,
-            'currentMonth' => $date
+            'currentMonth' => $date,
+            'dayNames' => $dayNames,
+            'days' => $days,
+            'userStanowisko' => $userStanowisko
         ]);
     }
 }

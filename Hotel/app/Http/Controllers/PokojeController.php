@@ -17,6 +17,8 @@ class PokojeController extends Controller
         date_default_timezone_set('UTC');
         $year = date('Y');
         $month = date('m');
+        
+        $userStanowisko = app('App\Http\Controllers\GetUserRoles')->select($request);
 
         return view('pokoje', [
             'rooms' => $rooms,
@@ -24,7 +26,8 @@ class PokojeController extends Controller
             'login' => $login,
             'pokoje' => $pokoje,
             'month' => $month,
-            'year' => $year
+            'year' => $year,
+            'userStanowisko' => $userStanowisko
         ]);
     }
 
@@ -55,7 +58,7 @@ class PokojeController extends Controller
             'message' => 'Dane przetworzone poprawnie!',
             'data' => $request->all(),
             'pokoj' => $pokoj,
-            'pokoje' => $pokoje
+            'pokoje' => $pokoje,
         ]);
     }
 

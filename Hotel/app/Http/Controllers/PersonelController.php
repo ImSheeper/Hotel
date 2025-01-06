@@ -45,6 +45,8 @@ class PersonelController extends Controller
                 $timeOfWork[$personel[$j]->imie] = 0;
             }
         }
+
+        $userStanowisko = app('App\Http\Controllers\GetUserRoles')->select($request);
         
         return view('personel', [
             'hotelInfos' => $hotelInfos,
@@ -54,7 +56,8 @@ class PersonelController extends Controller
             'month' => $month,
             'year' => $year,
             'statuses' => $statuses,
-            'stanowiska' => $stanowiska
+            'stanowiska' => $stanowiska,
+            'userStanowisko' => $userStanowisko
         ]);
     }
 

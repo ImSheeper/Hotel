@@ -6,10 +6,14 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <title>Grafik użytkownika {{ $login }}</title>
-  @vite('resources/css/app.css')
-  @vite('resources/js/animations.js')
-  @vite('resources/js/dates.js')
-  @vite('resources/js/afterClickArrow.js')
+    @vite('resources/css/app.css')
+
+    @if ($userStanowisko === 'Właściciel Hotelu' || $userStanowisko === 'Menedżer Hotelu')
+        @vite('resources/js/animations.js')
+        @vite('resources/js/afterClickArrow.js') 
+    @endif
+
+    @vite('resources/js/dates.js')
   {{-- flatpicker, dodawanie przez npm nie działa --}}
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/plugins/monthSelect/style.css">
@@ -51,20 +55,22 @@
                 <div class="font-bold text-center mt-10 text-3xl">Grafik użytkownika {{ $login }}</div>
                 <div class="flex h-min-max w-full justify-center animate-fade-down animate-delay-[1s] animate-ease-out mt-10 flex-wrap">
                     {{-- arrows --}}
-                    <div class="flex absolute h-full w-full items-center z-0">
-                        <div class="flex relative w-full justify-start items-center">
-                            <div class="svg-flex flex ml-16 px-6 select-none cursor-pointer">
-                                <img src={{ url('icons/leftArrow.svg') }} class='svg-icon h-14'>
+                    @if ($userStanowisko === 'Właściciel Hotelu' || $userStanowisko === 'Menedżer Hotelu')
+                        <div class="flex absolute h-full w-full items-center z-0">
+                            <div class="flex relative w-full justify-start items-center">
+                                <div class="svg-flex flex ml-16 px-6 select-none cursor-pointer">
+                                    <img src={{ url('icons/leftArrow.svg') }} class='svg-icon h-14'>
+                                </div>
+                                <div class="previousMonth text-4xl font-bold invisible opacity-0 pointer-events-none select-none">{{ Str::title($datePrevious) }}</div>
                             </div>
-                            <div class="previousMonth text-4xl font-bold invisible opacity-0 pointer-events-none select-none">{{ Str::title($datePrevious) }}</div>
-                        </div>
-                        <div class="flex relative w-full justify-end items-center">
-                            <div class="nextMonth text-4xl font-bold opacity-0 invisible pointer-events-none select-none">{{ Str::title($dateNext) }}</div>
-                            <div class="svg-flex flex mr-14 px-6 select-none cursor-pointer">
-                                <img src={{ url('icons/rightArrow.svg') }} class='svg-icon h-14'>
+                            <div class="flex relative w-full justify-end items-center">
+                                <div class="nextMonth text-4xl font-bold opacity-0 invisible pointer-events-none select-none">{{ Str::title($dateNext) }}</div>
+                                <div class="svg-flex flex mr-14 px-6 select-none cursor-pointer">
+                                    <img src={{ url('icons/rightArrow.svg') }} class='svg-icon h-14'>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    @endif
 
                     <div class="grid grid-cols-7 z-10">
                         <div class="flex w-min-max col-span-7 items-center group max-w-[50%]">
@@ -162,14 +168,17 @@
                     </div>
                 </div>
 
-                <div class="flex flex-col items-center justify-center w-full">
-                    <div class="flex relative group rounded-2xl mb-10 mt-10">
-                        <div class="flex relative group h-12">
-                            <button class="but bg-gray-200 w-36 h-12 min-w-max rounded-2xl text-lg opcaity-100 transition-all duration-200 group-hover:opacity-0">Zapisz</button>
-                            <button class="but absolute bg-gradient-to-r from-cyan-400 to-fuchsia-400 w-36 h-12 min-w-max rounded-2xl text-lg transition-all duration-200 opacity-0 group-hover:opacity-100 text-white">Zapisz</button>
+                @if ($userStanowisko === 'Właściciel Hotelu' || $userStanowisko === 'Menedżer Hotelu')
+
+                    <div class="flex flex-col items-center justify-center w-full">
+                        <div class="flex relative group rounded-2xl mb-10 mt-10">
+                            <div class="flex relative group h-12">
+                                <button class="but bg-gray-200 w-36 h-12 min-w-max rounded-2xl text-lg opcaity-100 transition-all duration-200 group-hover:opacity-0">Zapisz</button>
+                                <button class="but absolute bg-gradient-to-r from-cyan-400 to-fuchsia-400 w-36 h-12 min-w-max rounded-2xl text-lg transition-all duration-200 opacity-0 group-hover:opacity-100 text-white">Zapisz</button>
+                            </div>
                         </div>
                     </div>
-                </div>
+                @endif
             </div>
         </div>
         <div class="pop bg-black bg-opacity-20 backdrop-blur-sm flex absolute invisible h-full w-full justify-center items-center opacity-0">

@@ -87,6 +87,8 @@ class GrafikController extends Controller
         $jsonData = Storage::disk('public')->get('grafik/'.$login.'/'.'-'.$login.'-'.$month.'.'.$year.'.json'); // Zakładamy, że plik jest w storage/app/public
         $json = json_decode(json: $jsonData, associative: true);
 
+        $userStanowisko = app('App\Http\Controllers\GetUserRoles')->select($request);
+
         return view('grafik', [
             'hotelInfos' => $hotelInfos,
             'loginData' => $loginData,
@@ -99,7 +101,8 @@ class GrafikController extends Controller
             'login' => $login,
             'date' => $date,
             'datePrevious' => $datePrevious,
-            'dateNext' => $dateNext
+            'dateNext' => $dateNext,
+            'userStanowisko' => $userStanowisko
         ]);
     }
 

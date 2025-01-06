@@ -62,42 +62,48 @@
                     </div>
                 </div>
 
-                <div class="flex min-h-max w-full justify-center animate-fade-down animate-delay-[1s] animate-ease-out my-5">
-                    <div class="flex flex-col cursor-default min-w-max max-w-[1000px] grow max-h-96 bg-gray-200 rounded-2xl pl-10 pr-10 pt-5 pb-5 overflow-auto shadow-lg">
-                        <div class="font-bold text-3xl mb-5">Wykluczone pokoje</div>
-                        <div class="grid grid-cols-5 font-bold px-2 py-1">
-                            <div class="name">Pokój</div>
-                            <div class="name">Piętro</div>
-                            <div class="name">Status</div>
-                            <div class="name">Czysty</div>
-                            <div class="name">Wykluczony</div>
-                        </div>
-                        <div class="roomsContainerBlocked">
-                            <?php $__currentLoopData = $rooms; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $room): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <?php if($room->wykluczone === 1): ?>
-                                    <a class="tableClassBlocked cursor-pointer grid grid-cols-5 transition-all duration-300 hover:bg-gray-300 px-2 py-1 rounded-md">
-                                    <div class="pokoje"> <?php echo e($room->id); ?> </div>
-                                    <div class="pokoje"> <?php echo e($room->pietro); ?> </div>
-                                    <div class="pokoje"> <?php echo e($room->status ? 'Zajęte' : 'Wolne'); ?> </div>
-                                    <div class="pokoje"> <?php echo e($room->czyste ? 'Czysty' : 'Brudny'); ?> </div>
-                                    <div class="pokoje"> <?php echo e($room->wykluczone ? 'Wykluczony' : 'Aktywny'); ?> </div>
-                                    </a>
-                                <?php endif; ?>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                <?php if($userStanowisko === 'Właściciel Hotelu' || $userStanowisko === 'Menedżer Hotelu'): ?>
+                    <div class="flex min-h-max w-full justify-center animate-fade-down animate-delay-[1s] animate-ease-out my-5">
+                        <div class="flex flex-col cursor-default min-w-max max-w-[1000px] grow max-h-96 bg-gray-200 rounded-2xl pl-10 pr-10 pt-5 pb-5 overflow-auto shadow-lg">
+                            <div class="font-bold text-3xl mb-5">Wykluczone pokoje</div>
+                            <div class="grid grid-cols-5 font-bold px-2 py-1">
+                                <div class="name">Pokój</div>
+                                <div class="name">Piętro</div>
+                                <div class="name">Status</div>
+                                <div class="name">Czysty</div>
+                                <div class="name">Wykluczony</div>
+                            </div>
+                            <div class="roomsContainerBlocked">
+                                <?php $__currentLoopData = $rooms; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $room): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <?php if($room->wykluczone === 1): ?>
+                                        <a class="tableClassBlocked cursor-pointer grid grid-cols-5 transition-all duration-300 hover:bg-gray-300 px-2 py-1 rounded-md">
+                                        <div class="pokoje"> <?php echo e($room->id); ?> </div>
+                                        <div class="pokoje"> <?php echo e($room->pietro); ?> </div>
+                                        <div class="pokoje"> <?php echo e($room->status ? 'Zajęte' : 'Wolne'); ?> </div>
+                                        <div class="pokoje"> <?php echo e($room->czyste ? 'Czysty' : 'Brudny'); ?> </div>
+                                        <div class="pokoje"> <?php echo e($room->wykluczone ? 'Wykluczony' : 'Aktywny'); ?> </div>
+                                        </a>
+                                    <?php endif; ?>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </div>
                         </div>
                     </div>
-                </div>
+                <?php endif; ?>
 
-                <div class="flex min-h-max w-full justify-center animate-fade-down animate-delay-[1s] animate-ease-out items-center my-5">
-                    <div class="addPokoj font-bold shadow-lg bg-gray-200 h-44 w-44 rounded-2xl overflow-hidden content-center text-center animate-fade-down animate-delay-[0.2s] animate-ease-out mx-5 cursor-pointer">
-                        <div class="addPokoj text-xl select-none">Dodaj pokój</div>
-                    </div>
-                </div>
+                <?php if($userStanowisko === 'Właściciel Hotelu' || $userStanowisko === 'Menedżer Hotelu'): ?>
+                    <div class="flex min-h-max w-full justify-center animate-fade-down animate-delay-[1s] animate-ease-out items-center my-5">
+                        <div class="addPokoj font-bold shadow-lg bg-gray-200 h-44 w-44 rounded-2xl overflow-hidden content-center text-center animate-fade-down animate-delay-[0.2s] animate-ease-out mx-5 cursor-pointer">
+                            <div class="addPokoj text-xl select-none">Dodaj pokój</div>
+                        </div>
+                    </div>     
+                <?php endif; ?>
 
                 <div class="contextMenu hidden z-10 absolute bg-white px-2 py-2 shadow-md rounded-md opacity-0">
                     <div class="menuElement hover:bg-gray-200 transition-all duration-200 px-1 rounded-md cursor-pointer py-1">Edytuj Pokój</div>
-                    <div class="menuElement hover:bg-gray-200 transition-all duration-200 px-1 rounded-md cursor-pointer py-1">Wyklucz pokój</div>
-                    <div class="menuElement hover:bg-gray-200 transition-all duration-200 px-1 rounded-md cursor-pointer py-1">Usuń pokój</div>
+                    <?php if($userStanowisko === 'Właściciel Hotelu' || $userStanowisko === 'Menedżer Hotelu'): ?>
+                        <div class="menuElement hover:bg-gray-200 transition-all duration-200 px-1 rounded-md cursor-pointer py-1">Wyklucz pokój</div>
+                        <div class="menuElement hover:bg-gray-200 transition-all duration-200 px-1 rounded-md cursor-pointer py-1">Usuń pokój</div>
+                    <?php endif; ?>
                 </div>
 
                 <div class="contextMenuBlocked hidden z-10 absolute bg-white px-2 py-2 shadow-md rounded-md opacity-0">
@@ -122,18 +128,28 @@
                     </div>
                     <div class="flex justify-center flex-col w-[50%] p-2">
                         <div class="mb-1 text-gray-700">Piętro</div>
-                        <input type="text" placeholder="Piętro" class="data border-2 rounded-lg p-1">
+                        <?php if($userStanowisko === 'Właściciel Hotelu' || $userStanowisko === 'Menedżer Hotelu'): ?>
+                            <input type="text" placeholder="Piętro" class="data border-2 rounded-lg p-1">
+                        <?php else: ?>
+                            <input type="text" placeholder="Piętro" class="data border-2 rounded-lg p-1 bg-gray-200" disabled>
+                        <?php endif; ?>
                     </div>
                 </div>
 
                 <div class="flex justify-around w-full mt-2">
                     <div class="flex justify-center flex-col w-full p-2">
                         <div class="mb-1 text-gray-700">Status</div>
-                        
-                        <select name="Status" id="Status" class="data border-2 rounded-lg p-1 w-full bg-white">
-                            <option value="1"> Zajęte </option>
-                            <option value="0"> Wolne </option>
-                        </select>
+                        <?php if($userStanowisko === 'Właściciel Hotelu' || $userStanowisko === 'Menedżer Hotelu' || $userStanowisko === 'Recepcjonista'): ?>
+                            <select name="Status" id="Status" class="data border-2 rounded-lg p-1 w-full bg-white">
+                                <option value="1"> Zajęte </option>
+                                <option value="0"> Wolne </option>
+                            </select>
+                        <?php else: ?>
+                            <select name="Status" id="Status" class="data border-2 rounded-lg p-1 w-full bg-gray-200" disabled>
+                                <option value="1"> Zajęte </option>
+                                <option value="0"> Wolne </option>
+                            </select>
+                        <?php endif; ?>
                     </div>
                 </div>
 
@@ -147,8 +163,6 @@
                         </select>
                     </div>
                 </div>
-
-                
 
                 <div class="flex flex-col items-center justify-center w-full">
                     <div class="flex relative group rounded-2xl mb-4 mt-6">

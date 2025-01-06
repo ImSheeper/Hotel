@@ -20,37 +20,46 @@
                         <div class="p-2 z-10 transition duration-500 group-hover:text-white">Strona Główna</div>
                     </button>
                 </a>
+                    
+                @if ($userStanowisko === 'Właściciel Hotelu' || $userStanowisko === 'Menedżer Hotelu' || $userStanowisko === 'Pokojówka' || $userStanowisko === 'Recepcjonista')
+                    <a href='{{ route('pokojeRoute') }}' class="flex w-full h-10 mb-2">
+                        <button class="relative w-full flex h-10 mx-2 my-1 px-4 items-center p-2 text-start hover:text-white group animate-fade-right animate-delay-[0.3s] animate-ease-out" value="pokoje">
+                            <div class="absolute rounded-md inset-0 z-0 bg-gradient-to-r opacity-0 transition duration-500 group-hover:opacity-100 from-cyan-400 to-fuchsia-400"></div>
+                            <img src={{ url('/icons/Pokoje.svg') }} class="z-10 transition duration-500 opacity-100 group-hover:opacity-0 h-6">
+                            <img src={{ url('/icons/Pokoje-white.svg') }} class="z-10 transition duration-500 absolute opacity-0 group-hover:opacity-100 h-6">    
+                            <div class="p-2 z-10 transition duration-500 group-hover:text-white">Zarządzaj pokojami</div>
+                        </button>
+                    </a>
+                @endif
 
-                <a href='{{ route('pokojeRoute') }}' class="flex w-full h-10 mb-2">
-                    <button class="relative w-full flex h-10 mx-2 my-1 px-4 items-center p-2 text-start hover:text-white group animate-fade-right animate-delay-[0.3s] animate-ease-out" value="pokoje">
-                        <div class="absolute rounded-md inset-0 z-0 bg-gradient-to-r opacity-0 transition duration-500 group-hover:opacity-100 from-cyan-400 to-fuchsia-400"></div>
-                        <img src={{ url('/icons/Pokoje.svg') }} class="z-10 transition duration-500 opacity-100 group-hover:opacity-0 h-6">
-                        <img src={{ url('/icons/Pokoje-white.svg') }} class="z-10 transition duration-500 absolute opacity-0 group-hover:opacity-100 h-6">    
-                        <div class="p-2 z-10 transition duration-500 group-hover:text-white">Zarządzaj pokojami</div>
-                    </button>
-                </a>
+                @if ($userStanowisko === 'Właściciel Hotelu' || $userStanowisko === 'Menedżer Hotelu')
+                    <a href='{{ route('personelRoute') }}' class="flex w-full h-10 mb-2">
+                        <button class="relative w-full flex h-10 mx-2 my-1 px-4 items-center p-2 text-start hover:text-white group animate-fade-right animate-delay-[0.4s] animate-ease-out" value="grafik">
+                            <div class="absolute rounded-md inset-0 z-0 bg-gradient-to-r opacity-0 transition duration-500 group-hover:opacity-100 from-cyan-400 to-fuchsia-400"></div>
+                            <img src={{ url('/icons/Personel.svg') }} class="z-10 transition duration-500 opacity-100 group-hover:opacity-0 h-6">
+                            <img src={{ url('/icons/Personel-white.svg') }} class="z-10 transition duration-500 absolute opacity-0 group-hover:opacity-100 h-6">     
+                            <div class="p-2 z-10 transition duration-500 group-hover:text-white">Zarządzaj personelem</div>
+                        </button>
+                    </a>
+                @endif
 
-                <a href='{{ route('personelRoute') }}' class="flex w-full h-10 mb-2">
-                    <button class="relative w-full flex h-10 mx-2 my-1 px-4 items-center p-2 text-start hover:text-white group animate-fade-right animate-delay-[0.4s] animate-ease-out" value="grafik">
-                        <div class="absolute rounded-md inset-0 z-0 bg-gradient-to-r opacity-0 transition duration-500 group-hover:opacity-100 from-cyan-400 to-fuchsia-400"></div>
-                        <img src={{ url('/icons/Personel.svg') }} class="z-10 transition duration-500 opacity-100 group-hover:opacity-0 h-6">
-                        <img src={{ url('/icons/Personel-white.svg') }} class="z-10 transition duration-500 absolute opacity-0 group-hover:opacity-100 h-6">     
-                        <div class="p-2 z-10 transition duration-500 group-hover:text-white">Zarządzaj personelem</div>
-                    </button>
-                </a>
+                @if (str_contains($userStanowisko, 'Menedżer'))
+                    <a href='{{ route('magazynRoute') }}' class="flex w-full h-10 mb-2">
+                        <button class="relative w-full flex h-10 mx-2 my-1 px-4 items-center p-2 text-start hover:text-white group animate-fade-right animate-delay-[0.6s] animate-ease-out" value="magazyn">
+                            <div class="absolute rounded-md inset-0 z-0 bg-gradient-to-r opacity-0 transition duration-500 group-hover:opacity-100 from-cyan-400 to-fuchsia-400"></div>
+                            <img src={{ url('/icons/Magazyn.svg') }} class="z-10 transition duration-500 opacity-100 group-hover:opacity-0 h-6">
+                            <img src={{ url('/icons/Magazyn-white.svg') }} class="z-10 transition duration-500 absolute opacity-0 group-hover:opacity-100 h-6">
+                            <div class="p-2 z-10 transition duration-500 group-hover:text-white">Magazyn</div>
+                        </button>
+                    </a>
+                @endif
 
-                <a href='{{ route('magazynRoute') }}' class="flex w-full h-10 mb-2">
-                    <button class="relative w-full flex h-10 mx-2 my-1 px-4 items-center p-2 text-start hover:text-white group animate-fade-right animate-delay-[0.6s] animate-ease-out" value="magazyn">
-                        <div class="absolute rounded-md inset-0 z-0 bg-gradient-to-r opacity-0 transition duration-500 group-hover:opacity-100 from-cyan-400 to-fuchsia-400"></div>
-                        <img src={{ url('/icons/Magazyn.svg') }} class="z-10 transition duration-500 opacity-100 group-hover:opacity-0 h-6">
-                        <img src={{ url('/icons/Magazyn-white.svg') }} class="z-10 transition duration-500 absolute opacity-0 group-hover:opacity-100 h-6">
-                        <div class="p-2 z-10 transition duration-500 group-hover:text-white">Magazyn</div>
-                    </button>
-                </a>
-
-                {{-- HARDCODE NA MIESIAC I ROK W RAMACH TESTU --}}
-                <a href='{{ route('grafikRoute', ['month' => $month, 'year' => $year]) }}' class="flex w-full h-10 mb-2">
-                    <button class="relative w-full flex h-10 mx-2 my-1 px-4 items-center p-2 text-start hover:text-white group animate-fade-right animate-delay-[0.6s] animate-ease-out" value="magazyn">
+                @if ($userStanowisko === 'Właściciel Hotelu' || $userStanowisko === 'Menedżer Hotelu')
+                    <a href='{{ route('grafikRoute', ['month' => $month, 'year' => $year]) }}' class="flex w-full h-10 mb-2">
+                @else
+                    <a href='{{ route('personelParameterRoute', ['login' => $login, 'month' => $month, 'year' => $year]) }}' class="flex w-full h-10 mb-2">
+                @endif
+                <button class="relative w-full flex h-10 mx-2 my-1 px-4 items-center p-2 text-start hover:text-white group animate-fade-right animate-delay-[0.6s] animate-ease-out" value="magazyn">
                         <div class="absolute rounded-md inset-0 z-0 bg-gradient-to-r opacity-0 transition duration-500 group-hover:opacity-100 from-cyan-400 to-fuchsia-400"></div>
                         <img src={{ url('/icons/calendar.svg') }} class="z-10 transition duration-500 opacity-100 group-hover:opacity-0 h-6">
                         <img src={{ url('/icons/calendar-white.svg') }} class="z-10 transition duration-500 absolute opacity-0 group-hover:opacity-100 h-6">
@@ -58,24 +67,27 @@
                     </button>
                 </a>
 
-                <a href='{{ route('homeRoute', ['month' => $month, 'year' => $year]) }}' class="flex w-full h-10 mb-2">
-                    <button class="relative w-full flex h-10 mx-2 my-1 px-4 items-center p-2 text-start hover:text-white group animate-fade-right animate-delay-[0.5s] animate-ease-out" value="analiza">
-                        <div class="absolute rounded-md inset-0 z-0 bg-gradient-to-r opacity-0 transition duration-500 group-hover:opacity-100 from-cyan-400 to-fuchsia-400"></div>
-                        <img src={{ url('/icons/Analiza.svg') }} class="z-10 transition duration-500 opacity-100 group-hover:opacity-0 h-6">
-                        <img src={{ url('/icons/Analiza-white.svg') }} class="z-10 transition duration-500 absolute opacity-0 group-hover:opacity-100 h-6"> 
-                        <div class="p-2 z-10 transition duration-500 group-hover:text-white">Analiza</div>
-                    </button>
-                </a>
+                @if ($userStanowisko === 'Właściciel Hotelu')
+                    <a href='{{ route('homeRoute', ['month' => $month, 'year' => $year]) }}' class="flex w-full h-10 mb-2">
+                        <button class="relative w-full flex h-10 mx-2 my-1 px-4 items-center p-2 text-start hover:text-white group animate-fade-right animate-delay-[0.5s] animate-ease-out" value="analiza">
+                            <div class="absolute rounded-md inset-0 z-0 bg-gradient-to-r opacity-0 transition duration-500 group-hover:opacity-100 from-cyan-400 to-fuchsia-400"></div>
+                            <img src={{ url('/icons/Analiza.svg') }} class="z-10 transition duration-500 opacity-100 group-hover:opacity-0 h-6">
+                            <img src={{ url('/icons/Analiza-white.svg') }} class="z-10 transition duration-500 absolute opacity-0 group-hover:opacity-100 h-6"> 
+                            <div class="p-2 z-10 transition duration-500 group-hover:text-white">Analiza</div>
+                        </button>
+                    </a>
+                @endif
 
-                <a href='{{ route('homeRoute', ['month' => $month, 'year' => $year]) }}' class="flex w-full h-10 mb-2">
-                    <button class="relative w-full flex h-10 mx-2 my-1 px-4 items-center p-2 text-start hover:text-white group animate-fade-right animate-delay-[0.7s] animate-ease-out" value="konfiguracja">
-                        <div class="absolute rounded-md inset-0 z-0 bg-gradient-to-r opacity-0 transition duration-500 group-hover:opacity-100 from-cyan-400 to-fuchsia-400"></div>
-                        <img src={{ url('/icons/Settings.svg') }} class="z-10 transition duration-500 opacity-100 group-hover:opacity-0 h-6">
-                        <img src={{ url('/icons/Settings-white.svg') }} class="z-10 transition duration-500 absolute opacity-0 group-hover:opacity-100 h-6">
-                        <div class="p-2 z-10 transition duration-500 group-hover:text-white">Konfiguracja</div>
-                    </button>
-                </a>
-
+                @if ($userStanowisko === 'Właściciel Hotelu')
+                    <a href='{{ route('homeRoute', ['month' => $month, 'year' => $year]) }}' class="flex w-full h-10 mb-2">
+                        <button class="relative w-full flex h-10 mx-2 my-1 px-4 items-center p-2 text-start hover:text-white group animate-fade-right animate-delay-[0.7s] animate-ease-out" value="konfiguracja">
+                            <div class="absolute rounded-md inset-0 z-0 bg-gradient-to-r opacity-0 transition duration-500 group-hover:opacity-100 from-cyan-400 to-fuchsia-400"></div>
+                            <img src={{ url('/icons/Settings.svg') }} class="z-10 transition duration-500 opacity-100 group-hover:opacity-0 h-6">
+                            <img src={{ url('/icons/Settings-white.svg') }} class="z-10 transition duration-500 absolute opacity-0 group-hover:opacity-100 h-6">
+                            <div class="p-2 z-10 transition duration-500 group-hover:text-white">Konfiguracja</div>
+                        </button>
+                    </a>
+                @endif
             </div>
         </div>
     </div>

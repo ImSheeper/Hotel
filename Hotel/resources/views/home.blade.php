@@ -37,20 +37,22 @@
                 <div class="flex flex-col grow h-full w-full">
                     <div class="flex w-full h-1/2 flex-wrap p-5 gap-5">
                         {{-- Left --}}
-                        <div class="flex flex-col w-1/6 h-full  basis-[200px] grow">
-                            <div class="flex flex-col bg-[#FFCACA] shadow-lg h-1/3 min-h-[100px] mb-5 rounded-md justify-center items-center">
-                                <div class="text-5xl font-bold">{{ $roomsDirty }}</div>
-                                <div class="text-md mt-2">Brudne pokoje</div>
+                        @if ($userStanowisko === 'Właściciel Hotelu' || $userStanowisko === 'Menedżer Hotelu')
+                            <div class="flex flex-col w-1/6 h-full  basis-[200px] grow">
+                                <div class="flex flex-col bg-[#FFCACA] shadow-lg h-1/3 min-h-[100px] mb-5 rounded-md justify-center items-center">
+                                    <div class="text-5xl font-bold">{{ $roomsDirty }}</div>
+                                    <div class="text-md mt-2">Brudne pokoje</div>
+                                </div>
+                                <div class="flex flex-col bg-[#FFDCB5] shadow-lg h-1/3 min-h-[100px] mb-5 rounded-md justify-center items-center">
+                                    <div class="text-5xl font-bold">{{ $magazynMissing }}</div>
+                                    <div class="text-md mt-2">Deficyt produktów</div>
+                                </div>
+                                <div class="flex flex-col bg-[#C0D4FF] shadow-lg h-1/3 min-h-[100px] rounded-md justify-center items-center">
+                                    <div class="text-5xl font-bold">{{ $roomsTaken }}</div>
+                                    <div class="text-md mt-2">Zajęte pokoje</div>
+                                </div>
                             </div>
-                            <div class="flex flex-col bg-[#FFDCB5] shadow-lg h-1/3 min-h-[100px] mb-5 rounded-md justify-center items-center">
-                                <div class="text-5xl font-bold">{{ $magazynMissing }}</div>
-                                <div class="text-md mt-2">Deficyt produktów</div>
-                            </div>
-                            <div class="flex flex-col bg-[#C0D4FF] shadow-lg h-1/3 min-h-[100px] rounded-md justify-center items-center">
-                                <div class="text-5xl font-bold">{{ $roomsTaken }}</div>
-                                <div class="text-md mt-2">Zajęte pokoje</div>
-                            </div>
-                        </div>
+                        @endif
                         
                         <div class="flex flex-col w-2/6 h-full  basis-[400px] grow">
                             <div class="bg-[#F4F2FF] rounded-md shadow-lg overflow-auto p-5 h-full">
@@ -95,63 +97,67 @@
                             </div>
                         </div>
 
-                        <div class="flex flex-col w-2/6 h-full  basis-[300px] grow">
-                            <div class="bg-[#F4F2FF] rounded-md shadow-lg overflow-auto p-5 h-full">
-                                <div class="flex items-center mb-5">
-                                    <img src={{ url('/icons/Magazyn.svg') }} class="z-10 transition duration-500 opacity-100 group-hover:opacity-0 h-5">
-                                    <div class="font-bold text-2xl px-2">Magazyn</div>
-                                </div>
-                                
-                                <hr class="border-t border-gray-600 mb-5">
-                                <div class="grid grid-cols-3 font-bold px-2 py-1 gap-x-px">
-                                    <div class="name">Nazwa</div>
-                                    <div class="name">Ilość</div>
-                                    <div class="name">Data ważności</div>
-                                </div>
-                                <div class="magazynContainer">
-                                    @foreach ($magazyn as $item)
-                                    <div class="tableClass grid grid-cols-3 transition-all duration-300 px-2 py-1 rounded-md text-sm gap-x-px">
-                                        <div class="magazyn">{{ $item->produkt->nazwa }} </div>
-                                        <div class="magazyn">{{ $item->ilosc }} </div>
-                                        <div class="magazyn">{{ $item->data_waznosci }} </div>
+                        @if ($userStanowisko === 'Właściciel Hotelu' || str_contains($userStanowisko, 'Menedżer'))
+                            <div class="flex flex-col w-2/6 h-full  basis-[300px] grow">
+                                <div class="bg-[#F4F2FF] rounded-md shadow-lg overflow-auto p-5 h-full">
+                                    <div class="flex items-center mb-5">
+                                        <img src={{ url('/icons/Magazyn.svg') }} class="z-10 transition duration-500 opacity-100 group-hover:opacity-0 h-5">
+                                        <div class="font-bold text-2xl px-2">Magazyn</div>
                                     </div>
-                                    @endforeach
+                                    
+                                    <hr class="border-t border-gray-600 mb-5">
+                                    <div class="grid grid-cols-3 font-bold px-2 py-1 gap-x-px">
+                                        <div class="name">Nazwa</div>
+                                        <div class="name">Ilość</div>
+                                        <div class="name">Data ważności</div>
+                                    </div>
+                                    <div class="magazynContainer">
+                                        @foreach ($magazyn as $item)
+                                        <div class="tableClass grid grid-cols-3 transition-all duration-300 px-2 py-1 rounded-md text-sm gap-x-px">
+                                            <div class="magazyn">{{ $item->produkt->nazwa }} </div>
+                                            <div class="magazyn">{{ $item->ilosc }} </div>
+                                            <div class="magazyn">{{ $item->data_waznosci }} </div>
+                                        </div>
+                                        @endforeach
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @endif
                 
                 {{-- Sub --}}
                         {{-- Left --}}       
-                        <div class="flex flex-col h-full  w-1/2 basis-[600px] grow">
-                            <div class="bg-[#F4F2FF] rounded-md shadow-lg overflow-auto p-5 h-full">
-                                <div class="flex items-center mb-5">
-                                    <img src={{ url('/icons/Pokoje.svg') }} class="z-10 transition duration-500 opacity-100 group-hover:opacity-0 h-6">
-                                    <div class="font-bold text-2xl px-2">Pokoje</div>
-                                </div>
-                                
-                                <hr class="border-t border-gray-600 mb-5">
-                                <div class="grid grid-cols-5 font-bold px-2 py-1 text-sm">
-                                    <div class="name">Pokój</div>
-                                    <div class="name">Piętro</div>
-                                    <div class="name">Status</div>
-                                    <div class="name">Czysty</div>
-                                    <div class="name">Wykluczony</div>
-                                </div>
-                                <div class="roomsContainer">
-                                    @foreach ($rooms as $room)
-                                        @if($room->wykluczone === 0)
-                                            <a class="tableClass grid grid-cols-5 transition-all duration-300 px-2 py-1 rounded-md text-sm">
-                                            <div class="pokoje"> {{ $room->id }} </div>
-                                            <div class="pokoje"> {{ $room->pietro }} </div>
-                                            <div class="pokoje"> {{ $room->status ? 'Zajęte' : 'Wolne' }} </div>
-                                            <div class="pokoje"> {{ $room->czyste ? 'Czysty' : 'Brudny' }} </div>
-                                            <div class="pokoje"> {{ $room->wykluczone ? 'Wykluczony' : 'Aktywny' }} </div>
-                                            </a>
-                                        @endif
-                                    @endforeach
+                        @if ($userStanowisko === 'Właściciel Hotelu' || $userStanowisko === 'Menedżer Hotelu' || $userStanowisko === 'Pokojówka')
+                            <div class="flex flex-col h-full  w-1/2 basis-[600px] grow">
+                                <div class="bg-[#F4F2FF] rounded-md shadow-lg overflow-auto p-5 h-full">
+                                    <div class="flex items-center mb-5">
+                                        <img src={{ url('/icons/Pokoje.svg') }} class="z-10 transition duration-500 opacity-100 group-hover:opacity-0 h-6">
+                                        <div class="font-bold text-2xl px-2">Pokoje</div>
+                                    </div>
+                                    
+                                    <hr class="border-t border-gray-600 mb-5">
+                                    <div class="grid grid-cols-5 font-bold px-2 py-1 text-sm">
+                                        <div class="name">Pokój</div>
+                                        <div class="name">Piętro</div>
+                                        <div class="name">Status</div>
+                                        <div class="name">Czysty</div>
+                                        <div class="name">Wykluczony</div>
+                                    </div>
+                                    <div class="roomsContainer">
+                                        @foreach ($rooms as $room)
+                                            @if($room->wykluczone === 0)
+                                                <a class="tableClass grid grid-cols-5 transition-all duration-300 px-2 py-1 rounded-md text-sm">
+                                                <div class="pokoje"> {{ $room->id }} </div>
+                                                <div class="pokoje"> {{ $room->pietro }} </div>
+                                                <div class="pokoje"> {{ $room->status ? 'Zajęte' : 'Wolne' }} </div>
+                                                <div class="pokoje"> {{ $room->czyste ? 'Czysty' : 'Brudny' }} </div>
+                                                <div class="pokoje"> {{ $room->wykluczone ? 'Wykluczony' : 'Aktywny' }} </div>
+                                                </a>
+                                            @endif
+                                        @endforeach
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @endif
 
                         {{-- Right --}}
                         <div class="flex flex-col w-1/2 h-full  basis-[600px] grow">

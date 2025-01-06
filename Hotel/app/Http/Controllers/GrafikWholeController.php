@@ -88,6 +88,11 @@ class GrafikWholeController extends Controller
         $urlData = $month . '.' . $year;
         $isFile = false;
 
+        if($month[0] === '0') {            
+            $month = substr($month, 1);
+            $urlData = $month . '.' . $year;
+        }
+
         foreach($jsonData as $file) {
             if (preg_match('/\b' . preg_quote($urlData, '/') . '\b/', $file)) {
                 $filteredFiles[] = $file;
@@ -114,6 +119,8 @@ class GrafikWholeController extends Controller
             $uniqueData = null;
         }
 
+        $userStanowisko = app('App\Http\Controllers\GetUserRoles')->select($request);
+
         return view('grafikWhole', [
             'hotelInfos' => $hotelInfos,
             'personels' => $personelData,
@@ -126,7 +133,8 @@ class GrafikWholeController extends Controller
             'date' => $date,
             'datePrevious' => $datePrevious,
             'dateNext' => $dateNext,
-            'uniqueData' => $uniqueData
+            'uniqueData' => $uniqueData,
+            'userStanowisko' => $userStanowisko
         ]);
     }
 }
