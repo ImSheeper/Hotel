@@ -52,7 +52,7 @@
 
                         <?php $__currentLoopData = $personels; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $personel): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <?php if($personel->zablokowany === 0): ?>
-                                <a href='<?php echo e(route('personelParameterRoute', ['login' => $personel->login, 'month' => $month, 'year' => $year])); ?>' class="tableClass cursor-pointer grid grid-cols-5 transition-all duration-300 hover:bg-gray-300 px-2 py-1 rounded-md">
+                            <a href='<?php echo e(route('personelParameterRoute', ['login' => $personel->login, 'month' => $month, 'year' => $year])); ?>' class="tableClass cursor-pointer grid grid-cols-5 transition-all duration-300 hover:bg-gray-300 px-2 py-1 rounded-md">
                                     <div class="className hidden"> <?php echo e($personel->login); ?> </div>
                                     <div class="class"> <?php echo e($personel->imie); ?>  <?php echo e($personel->nazwisko); ?> </div>
                                     <div class="class"> <?php echo e($personel->stanowiska->stanowisko); ?> </div>
@@ -85,7 +85,7 @@
 
                         <?php $__currentLoopData = $personels; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $personel): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <?php if($personel->zablokowany === 1): ?>
-                                <a href='<?php echo e(route('personelParameterRoute', ['login' => $personel->login, 'month' => $month, 'year' => $year])); ?>' class="tableClassBlocked cursor-pointer grid grid-cols-3 transition-all duration-300 hover:bg-gray-300 px-2 py-1 rounded-md">
+                            <a href='<?php echo e(route('personelParameterRoute', ['login' => $personel->login, 'month' => $month, 'year' => $year])); ?>' class="tableClassBlocked cursor-pointer grid grid-cols-3 transition-all duration-300 hover:bg-gray-300 px-2 py-1 rounded-md">
                                     <div class="className hidden"> <?php echo e($personel->login); ?> </div>
                                     <div class="class"> <?php echo e($personel->imie); ?>  <?php echo e($personel->nazwisko); ?> </div>
                                     <div class="class"> <?php echo e($personel->stanowiska->stanowisko); ?> </div>

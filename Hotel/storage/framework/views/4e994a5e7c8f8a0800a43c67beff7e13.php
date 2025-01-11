@@ -135,22 +135,20 @@
                                     </div>
                                     
                                     <hr class="border-t border-gray-600 mb-5">
-                                    <div class="grid grid-cols-5 font-bold px-2 py-1 text-sm">
+                                    <div class="grid grid-cols-4 font-bold px-2 py-1 text-sm">
                                         <div class="name">Pokój</div>
                                         <div class="name">Piętro</div>
                                         <div class="name">Status</div>
                                         <div class="name">Czysty</div>
-                                        <div class="name">Wykluczony</div>
                                     </div>
                                     <div class="roomsContainer">
                                         <?php $__currentLoopData = $rooms; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $room): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <?php if($room->wykluczone === 0): ?>
-                                                <a class="tableClass grid grid-cols-5 transition-all duration-300 px-2 py-1 rounded-md text-sm">
+                                                <a class="tableClass grid grid-cols-4 transition-all duration-300 px-2 py-1 rounded-md text-sm">
                                                 <div class="pokoje"> <?php echo e($room->id); ?> </div>
                                                 <div class="pokoje"> <?php echo e($room->pietro); ?> </div>
                                                 <div class="pokoje"> <?php echo e($room->status ? 'Zajęte' : 'Wolne'); ?> </div>
                                                 <div class="pokoje"> <?php echo e($room->czyste ? 'Czysty' : 'Brudny'); ?> </div>
-                                                <div class="pokoje"> <?php echo e($room->wykluczone ? 'Wykluczony' : 'Aktywny'); ?> </div>
                                                 </a>
                                             <?php endif; ?>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -169,7 +167,7 @@
                                 
                                 <hr class="border-t border-gray-600 mb-5">
 
-                                <div class="grid grid-cols-7 z-10">
+                                <div class="grid grid-cols-7 z-10 justify-items-center">
                                     <?php if(isset($grafik)): ?>
                                         <?php 
                                             $file = $grafik[0]['data'][0]['nazwa dnia'];
@@ -201,7 +199,7 @@
                                             foreach($dni as $klucz => $dzien) {
                                                 if($file == $dzien) $currentDay = $klucz;
                                             }
-                                            
+
                                             $fieldsToAdd = 0;
                                             for($currentDay; $currentDay > 1; $currentDay--) {
                                                 $fieldsToAdd++;
@@ -231,7 +229,7 @@
                                                 <div class="document font-bold hidden"><?php echo e($graf["nazwa dnia"]); ?></div>
                                                 <div class="flex overflow-hidden">
                                                     <div class="document text-sm">
-                                                        <?php if($userStanowisko === 'Właściciel Hotelu' || $userStanowisko === 'Menedżer Hotelu'): ?>
+                                                        <?php if($userStanowisko === 'Właściciel Hotelu'): ?>
                                                             Pracuje
                                                         <?php else: ?>
                                                             <?php echo e($graf["status"]); ?>
@@ -253,7 +251,7 @@
                                                             <div class="document font-bold hidden"><?php echo e($graf["nazwa dnia"]); ?></div>
                                                         <div class="flex overflow-hidden">
                                                             <div class="document text-sm">
-                                                                <?php if($userStanowisko === 'Właściciel Hotelu' || $userStanowisko === 'Menedżer Hotelu'): ?>
+                                                                <?php if($userStanowisko === 'Właściciel Hotelu'): ?>
                                                                     Brak
                                                                 <?php else: ?>
                                                                     <?php echo e($graf["status"]); ?>

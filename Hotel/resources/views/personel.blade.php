@@ -52,7 +52,7 @@
 
                         @foreach ($personels as $personel)
                             @if ($personel->zablokowany === 0)
-                                <a href='{{ route('personelParameterRoute', ['login' => $personel->login, 'month' => $month, 'year' => $year]) }}' class="tableClass cursor-pointer grid grid-cols-5 transition-all duration-300 hover:bg-gray-300 px-2 py-1 rounded-md">
+                            <a href='{{ route('personelParameterRoute', ['login' => $personel->login, 'month' => $month, 'year' => $year]) }}' class="tableClass cursor-pointer grid grid-cols-5 transition-all duration-300 hover:bg-gray-300 px-2 py-1 rounded-md">
                                     <div class="className hidden"> {{ $personel->login }} </div>
                                     <div class="class"> {{ $personel->imie }}  {{ $personel->nazwisko }} </div>
                                     <div class="class"> {{ $personel->stanowiska->stanowisko }} </div>
@@ -85,7 +85,7 @@
 
                         @foreach ($personels as $personel)
                             @if ($personel->zablokowany === 1)
-                                <a href='{{ route('personelParameterRoute', ['login' => $personel->login, 'month' => $month, 'year' => $year]) }}' class="tableClassBlocked cursor-pointer grid grid-cols-3 transition-all duration-300 hover:bg-gray-300 px-2 py-1 rounded-md">
+                            <a href='{{ route('personelParameterRoute', ['login' => $personel->login, 'month' => $month, 'year' => $year]) }}' class="tableClassBlocked cursor-pointer grid grid-cols-3 transition-all duration-300 hover:bg-gray-300 px-2 py-1 rounded-md">
                                     <div class="className hidden"> {{ $personel->login }} </div>
                                     <div class="class"> {{ $personel->imie }}  {{ $personel->nazwisko }} </div>
                                     <div class="class"> {{ $personel->stanowiska->stanowisko }} </div>

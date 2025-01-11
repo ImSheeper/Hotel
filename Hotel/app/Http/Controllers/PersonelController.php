@@ -48,6 +48,9 @@ class PersonelController extends Controller
 
         $userStanowisko = app('App\Http\Controllers\GetUserRoles')->select($request);
         
+        // $month zwraca 01, ale powinno zwracać tylko 1 - po to jest ta poniższa linijka
+        if($month[0] === '0') $month = $month[1];
+
         return view('personel', [
             'hotelInfos' => $hotelInfos,
             'login' => $login,

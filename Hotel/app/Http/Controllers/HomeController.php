@@ -36,6 +36,8 @@ class HomeController extends Controller
         $year = date('Y');
         $month = date('m');
 
+        if($month[0] === '0') $month = $month[1];
+
         $timeOfWork = [];
         $zmiana = 12; //tutaj pobieraj dane z pliku konfiguracyjnego
         $statuses = [];
@@ -125,7 +127,8 @@ class HomeController extends Controller
                 $content = Storage::disk('public')->get($file);
                 $json[] = json_decode($content, true);
             }
-            for($i = 0; $i < count($json); $i++) {
+            
+            for($i = 0; $i < count($json) - 1; $i++) {
                 foreach ($json[$i]['data'] as $graf) {
                     if ($graf["status"] === "Pracuje") {
                         $data[] = $graf['dzisiejszy dzien'];
