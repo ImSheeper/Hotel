@@ -39,17 +39,19 @@
                 <div class="flex min-h-max w-full justify-center animate-fade-down animate-delay-[1s] animate-ease-out my-5">
                     <div class="flex flex-col cursor-default min-w-max max-w-[1000px] grow max-h-96 bg-gray-200 rounded-2xl pl-10 pr-10 pt-5 pb-5 overflow-auto shadow-lg">
                         <div class="font-bold text-3xl mb-5">Magazyn</div>
-                        <div class="grid grid-cols-3 font-bold px-2 py-1">
+                        <div class="grid grid-cols-4 font-bold px-2 py-1">
                             <div class="name">Nazwa</div>
                             <div class="name">Ilość</div>
                             <div class="name">Data ważności do</div>
+                            <div class="name">Rodzaj</div>
                         </div>
                         <div class="magazynContainer">
                             <?php $__currentLoopData = $magazyn; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <div class="tableClass cursor-pointer grid grid-cols-3 transition-all duration-300 hover:bg-gray-300 px-2 py-1 rounded-md">
+                            <div class="tableClass cursor-pointer grid grid-cols-4 transition-all duration-300 hover:bg-gray-300 px-2 py-1 rounded-md">
                                 <div class="magazyn"><?php echo e($item->produkt->nazwa); ?> </div>
                                 <div class="magazyn"><?php echo e($item->ilosc); ?> </div>
                                 <div class="magazyn"><?php echo e($item->data_waznosci); ?> </div>
+                                <div class="magazyn"><?php echo e($item->rodzaj); ?> </div>
                             </div>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </div>

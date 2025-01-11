@@ -261,11 +261,14 @@ function refresh(result) {
             if(prod.id == mag.nazwa_produktu) mag.nazwa_produktu = prod.nazwa;
         });
 
+        console.log(mag.rodzaj);
+
         const magHTML = `
-            <div class="tableClass cursor-pointer grid grid-cols-3 transition-all duration-300 hover:bg-gray-300 px-2 py-1 rounded-md">
+            <div class="tableClass cursor-pointer grid grid-cols-4 transition-all duration-300 hover:bg-gray-300 px-2 py-1 rounded-md">
                 <div class="magazyn">${mag.nazwa_produktu} </div>
                 <div class="magazyn">${mag.ilosc} </div>
                 <div class="magazyn">${mag.data_waznosci} </div>
+                <div class="magazyn">${mag.rodzaj} </div>
             </div>
         `;
         magazynContainer.append(magHTML);

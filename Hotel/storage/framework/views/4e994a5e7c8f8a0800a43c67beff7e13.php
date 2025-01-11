@@ -218,25 +218,48 @@
             
                                     <?php if(isset($grafik)): ?>
                                         <?php $__currentLoopData = $grafik[0]['data']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $graf): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                <?php if(in_array($graf['dzisiejszy dzien'], $uniqueData)): ?>
-                                                <div class="json overflow-hidden select-none flex flex-col bg-red-400 h-20 shadow-md w-20 rounded-full mx-2 my-2 justify-center items-center">
-                                                    <div class="document font-bold hidden"><?php echo e($graf["rok"]); ?></div>
-                                                        <div class="document font-bold hidden"><?php echo e($graf["numer dni"]); ?></div>
-                                                        <div class="document font-bold hidden"><?php echo e($graf["miesiąc"]); ?></div>
-                                                        <div class="document text-xl"><?php echo e($graf["dzisiejszy dzien"]); ?></div>
-                                                        <div class="document font-bold hidden"><?php echo e($graf["nazwa dnia"]); ?></div>
-                                                        <div class="flex overflow-hidden">
-                                                            <div class="document text-sm"><?php echo e($graf["status"]); ?></div>
-                                                        </div>                                            </div>
-                                                <?php else: ?>
+                                        <?php if(($userStanowisko === 'Właściciel Hotelu' && in_array($graf['dzisiejszy dzien'], $uniqueData)) || ($userStanowisko !== 'Właściciel Hotelu' && $graf["status"] === "Pracuje")): ?>
+                                            <?php if(($userStanowisko === 'Właściciel Hotelu')): ?>     
                                                 <div class="json overflow-hidden select-none flex flex-col bg-green-400 h-20 shadow-md w-20 rounded-full mx-2 my-2 justify-center items-center">
-                                                    <div class="document font-bold hidden"><?php echo e($graf["rok"]); ?></div>
-                                                        <div class="document font-bold hidden"><?php echo e($graf["numer dni"]); ?></div>
-                                                        <div class="document font-bold hidden"><?php echo e($graf["miesiąc"]); ?></div>
-                                                        <div class="document text-xl"><?php echo e($graf["dzisiejszy dzien"]); ?></div>
-                                                        <div class="document font-bold hidden"><?php echo e($graf["nazwa dnia"]); ?></div>
+                                            <?php else: ?>
+                                                <div class="json overflow-hidden select-none flex flex-col bg-red-400 h-20 shadow-md w-20 rounded-full mx-2 my-2 justify-center items-center">
+                                            <?php endif; ?>
+                                                <div class="document font-bold hidden"><?php echo e($graf["rok"]); ?></div>
+                                                <div class="document font-bold hidden"><?php echo e($graf["numer dni"]); ?></div>
+                                                <div class="document font-bold hidden"><?php echo e($graf["miesiąc"]); ?></div>
+                                                <div class="document text-xl"><?php echo e($graf["dzisiejszy dzien"]); ?></div>
+                                                <div class="document font-bold hidden"><?php echo e($graf["nazwa dnia"]); ?></div>
+                                                <div class="flex overflow-hidden">
+                                                    <div class="document text-sm">
+                                                        <?php if($userStanowisko === 'Właściciel Hotelu' || $userStanowisko === 'Menedżer Hotelu'): ?>
+                                                            Pracuje
+                                                        <?php else: ?>
+                                                            <?php echo e($graf["status"]); ?>
+
+                                                        <?php endif; ?>
+                                                    </div>
+                                                </div>                                            
+                                            </div>
+                                                <?php else: ?>
+                                                    <?php if(($userStanowisko === 'Właściciel Hotelu')): ?>     
+                                                        <div class="json overflow-hidden select-none flex flex-col bg-red-400 h-20 shadow-md w-20 rounded-full mx-2 my-2 justify-center items-center">
+                                                    <?php else: ?>
+                                                        <div class="json overflow-hidden select-none flex flex-col bg-green-400 h-20 shadow-md w-20 rounded-full mx-2 my-2 justify-center items-center">
+                                                    <?php endif; ?>                                                        
+                                                            <div class="document font-bold hidden"><?php echo e($graf["rok"]); ?></div>
+                                                            <div class="document font-bold hidden"><?php echo e($graf["numer dni"]); ?></div>
+                                                            <div class="document font-bold hidden"><?php echo e($graf["miesiąc"]); ?></div>
+                                                            <div class="document text-xl"><?php echo e($graf["dzisiejszy dzien"]); ?></div>
+                                                            <div class="document font-bold hidden"><?php echo e($graf["nazwa dnia"]); ?></div>
                                                         <div class="flex overflow-hidden">
-                                                            <div class="document text-sm"><?php echo e($graf["status"]); ?></div>
+                                                            <div class="document text-sm">
+                                                                <?php if($userStanowisko === 'Właściciel Hotelu' || $userStanowisko === 'Menedżer Hotelu'): ?>
+                                                                    Brak
+                                                                <?php else: ?>
+                                                                    <?php echo e($graf["status"]); ?>
+
+                                                                <?php endif; ?>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 <?php endif; ?>

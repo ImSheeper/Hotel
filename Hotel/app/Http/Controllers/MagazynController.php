@@ -22,7 +22,7 @@ class MagazynController extends Controller
         }
 
         
-        $magazyn = Magazyn::select('data_waznosci', DB::raw('nazwa_produktu, data_waznosci, SUM(ilosc) as ilosc'))
+        $magazyn = Magazyn::select('data_waznosci', DB::raw('nazwa_produktu, data_waznosci, rodzaj, SUM(ilosc) as ilosc'))
         ->groupBy('data_waznosci')
         ->groupBy('nazwa_produktu');
         
@@ -97,7 +97,7 @@ class MagazynController extends Controller
         }
 
         
-        $magazyn = Magazyn::select('data_waznosci', DB::raw('nazwa_produktu, data_waznosci, SUM(ilosc) as ilosc'))
+        $magazyn = Magazyn::select('data_waznosci', DB::raw('nazwa_produktu, data_waznosci, rodzaj, SUM(ilosc) as ilosc'))
         ->groupBy('data_waznosci')
         ->groupBy('nazwa_produktu');
         
@@ -130,19 +130,37 @@ class MagazynController extends Controller
                 $produkt = Produkt::where('nazwa', $nazwaDelete)->delete();
                 break;
             case 1:
-                $produkt = new Produkt();
-                $produkt->nazwa = $nazwaAdd;
-                $produkt->rodzaj = $magazynAdd;
-                $produkt->save();
+                $existingProdukt = Produkt::where('nazwa', $nazwaAdd)->first();
+
+                if(!$existingProdukt) {
+                    $produkt = new Produkt();
+                    $produkt->nazwa = $nazwaAdd;
+                    $produkt->rodzaj = $magazynAdd;
+                    $produkt->save();
+                }
                 break;
         }
 
-        $magazyn = Magazyn::select('data_waznosci', DB::raw('nazwa_produktu, data_waznosci, SUM(ilosc) as ilosc'))
+        $userStanowisko = app('App\Http\Controllers\GetUserRoles')->select($request);
+
+        if($userStanowisko === 'Menedżer Kuchni') {
+            $type = 'Kuchnia';
+        } else if ($userStanowisko === 'Menedżer Hotelu') {
+            $type = 'Hotel';
+        } else {
+            $type = '';
+        }
+
+        
+        $magazyn = Magazyn::select('data_waznosci', DB::raw('nazwa_produktu, data_waznosci, rodzaj, SUM(ilosc) as ilosc'))
         ->groupBy('data_waznosci')
-        ->groupBy('nazwa_produktu')
-        ->get();
-    
-        $produkt = Produkt::get();
+        ->groupBy('nazwa_produktu');
+        
+        if($type != '') $magazyn->where('rodzaj', $type);
+        $magazyn = $magazyn->get();
+        
+        if($type != '') $produkt = Produkt::where('rodzaj', $type)->get();
+        else $produkt = Produkt::get();
 
         return response()->json([
             'message' => 'Dane przetworzone poprawnie!',
@@ -166,7 +184,7 @@ class MagazynController extends Controller
         $magazyn->data_waznosci = $date; 
         $magazyn->save();
 
-        $magazyn = Magazyn::select('data_waznosci', DB::raw('nazwa_produktu, data_waznosci, SUM(ilosc) as ilosc'))
+        $magazyn = Magazyn::select('data_waznosci', DB::raw('nazwa_produktu, data_waznosci, rodzaj, SUM(ilosc) as ilosc'))
         ->groupBy('data_waznosci')
         ->groupBy('nazwa_produktu')
         ->get();
@@ -188,7 +206,7 @@ class MagazynController extends Controller
         ->where('data_waznosci', $request->data['date'])
         ->delete();
 
-        $magazyn = Magazyn::select('data_waznosci', DB::raw('nazwa_produktu, data_waznosci, SUM(ilosc) as ilosc'))
+        $magazyn = Magazyn::select('data_waznosci', DB::raw('nazwa_produktu, data_waznosci, rodzaj, SUM(ilosc) as ilosc'))
         ->groupBy('data_waznosci')
         ->groupBy('nazwa_produktu')
         ->get();
