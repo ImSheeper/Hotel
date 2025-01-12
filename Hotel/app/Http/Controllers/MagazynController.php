@@ -177,19 +177,35 @@ class MagazynController extends Controller
         $nazwa = $produkt->id;
         $ilosc = (int) $request->data['ilosc'];
         $date = $request->data['date'];
+        $rodzaj = $request->data['rodzaj'];
 
         $magazyn = new Magazyn();
         $magazyn->nazwa_produktu = $nazwa;
         $magazyn->ilosc = $ilosc;
         $magazyn->data_waznosci = $date; 
+        $magazyn->rodzaj = $rodzaj; 
         $magazyn->save();
 
+        $userStanowisko = app('App\Http\Controllers\GetUserRoles')->select($request);
+
+        if($userStanowisko === 'Menedżer Kuchni') {
+            $type = 'Kuchnia';
+        } else if ($userStanowisko === 'Menedżer Hotelu') {
+            $type = 'Hotel';
+        } else {
+            $type = '';
+        }
+
+        
         $magazyn = Magazyn::select('data_waznosci', DB::raw('nazwa_produktu, data_waznosci, rodzaj, SUM(ilosc) as ilosc'))
         ->groupBy('data_waznosci')
-        ->groupBy('nazwa_produktu')
-        ->get();
-    
-        $produkt = Produkt::get();
+        ->groupBy('nazwa_produktu');
+        
+        if($type != '') $magazyn->where('rodzaj', $type);
+        $magazyn = $magazyn->get();
+        
+        if($type != '') $produkt = Produkt::where('rodzaj', $type)->get();
+        else $produkt = Produkt::get();
 
         return response()->json([
             'message' => 'Dane przetworzone poprawnie!',
@@ -206,12 +222,26 @@ class MagazynController extends Controller
         ->where('data_waznosci', $request->data['date'])
         ->delete();
 
+        $userStanowisko = app('App\Http\Controllers\GetUserRoles')->select($request);
+
+        if($userStanowisko === 'Menedżer Kuchni') {
+            $type = 'Kuchnia';
+        } else if ($userStanowisko === 'Menedżer Hotelu') {
+            $type = 'Hotel';
+        } else {
+            $type = '';
+        }
+
+        
         $magazyn = Magazyn::select('data_waznosci', DB::raw('nazwa_produktu, data_waznosci, rodzaj, SUM(ilosc) as ilosc'))
         ->groupBy('data_waznosci')
-        ->groupBy('nazwa_produktu')
-        ->get();
-    
-        $produkt = Produkt::get();
+        ->groupBy('nazwa_produktu');
+        
+        if($type != '') $magazyn->where('rodzaj', $type);
+        $magazyn = $magazyn->get();
+        
+        if($type != '') $produkt = Produkt::where('rodzaj', $type)->get();
+        else $produkt = Produkt::get();
 
         return response()->json([
             'message' => 'Dane przetworzone poprawnie!',

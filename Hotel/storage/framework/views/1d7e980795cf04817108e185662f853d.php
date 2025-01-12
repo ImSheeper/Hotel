@@ -173,7 +173,7 @@
                     <div class="flex flex-col items-center justify-center w-full">
                         <div class="flex relative group rounded-2xl mb-10 mt-10">
                             <div class="flex relative group h-12">
-                                <button class="but bg-gray-200 w-36 h-12 min-w-max rounded-2xl text-lg opcaity-100 transition-all duration-200 group-hover:opacity-0">Zapisz</button>
+                                <button class="but bg-[#F4F2FF] w-36 h-12 min-w-max rounded-2xl text-lg opcaity-100 transition-all duration-200 group-hover:opacity-0">Zapisz</button>
                                 <button class="but absolute bg-gradient-to-r from-cyan-400 to-fuchsia-400 w-36 h-12 min-w-max rounded-2xl text-lg transition-all duration-200 opacity-0 group-hover:opacity-100 text-white">Zapisz</button>
                             </div>
                         </div>
@@ -185,7 +185,7 @@
             <div class="pop2 flex flex-col bg-white w-[500px] min-h-max rounded-lg items-center justify-center p-5">
                 <div class="text-2xl mb-5">Grafik został zaktualizowany.</div>
                 <div class="flex relative group h-12">
-                    <button class="close bg-gray-200 w-36 h-10 min-w-max rounded-2xl text-lg opcaity-100 transition-all duration-200 group-hover:opacity-0 shadow-lg">Zamknij</button>
+                    <button class="close bg-[#F4F2FF] w-36 h-10 min-w-max rounded-2xl text-lg opcaity-100 transition-all duration-200 group-hover:opacity-0 shadow-lg">Zamknij</button>
                     <button class="close absolute bg-gradient-to-r from-cyan-400 to-fuchsia-400 w-36 h-10 min-w-max rounded-2xl text-lg transition-all duration-200 opacity-0 group-hover:opacity-100 text-white">Zamknij</button>
                 </div>
             </div>

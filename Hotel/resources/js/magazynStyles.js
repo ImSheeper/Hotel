@@ -283,7 +283,8 @@ $('.AjaxDodaj').on('click', function() {
     var data = {
         'nazwa' : $('.dataDodaj').eq(0).val(),
         'ilosc' : $('.dataDodaj').eq(1).val(),
-        'date' : $('.dataDodaj').eq(2).val()
+        'date' : $('.dataDodaj').eq(2).val(),
+        'rodzaj' : $('.dataDodaj').eq(3).val()
     };
     
     $.ajax({

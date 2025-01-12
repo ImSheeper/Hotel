@@ -187,8 +187,8 @@ $(document).ready(function() {
     // Użytkownik zablokowany - style
     $('.zablokowany').each(function() {
         if($(this).text().trim() === "Tak") {
-            $(this).addClass('text-red-500');
-            $(this).parent().find('.class').addClass('text-red-500');
+            // $(this).addClass('text-red-500');
+            // $(this).parent().find('.class').addClass('text-red-500');
         }
     });
 

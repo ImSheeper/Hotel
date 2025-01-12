@@ -54,7 +54,7 @@
                             </div>
                         @endif
                         
-                        <div class="flex flex-col w-2/6 h-full  basis-[400px] grow">
+                        <div class="flex flex-col w-2/6 h-full basis-[400px] grow">
                             <div class="bg-[#F4F2FF] rounded-md shadow-lg overflow-auto p-5 h-full">
                                 <div class="flex items-center mb-5">
                                     <img src={{ url('/icons/Personel.svg') }} class="z-10 transition duration-500 opacity-100 group-hover:opacity-0 h-6">
@@ -79,7 +79,7 @@
                         </div>
 
                         {{-- Right --}}
-                        <div class="flex flex-col w-1/6 h-full  basis-[200px] grow">
+                        <div class="flex flex-col w-1/6 h-full basis-[200px] grow">
                             <div class="flex flex-col bg-[#F4F2FF] shadow-lg rounded-md grow p-5 overflow-auto">
                                 <div class="flex items-center mb-5">
                                     <img src={{ url('/icons/Account.svg') }} class="z-10 transition duration-500 opacity-100 group-hover:opacity-0 h-6">
@@ -106,6 +106,7 @@
                                     </div>
                                     
                                     <hr class="border-t border-gray-600 mb-5">
+                                    
                                     <div class="grid grid-cols-3 font-bold px-2 py-1 gap-x-px">
                                         <div class="name">Nazwa</div>
                                         <div class="name">Ilość</div>
