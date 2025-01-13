@@ -198,9 +198,10 @@ $('.sendAjax').on('click', function() {
     var data = {
         'id' : $('.data').eq(0).val(),
         'pietro' : $('.data').eq(1).val(),
-        'status' : $('.data').eq(2).val(),
-        'czysty' : $('.data').eq(3).val(),
-        'wykluczony' : $('.data').eq(4).val()
+        'rodzaj' : $('.data').eq(2).val(),
+        'status' : $('.data').eq(3).val(),
+        'czysty' : $('.data').eq(4).val(),
+        'wykluczony' : $('.data').eq(5).val()
     };
     
     $.ajax({
@@ -232,7 +233,8 @@ $('.sendAjax').on('click', function() {
 $('.butYes').on('click', function() {
 
     var data = {
-        'id' : $('.data').eq(0).val()
+        'id' : $('.data').eq(0).val(),
+        'powod' : $('.dataWyklucz').eq(0).val()
     };
     
     $.ajax({
@@ -295,13 +297,23 @@ function refreshPokoje(result) {
 
     $('.tableClass').remove();
     $('.tableClassBlocked').remove();
+    var powod = ''
+    console.log('rodzaj', result.rodzaj_pokoj);
 
     result.pokoje.forEach(room => {
+        let rodzaj = '';
+        result.rodzaj_pokoj.forEach(rodz => {
+            if(room.rodzaj_id === rodz.id) {
+                rodzaj = rodz.rodzaj;
+            }
+        });
+
         if (room.wykluczone === 0) { // Tylko aktywne pokoje
             const roomHTML = `
-                <a class="tableClass cursor-pointer grid grid-cols-5 transition-all duration-300 hover:bg-gray-300 px-2 py-1 rounded-md">
+                <a class="tableClass cursor-pointer grid grid-cols-6 transition-all duration-300 hover:bg-gray-300 px-2 py-1 rounded-md">
                     <div class="pokoje">${room.id} </div>
                     <div class="pokoje">${room.pietro} </div>
+                    <div class="pokoje">${rodzaj} </div>
                     <div class="pokoje">${room.status ? 'Zajęte' : 'Wolne'} </div>
                     <div class="pokoje">${room.czyste ? 'Czysty' : 'Brudny'} </div>
                     <div class="pokoje">${room.wykluczone ? 'Wykluczony' : 'Aktywny'} </div>
@@ -309,13 +321,21 @@ function refreshPokoje(result) {
             `;
             roomsContainer.append(roomHTML); // Dodaj pokój do kontenera
         } else {
+            if(room.powod_wykluczenia !== null) {
+                powod = room.powod_wykluczenia;
+            } else {
+                powod = '';
+            }
+
             const roomHTML = `
-                <a class="tableClassBlocked cursor-pointer grid grid-cols-5 transition-all duration-300 hover:bg-gray-300 px-2 py-1 rounded-md">
+                <a class="tableClassBlocked cursor-pointer grid grid-cols-7 transition-all duration-300 hover:bg-gray-300 px-2 py-1 rounded-md" title="${room.powod_wykluczenia}">
                     <div class="pokoje">${room.id} </div>
                     <div class="pokoje">${room.pietro} </div>
+                    <div class="pokoje">${rodzaj} </div>
                     <div class="pokoje">${room.status ? 'Zajęte' : 'Wolne'} </div>
                     <div class="pokoje">${room.czyste ? 'Czysty' : 'Brudny'} </div>
                     <div class="pokoje">${room.wykluczone ? 'Wykluczony' : 'Aktywny'} </div>
+                    <div class="pokoje w-36 overflow-hidden whitespace-nowrap text-ellipsis"> ${powod} </div>
                 </a>
             `;
             roomsContainerBlocked.append(roomHTML); // Dodaj pokój do kontenera

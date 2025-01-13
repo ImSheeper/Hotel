@@ -10,4 +10,9 @@ class Pokoje extends Model
     use HasFactory;
 
     protected $table = "Pokoje";
+    
+    public function rodzaj()
+    {
+        return $this->belongsTo(Pokoje_rodzaj::class, 'rodzaj_id');
+    }
 }
