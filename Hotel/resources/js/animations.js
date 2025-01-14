@@ -20,16 +20,23 @@ $(".json").click(function() {
         { offset: [0.1, 0.5, 0.7], easing: "ease-out", duration: 0.4}
     )
 
-    if($(this).hasClass('bg-red-400')) {
+    console.log($(this).find('.document:last').text());
+    if ($(this).hasClass('bg-red-400') && $(this).find('.document:last').text() === '2. zmiana') {
         $(this).removeClass('bg-red-400').addClass('bg-green-400');
         $(this).find('.document:last').text("Wolne");
+    } else if ($(this).hasClass('bg-red-400') ) {
+        $(this).find('.document:last').text("2. zmiana");
     } else {
         $(this).removeClass('bg-green-400').addClass('bg-red-400'); 
-        $(this).find('.document:last').text("Pracuje");
+        $(this).find('.document:last').text("1. zmiana");
     }
-    //coś nie działa
-    // if($(this).hasClass('bg-gray-200')) {
-    //     $('.document:last').removeClass('visible').addClass('invisible');
+
+    // if($(this).hasClass('bg-red-400')) {
+    //     $(this).removeClass('bg-red-400').addClass('bg-green-400');
+    //     $(this).find('.document:last').text("Wolne");
+    // } else {
+    //     $(this).removeClass('bg-green-400').addClass('bg-red-400'); 
+    //     $(this).find('.document:last').text("1. zmiana");
     // }
 });
 

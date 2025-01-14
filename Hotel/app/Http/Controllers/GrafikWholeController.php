@@ -99,6 +99,8 @@ class GrafikWholeController extends Controller
                 $isFile = true;
             }
         }
+        
+        $status = [];
 
         if ($isFile) {
             foreach ($filteredFiles as $file) {
@@ -107,8 +109,14 @@ class GrafikWholeController extends Controller
             }
             for($i = 0; $i < count($json); $i++) {
                 foreach ($json[$i]['data'] as $graf) {
-                    if ($graf["status"] === "Pracuje") {
+                    if ($graf["status"] === "1. zmiana" || $graf["status"] === "2. zmiana") {
                         $data[] = $graf['dzisiejszy dzien'];
+                        $status[] = [
+                            'status' => $graf['status'],
+                            'dzien' => $graf['dzisiejszy dzien'],
+                            'login' => $graf['login'],
+                            'stanowisko' => $graf['stanowisko']
+                        ];
                     }
                 }
             }
@@ -118,6 +126,8 @@ class GrafikWholeController extends Controller
             $json = null;
             $uniqueData = null;
         }
+
+        // dd($json[0]['data']);
 
         $userStanowisko = app('App\Http\Controllers\GetUserRoles')->select($request);
 
@@ -134,7 +144,8 @@ class GrafikWholeController extends Controller
             'datePrevious' => $datePrevious,
             'dateNext' => $dateNext,
             'uniqueData' => $uniqueData,
-            'userStanowisko' => $userStanowisko
+            'userStanowisko' => $userStanowisko,
+            'status' => $status
         ]);
     }
 }

@@ -7,7 +7,7 @@ $(document).ready(function() {
         //$('.warnUser').removeClass('invisible').addClass("visible animate-jump");
 
         //Separator danych. Liczba 6 to liczba danych w JSON
-        var dataSeparator = 6;
+        var dataSeparator = 8;
 
         //Rozpoczęcie pobierania danych do AJAX
         var data = [];
@@ -22,7 +22,9 @@ $(document).ready(function() {
                     "miesiąc" : child[i + 2].innerText,
                     "dzisiejszy dzien" : child[i + 3].innerText,
                     "nazwa dnia" : child[i + 4].innerText,
-                    "status" : child[i + 5].innerText,
+                    "stanowisko" : child[i + 5].innerText,
+                    "login" : child[i + 6].innerText,
+                    "status" : child[i + 7].innerText,
                 }
             if(child[i + 5].innerText == "") {
                 alert("Proszę uzupełnić wszystkie pola!");

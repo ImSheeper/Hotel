@@ -48,7 +48,6 @@
 
             {{-- Main screen --}}
             <div class="flex flex-col bg-white grow mx-1 my-1 mr-2 mb-2 min-w-fit rounded-md overflow-auto items-center w-min-max">
-                <div class="font-bold text-center mt-10 text-3xl">Grafik pracowników</div>
                 <div class="flex h-min-max w-full justify-center animate-fade-down animate-delay-[1s] animate-ease-out mt-10 flex-wrap">
                     {{-- arrows --}}
                     <div class="flex absolute h-full w-full items-center z-0">
@@ -119,30 +118,53 @@
                         @endif
 
                         @isset($grafik)
-                            @foreach ($grafik[0]['data'] as $graf)
-                                    @if (in_array($graf['dzisiejszy dzien'], $uniqueData))
+                        @foreach ($grafik[0]['data'] as $graf)
+                        @if (($userStanowisko === 'Właściciel Hotelu' && in_array($graf['dzisiejszy dzien'], $uniqueData)) || ($userStanowisko !== 'Właściciel Hotelu' && $graf["status"] === "1. zmiana" || ($userStanowisko !== 'Właściciel Hotelu' && $graf["status"] === "2. zmiana")))
+                            @if (($userStanowisko === 'Właściciel Hotelu'))     
+                                <div class="json overflow-hidden select-none flex flex-col bg-green-400 h-32 shadow-md w-32 rounded-full mx-2 my-2 justify-center items-center">
+                            @else
+                                <div class="json overflow-hidden select-none flex flex-col bg-red-400 h-32 shadow-md w-32 rounded-full mx-2 my-2 justify-center items-center">
+                            @endif
+                                <div class="document font-bold hidden">{{ $graf["rok"] }}</div>
+                                <div class="document font-bold hidden">{{ $graf["numer dni"] }}</div>
+                                <div class="document font-bold hidden">{{ $graf["miesiąc"] }}</div>
+                                <div class="document text-3xl">{{ $graf["dzisiejszy dzien"] }}</div>
+                                <div class="document font-bold hidden">{{ $graf["nazwa dnia"] }}</div>
+                                <div class="flex flex-col overflow-hidden">
+                                    @if (($userStanowisko === 'Właściciel Hotelu'))  
+                                        @foreach ($status as $stat)
+                                            @if ($graf['dzisiejszy dzien'] == $stat['dzien'])
+                                                <div class="document" title="{{ $stat["login"] }} : {{ $stat["stanowisko"] }}">{{ $stat["status"] }}</div>
+                                            @endif
+                                        @endforeach
+                                    @else
+                                        {{ $graf["status"] }}
+                                    @endif
+                                </div>                                               
+                            </div>
+                                @else
+                                    @if (($userStanowisko === 'Właściciel Hotelu'))     
                                         <div class="json overflow-hidden select-none flex flex-col bg-red-400 h-32 shadow-md w-32 rounded-full mx-2 my-2 justify-center items-center">
-                                            <div class="document font-bold hidden">{{ $graf["rok"] }}</div>
-                                            <div class="document font-bold hidden">{{ $graf["numer dni"] }}</div>
-                                            <div class="document font-bold hidden">{{ $graf["miesiąc"] }}</div>
-                                            <div class="document text-3xl">{{ $graf["dzisiejszy dzien"] }}</div>
-                                            <div class="document font-bold hidden">{{ $graf["nazwa dnia"] }}</div>
-                                            <div class="flex overflow-hidden">
-                                                <div class="document">{{ $graf["status"] }}</div>
-                                            </div>                                            </div>
                                     @else
                                         <div class="json overflow-hidden select-none flex flex-col bg-green-400 h-32 shadow-md w-32 rounded-full mx-2 my-2 justify-center items-center">
+                                    @endif                                                        
                                             <div class="document font-bold hidden">{{ $graf["rok"] }}</div>
                                             <div class="document font-bold hidden">{{ $graf["numer dni"] }}</div>
                                             <div class="document font-bold hidden">{{ $graf["miesiąc"] }}</div>
                                             <div class="document text-3xl">{{ $graf["dzisiejszy dzien"] }}</div>
                                             <div class="document font-bold hidden">{{ $graf["nazwa dnia"] }}</div>
-                                            <div class="flex overflow-hidden">
-                                                <div class="document">{{ $graf["status"] }}</div>
+                                        <div class="flex overflow-hidden">
+                                            <div class="document">
+                                                @if ($userStanowisko === 'Właściciel Hotelu')
+                                                    Brak
+                                                @else
+                                                    {{ $graf["status"] }}
+                                                @endif
                                             </div>
                                         </div>
-                                    @endif
-                            @endforeach
+                                    </div>
+                                @endif
+                        @endforeach
                     
                             @else
                             @for ($i = 1; $i <= $days; $i++)

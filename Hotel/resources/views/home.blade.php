@@ -217,7 +217,7 @@
             
                                     @isset($grafik)
                                         @foreach ($grafik[0]['data'] as $graf)
-                                        @if (($userStanowisko === 'Właściciel Hotelu' && in_array($graf['dzisiejszy dzien'], $uniqueData)) || ($userStanowisko !== 'Właściciel Hotelu' && $graf["status"] === "Pracuje"))
+                                        @if (($userStanowisko === 'Właściciel Hotelu' && in_array($graf['dzisiejszy dzien'], $uniqueData)) || ($userStanowisko !== 'Właściciel Hotelu' && $graf["status"] === "1. zmiana" || ($userStanowisko !== 'Właściciel Hotelu' && $graf["status"] === "2. zmiana")))
                                             @if (($userStanowisko === 'Właściciel Hotelu'))     
                                                 <div class="json overflow-hidden select-none flex flex-col bg-green-400 h-20 shadow-md w-20 rounded-full mx-2 my-2 justify-center items-center">
                                             @else
@@ -228,15 +228,17 @@
                                                 <div class="document font-bold hidden">{{ $graf["miesiąc"] }}</div>
                                                 <div class="document text-xl">{{ $graf["dzisiejszy dzien"] }}</div>
                                                 <div class="document font-bold hidden">{{ $graf["nazwa dnia"] }}</div>
-                                                <div class="flex overflow-hidden">
-                                                    <div class="document text-sm">
-                                                        @if ($userStanowisko === 'Właściciel Hotelu')
-                                                            Pracuje
-                                                        @else
-                                                            {{ $graf["status"] }}
-                                                        @endif
-                                                    </div>
-                                                </div>                                            
+                                                <div class="flex flex-col overflow-hidden text-xs">
+                                                    @if (($userStanowisko === 'Właściciel Hotelu'))  
+                                                        @foreach ($status as $stat)
+                                                            @if ($graf['dzisiejszy dzien'] == $stat['dzien'])
+                                                                <div class="document" title="{{ $stat["login"] }} : {{ $stat["stanowisko"] }}">{{ $stat["status"] }}</div>
+                                                            @endif
+                                                        @endforeach
+                                                    @else
+                                                        {{ $graf["status"] }}
+                                                    @endif
+                                                </div>                                               
                                             </div>
                                                 @else
                                                     @if (($userStanowisko === 'Właściciel Hotelu'))     

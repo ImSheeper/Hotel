@@ -122,16 +122,24 @@ class HomeController extends Controller
             }
         }
 
+        $data = [];
+        $status = [];
+
         if ($isFile) {
             foreach ($filteredFiles as $file) {
                 $content = Storage::disk('public')->get($file);
                 $json[] = json_decode($content, true);
             }
-            
-            for($i = 0; $i < count($json) - 1; $i++) {
+            for($i = 0; $i < count($json); $i++) {
                 foreach ($json[$i]['data'] as $graf) {
-                    if ($graf["status"] === "Pracuje") {
+                    if ($graf["status"] === "1. zmiana" || $graf["status"] === "2. zmiana") {
                         $data[] = $graf['dzisiejszy dzien'];
+                        $status[] = [
+                            'status' => $graf['status'],
+                            'dzien' => $graf['dzisiejszy dzien'],
+                            'login' => $graf['login'],
+                            'stanowisko' => $graf['stanowisko']
+                        ];
                     }
                 }
             }
@@ -202,7 +210,8 @@ class HomeController extends Controller
             'currentMonth' => $date,
             'dayNames' => $dayNames,
             'days' => $days,
-            'userStanowisko' => $userStanowisko
+            'userStanowisko' => $userStanowisko,
+            'status' => $status
         ]);
     }
 }

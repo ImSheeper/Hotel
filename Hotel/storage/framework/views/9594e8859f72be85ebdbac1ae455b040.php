@@ -217,7 +217,7 @@
             
                                     <?php if(isset($grafik)): ?>
                                         <?php $__currentLoopData = $grafik[0]['data']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $graf): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <?php if(($userStanowisko === 'Właściciel Hotelu' && in_array($graf['dzisiejszy dzien'], $uniqueData)) || ($userStanowisko !== 'Właściciel Hotelu' && $graf["status"] === "Pracuje")): ?>
+                                        <?php if(($userStanowisko === 'Właściciel Hotelu' && in_array($graf['dzisiejszy dzien'], $uniqueData)) || ($userStanowisko !== 'Właściciel Hotelu' && $graf["status"] === "1. zmiana" || ($userStanowisko !== 'Właściciel Hotelu' && $graf["status"] === "2. zmiana"))): ?>
                                             <?php if(($userStanowisko === 'Właściciel Hotelu')): ?>     
                                                 <div class="json overflow-hidden select-none flex flex-col bg-green-400 h-20 shadow-md w-20 rounded-full mx-2 my-2 justify-center items-center">
                                             <?php else: ?>
@@ -228,16 +228,18 @@
                                                 <div class="document font-bold hidden"><?php echo e($graf["miesiąc"]); ?></div>
                                                 <div class="document text-xl"><?php echo e($graf["dzisiejszy dzien"]); ?></div>
                                                 <div class="document font-bold hidden"><?php echo e($graf["nazwa dnia"]); ?></div>
-                                                <div class="flex overflow-hidden">
-                                                    <div class="document text-sm">
-                                                        <?php if($userStanowisko === 'Właściciel Hotelu'): ?>
-                                                            Pracuje
-                                                        <?php else: ?>
-                                                            <?php echo e($graf["status"]); ?>
+                                                <div class="flex flex-col overflow-hidden text-xs">
+                                                    <?php if(($userStanowisko === 'Właściciel Hotelu')): ?>  
+                                                        <?php $__currentLoopData = $status; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $stat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                            <?php if($graf['dzisiejszy dzien'] == $stat['dzien']): ?>
+                                                                <div class="document" title="<?php echo e($stat["login"]); ?> : <?php echo e($stat["stanowisko"]); ?>"><?php echo e($stat["status"]); ?></div>
+                                                            <?php endif; ?>
+                                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                    <?php else: ?>
+                                                        <?php echo e($graf["status"]); ?>
 
-                                                        <?php endif; ?>
-                                                    </div>
-                                                </div>                                            
+                                                    <?php endif; ?>
+                                                </div>                                               
                                             </div>
                                                 <?php else: ?>
                                                     <?php if(($userStanowisko === 'Właściciel Hotelu')): ?>     
