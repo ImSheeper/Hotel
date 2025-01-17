@@ -126,7 +126,7 @@
                         @isset($grafik)
                             @foreach ($grafik['data'] as $graf)
                                     @if ($graf["status"] === "1. zmiana" || $graf["status"] === "2. zmiana")
-                                        <div class="json overflow-hidden select-none flex flex-col bg-red-400 h-32 shadow-md w-32 rounded-full mx-2 my-2 justify-center items-center">
+                                        <div class="json overflow-hidden select-none flex flex-col bg-green-400 h-32 shadow-md w-32 rounded-full mx-2 my-2 justify-center items-center">
                                             <div class="document font-bold hidden">{{ $graf["rok"] }}</div>
                                             <div class="document font-bold hidden">{{ $graf["numer dni"] }}</div>
                                             <div class="document font-bold hidden">{{ $graf["miesiąc"] }}</div>
@@ -139,7 +139,7 @@
                                             </div>                                            
                                         </div>
                                     @elseif ($graf["status"] === "Wolne")
-                                        <div class="json overflow-hidden select-none flex flex-col bg-green-400 h-32 shadow-md w-32 rounded-full mx-2 my-2 justify-center items-center">
+                                        <div class="json overflow-hidden select-none flex flex-col bg-red-400 h-32 shadow-md w-32 rounded-full mx-2 my-2 justify-center items-center">
                                             <div class="document font-bold hidden">{{ $graf["rok"] }}</div>
                                             <div class="document font-bold hidden">{{ $graf["numer dni"] }}</div>
                                             <div class="document font-bold hidden">{{ $graf["miesiąc"] }}</div>
@@ -163,7 +163,7 @@
 
                                     <div class="document text-3xl">{{ $i }}</div>
                                     <div class="document font-bold hidden">{{ $dayNames[$i] }}</div>
-                                    <div class="document font-bold hidden">{{ $userStanowisko }}</div>
+                                    <div class="document font-bold hidden">{{ $grafStanowisko }}</div>
                                     <div class="document font-bold hidden">{{ $login }}</div>
                                     <div class="flex-col overflow-hidden">
                                         <div class="document visible">Status</div>

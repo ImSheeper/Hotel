@@ -126,7 +126,7 @@
                         <?php if(isset($grafik)): ?>
                             <?php $__currentLoopData = $grafik['data']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $graf): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <?php if($graf["status"] === "1. zmiana" || $graf["status"] === "2. zmiana"): ?>
-                                        <div class="json overflow-hidden select-none flex flex-col bg-red-400 h-32 shadow-md w-32 rounded-full mx-2 my-2 justify-center items-center">
+                                        <div class="json overflow-hidden select-none flex flex-col bg-green-400 h-32 shadow-md w-32 rounded-full mx-2 my-2 justify-center items-center">
                                             <div class="document font-bold hidden"><?php echo e($graf["rok"]); ?></div>
                                             <div class="document font-bold hidden"><?php echo e($graf["numer dni"]); ?></div>
                                             <div class="document font-bold hidden"><?php echo e($graf["miesiąc"]); ?></div>
@@ -139,7 +139,7 @@
                                             </div>                                            
                                         </div>
                                     <?php elseif($graf["status"] === "Wolne"): ?>
-                                        <div class="json overflow-hidden select-none flex flex-col bg-green-400 h-32 shadow-md w-32 rounded-full mx-2 my-2 justify-center items-center">
+                                        <div class="json overflow-hidden select-none flex flex-col bg-red-400 h-32 shadow-md w-32 rounded-full mx-2 my-2 justify-center items-center">
                                             <div class="document font-bold hidden"><?php echo e($graf["rok"]); ?></div>
                                             <div class="document font-bold hidden"><?php echo e($graf["numer dni"]); ?></div>
                                             <div class="document font-bold hidden"><?php echo e($graf["miesiąc"]); ?></div>
@@ -163,7 +163,7 @@
 
                                     <div class="document text-3xl"><?php echo e($i); ?></div>
                                     <div class="document font-bold hidden"><?php echo e($dayNames[$i]); ?></div>
-                                    <div class="document font-bold hidden"><?php echo e($userStanowisko); ?></div>
+                                    <div class="document font-bold hidden"><?php echo e($grafStanowisko); ?></div>
                                     <div class="document font-bold hidden"><?php echo e($login); ?></div>
                                     <div class="flex-col overflow-hidden">
                                         <div class="document visible">Status</div>

@@ -168,7 +168,7 @@
                         
                         <select name="stanowisko" id="stanowisko" class="data border-2 rounded-lg p-1 w-full">
                             <?php $__currentLoopData = $stanowiska; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $stanowisko): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <option value=<?php echo e($stanowisko->stanowisko); ?>><?php echo e($stanowisko->stanowisko); ?></option>
+                                <option value="<?php echo e($stanowisko->stanowisko); ?>"><?php echo e($stanowisko->stanowisko); ?></option>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                     </div>

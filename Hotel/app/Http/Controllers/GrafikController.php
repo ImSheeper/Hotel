@@ -14,7 +14,8 @@ class GrafikController extends Controller
 {
     public function select(Request $request, string $login) {
         $hotelInfos = Hotel::get();
-
+        $userFullName = User::where('login', $login)->first();
+        
         $loginData = $request->session()->get('login');
 
         $personelData = User::get();
@@ -88,7 +89,9 @@ class GrafikController extends Controller
         $json = json_decode(json: $jsonData, associative: true);
 
         $userStanowisko = app('App\Http\Controllers\GetUserRoles')->select($request);
-
+        $grafStanowisko = app('App\Http\Controllers\GetUserRoles')->selectUserLogin($login);
+        $login = $userFullName['imie'] . ' ' . $userFullName['nazwisko'];
+        
         return view('grafik', [
             'hotelInfos' => $hotelInfos,
             'loginData' => $loginData,
@@ -102,7 +105,8 @@ class GrafikController extends Controller
             'date' => $date,
             'datePrevious' => $datePrevious,
             'dateNext' => $dateNext,
-            'userStanowisko' => $userStanowisko
+            'userStanowisko' => $userStanowisko,
+            'grafStanowisko' => $grafStanowisko
         ]);
     }
 

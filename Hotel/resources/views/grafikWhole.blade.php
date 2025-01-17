@@ -65,122 +65,24 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-7 z-10">
-                        <div class="flex col-span-7 items-center group">
+                    <div class="flex flex-col z-10 w-full">
+                        <div class="flex items-center group justify-start mx-48">
                             <img src={{ url('icons/calendar.svg') }} class="h-12 ml-2">
                             <input value="{{ $year }}-{{ $month }}" class="date text-5xl h-24 font-bold ml-2 leading-loose capitalize group border-none outline-none"></input>
                         </div>
 
-                        @isset($grafik)
-                            @php 
-                                $file = $grafik[0]['data'][0]['nazwa dnia'];
-                            @endphp
-                        @else
-                            @php
-                                $file = $dayNames[1];
-                            @endphp
-                        @endisset
+                        <div class="flex items-center group justify-start mx-48">
+                            <select class='select border-2 rounded-lg p-1'> 
+                                @foreach ($stanowiska as $stanowisko)
+                                    <option> {{ $stanowisko->stanowisko }} </option>
+                                @endforeach
+                            </select>
+                        </div>
 
-                        @php
-                            $dni = array(
-                                1 => "Poniedziałek",
-                                2 => "Wtorek",
-                                3 => "Środa",
-                                4 => "Czwartek",
-                                5 => "Piątek",
-                                6 => "Sobota",
-                                7 => "Niedziela",
-                            );
-                        @endphp
-                        
-                        @foreach ($dni as $dzien)
-                            <div class="document-animation font-bold mx-2 my-2 text-center text-xl select-none">{{ $dzien }}</div>
-                        @endforeach
+                    </div>
 
-                        @if($file != "Poniedziałek")
-                            @php
-                                foreach($dni as $klucz => $dzien) {
-                                    if($file == $dzien) $currentDay = $klucz;
-                                }
-                                
-                                $fieldsToAdd = 0;
-                                for($currentDay; $currentDay > 1; $currentDay--) {
-                                    $fieldsToAdd++;
-                                }
-                            @endphp
-
-                            @for ($i = 1; $i <= $fieldsToAdd; $i++)
-                            <div class="json flex flex-col bg-gray-300 h-32 shadow-md w-32 rounded-3xl mx-2 my-2 pointer-events-none">
-                                <div class="document-animation font-bold"></div>
-                            </div>                           
-                            @endfor
-
-                        @endif
-
-                        @isset($grafik)
-                        @foreach ($grafik[0]['data'] as $graf)
-                        @if (($userStanowisko === 'Właściciel Hotelu' && in_array($graf['dzisiejszy dzien'], $uniqueData)) || ($userStanowisko !== 'Właściciel Hotelu' && $graf["status"] === "1. zmiana" || ($userStanowisko !== 'Właściciel Hotelu' && $graf["status"] === "2. zmiana")))
-                            @if (($userStanowisko === 'Właściciel Hotelu'))     
-                                <div class="json overflow-hidden select-none flex flex-col bg-green-400 h-32 shadow-md w-32 rounded-full mx-2 my-2 justify-center items-center">
-                            @else
-                                <div class="json overflow-hidden select-none flex flex-col bg-red-400 h-32 shadow-md w-32 rounded-full mx-2 my-2 justify-center items-center">
-                            @endif
-                                <div class="document font-bold hidden">{{ $graf["rok"] }}</div>
-                                <div class="document font-bold hidden">{{ $graf["numer dni"] }}</div>
-                                <div class="document font-bold hidden">{{ $graf["miesiąc"] }}</div>
-                                <div class="document text-3xl">{{ $graf["dzisiejszy dzien"] }}</div>
-                                <div class="document font-bold hidden">{{ $graf["nazwa dnia"] }}</div>
-                                <div class="flex flex-col overflow-hidden">
-                                    @if (($userStanowisko === 'Właściciel Hotelu'))  
-                                        @foreach ($status as $stat)
-                                            @if ($graf['dzisiejszy dzien'] == $stat['dzien'])
-                                                <div class="document" title="{{ $stat["login"] }} : {{ $stat["stanowisko"] }}">{{ $stat["status"] }}</div>
-                                            @endif
-                                        @endforeach
-                                    @else
-                                        {{ $graf["status"] }}
-                                    @endif
-                                </div>                                               
-                            </div>
-                                @else
-                                    @if (($userStanowisko === 'Właściciel Hotelu'))     
-                                        <div class="json overflow-hidden select-none flex flex-col bg-red-400 h-32 shadow-md w-32 rounded-full mx-2 my-2 justify-center items-center">
-                                    @else
-                                        <div class="json overflow-hidden select-none flex flex-col bg-green-400 h-32 shadow-md w-32 rounded-full mx-2 my-2 justify-center items-center">
-                                    @endif                                                        
-                                            <div class="document font-bold hidden">{{ $graf["rok"] }}</div>
-                                            <div class="document font-bold hidden">{{ $graf["numer dni"] }}</div>
-                                            <div class="document font-bold hidden">{{ $graf["miesiąc"] }}</div>
-                                            <div class="document text-3xl">{{ $graf["dzisiejszy dzien"] }}</div>
-                                            <div class="document font-bold hidden">{{ $graf["nazwa dnia"] }}</div>
-                                        <div class="flex overflow-hidden">
-                                            <div class="document">
-                                                @if ($userStanowisko === 'Właściciel Hotelu')
-                                                    Brak
-                                                @else
-                                                    {{ $graf["status"] }}
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endif
-                        @endforeach
-                    
-                            @else
-                            @for ($i = 1; $i <= $days; $i++)
-                                <div class="json overflow-hidden select-none flex flex-col bg-gray-200 h-32 shadow-md w-32 rounded-full mx-2 my-2 justify-center items-center">
-                                    <div class="document font-bold hidden">{{ $year }}</div>
-                                    <div class="document font-bold hidden">{{ $days }}</div>
-                                    <div class="document font-bold hidden">{{ $month }}</div>
-
-                                    <div class="document text-3xl">{{ $i }}</div>
-                                    <div class="document font-bold hidden">{{ $dayNames[$i] }}</div>
-                                    <div class="flex overflow-hidden">
-                                        <div class="document visible">Status</div>
-                                    </div>
-                                </div>
-                            @endfor
-                        @endisset
+                    <div id="grafik" class="grid grid-cols-7 z-10">
+                        @include('Templates.grafikTemplate', ['grafik' => $grafik])
                     </div>
                 </div>
             </div>

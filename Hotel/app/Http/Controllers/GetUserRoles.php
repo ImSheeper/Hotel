@@ -15,4 +15,11 @@ class GetUserRoles extends Controller
 
         return $user->stanowiska->stanowisko;
     }
+
+    public function selectUserLogin($loginRequest) {
+        $login = $loginRequest;
+        $user = User::where('login', $login)->first();
+
+        return $user->stanowiska->stanowisko;
+    }
 }

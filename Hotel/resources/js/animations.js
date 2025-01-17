@@ -21,13 +21,13 @@ $(".json").click(function() {
     )
 
     console.log($(this).find('.document:last').text());
-    if ($(this).hasClass('bg-red-400') && $(this).find('.document:last').text() === '2. zmiana') {
-        $(this).removeClass('bg-red-400').addClass('bg-green-400');
+    if ($(this).hasClass('bg-green-400') && $(this).find('.document:last').text() === '2. zmiana') {
+        $(this).removeClass('bg-green-400').addClass('bg-red-400');
         $(this).find('.document:last').text("Wolne");
-    } else if ($(this).hasClass('bg-red-400') ) {
+    } else if ($(this).hasClass('bg-green-400') ) {
         $(this).find('.document:last').text("2. zmiana");
     } else {
-        $(this).removeClass('bg-green-400').addClass('bg-red-400'); 
+        $(this).removeClass('bg-red-400').addClass('bg-green-400'); 
         $(this).find('.document:last').text("1. zmiana");
     }
 

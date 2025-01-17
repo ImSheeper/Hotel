@@ -65,124 +65,24 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-7 z-10">
-                        <div class="flex col-span-7 items-center group">
+                    <div class="flex flex-col z-10 w-full">
+                        <div class="flex items-center group justify-start mx-48">
                             <img src=<?php echo e(url('icons/calendar.svg')); ?> class="h-12 ml-2">
                             <input value="<?php echo e($year); ?>-<?php echo e($month); ?>" class="date text-5xl h-24 font-bold ml-2 leading-loose capitalize group border-none outline-none"></input>
                         </div>
 
-                        <?php if(isset($grafik)): ?>
-                            <?php 
-                                $file = $grafik[0]['data'][0]['nazwa dnia'];
-                            ?>
-                        <?php else: ?>
-                            <?php
-                                $file = $dayNames[1];
-                            ?>
-                        <?php endif; ?>
+                        <div class="flex items-center group justify-start mx-48">
+                            <select class='select border-2 rounded-lg p-1'> 
+                                <?php $__currentLoopData = $stanowiska; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $stanowisko): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option> <?php echo e($stanowisko->stanowisko); ?> </option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </select>
+                        </div>
 
-                        <?php
-                            $dni = array(
-                                1 => "Poniedziałek",
-                                2 => "Wtorek",
-                                3 => "Środa",
-                                4 => "Czwartek",
-                                5 => "Piątek",
-                                6 => "Sobota",
-                                7 => "Niedziela",
-                            );
-                        ?>
-                        
-                        <?php $__currentLoopData = $dni; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $dzien): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <div class="document-animation font-bold mx-2 my-2 text-center text-xl select-none"><?php echo e($dzien); ?></div>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    </div>
 
-                        <?php if($file != "Poniedziałek"): ?>
-                            <?php
-                                foreach($dni as $klucz => $dzien) {
-                                    if($file == $dzien) $currentDay = $klucz;
-                                }
-                                
-                                $fieldsToAdd = 0;
-                                for($currentDay; $currentDay > 1; $currentDay--) {
-                                    $fieldsToAdd++;
-                                }
-                            ?>
-
-                            <?php for($i = 1; $i <= $fieldsToAdd; $i++): ?>
-                            <div class="json flex flex-col bg-gray-300 h-32 shadow-md w-32 rounded-3xl mx-2 my-2 pointer-events-none">
-                                <div class="document-animation font-bold"></div>
-                            </div>                           
-                            <?php endfor; ?>
-
-                        <?php endif; ?>
-
-                        <?php if(isset($grafik)): ?>
-                        <?php $__currentLoopData = $grafik[0]['data']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $graf): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <?php if(($userStanowisko === 'Właściciel Hotelu' && in_array($graf['dzisiejszy dzien'], $uniqueData)) || ($userStanowisko !== 'Właściciel Hotelu' && $graf["status"] === "1. zmiana" || ($userStanowisko !== 'Właściciel Hotelu' && $graf["status"] === "2. zmiana"))): ?>
-                            <?php if(($userStanowisko === 'Właściciel Hotelu')): ?>     
-                                <div class="json overflow-hidden select-none flex flex-col bg-green-400 h-32 shadow-md w-32 rounded-full mx-2 my-2 justify-center items-center">
-                            <?php else: ?>
-                                <div class="json overflow-hidden select-none flex flex-col bg-red-400 h-32 shadow-md w-32 rounded-full mx-2 my-2 justify-center items-center">
-                            <?php endif; ?>
-                                <div class="document font-bold hidden"><?php echo e($graf["rok"]); ?></div>
-                                <div class="document font-bold hidden"><?php echo e($graf["numer dni"]); ?></div>
-                                <div class="document font-bold hidden"><?php echo e($graf["miesiąc"]); ?></div>
-                                <div class="document text-3xl"><?php echo e($graf["dzisiejszy dzien"]); ?></div>
-                                <div class="document font-bold hidden"><?php echo e($graf["nazwa dnia"]); ?></div>
-                                <div class="flex flex-col overflow-hidden">
-                                    <?php if(($userStanowisko === 'Właściciel Hotelu')): ?>  
-                                        <?php $__currentLoopData = $status; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $stat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <?php if($graf['dzisiejszy dzien'] == $stat['dzien']): ?>
-                                                <div class="document" title="<?php echo e($stat["login"]); ?> : <?php echo e($stat["stanowisko"]); ?>"><?php echo e($stat["status"]); ?></div>
-                                            <?php endif; ?>
-                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                    <?php else: ?>
-                                        <?php echo e($graf["status"]); ?>
-
-                                    <?php endif; ?>
-                                </div>                                               
-                            </div>
-                                <?php else: ?>
-                                    <?php if(($userStanowisko === 'Właściciel Hotelu')): ?>     
-                                        <div class="json overflow-hidden select-none flex flex-col bg-red-400 h-32 shadow-md w-32 rounded-full mx-2 my-2 justify-center items-center">
-                                    <?php else: ?>
-                                        <div class="json overflow-hidden select-none flex flex-col bg-green-400 h-32 shadow-md w-32 rounded-full mx-2 my-2 justify-center items-center">
-                                    <?php endif; ?>                                                        
-                                            <div class="document font-bold hidden"><?php echo e($graf["rok"]); ?></div>
-                                            <div class="document font-bold hidden"><?php echo e($graf["numer dni"]); ?></div>
-                                            <div class="document font-bold hidden"><?php echo e($graf["miesiąc"]); ?></div>
-                                            <div class="document text-3xl"><?php echo e($graf["dzisiejszy dzien"]); ?></div>
-                                            <div class="document font-bold hidden"><?php echo e($graf["nazwa dnia"]); ?></div>
-                                        <div class="flex overflow-hidden">
-                                            <div class="document">
-                                                <?php if($userStanowisko === 'Właściciel Hotelu'): ?>
-                                                    Brak
-                                                <?php else: ?>
-                                                    <?php echo e($graf["status"]); ?>
-
-                                                <?php endif; ?>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <?php endif; ?>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                    
-                            <?php else: ?>
-                            <?php for($i = 1; $i <= $days; $i++): ?>
-                                <div class="json overflow-hidden select-none flex flex-col bg-gray-200 h-32 shadow-md w-32 rounded-full mx-2 my-2 justify-center items-center">
-                                    <div class="document font-bold hidden"><?php echo e($year); ?></div>
-                                    <div class="document font-bold hidden"><?php echo e($days); ?></div>
-                                    <div class="document font-bold hidden"><?php echo e($month); ?></div>
-
-                                    <div class="document text-3xl"><?php echo e($i); ?></div>
-                                    <div class="document font-bold hidden"><?php echo e($dayNames[$i]); ?></div>
-                                    <div class="flex overflow-hidden">
-                                        <div class="document visible">Status</div>
-                                    </div>
-                                </div>
-                            <?php endfor; ?>
-                        <?php endif; ?>
+                    <div id="grafik" class="grid grid-cols-7 z-10">
+                        <?php echo $__env->make('Templates.grafikTemplate', ['grafik' => $grafik], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                     </div>
                 </div>
             </div>

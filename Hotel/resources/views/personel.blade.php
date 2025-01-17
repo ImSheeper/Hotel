@@ -168,7 +168,7 @@
                         {{-- <input type="text" placeholder="Stanowisko" class="data border-2 rounded-lg p-1 w-full"> --}}
                         <select name="stanowisko" id="stanowisko" class="data border-2 rounded-lg p-1 w-full">
                             @foreach ($stanowiska as $stanowisko)
-                                <option value={{ $stanowisko->stanowisko }}>{{ $stanowisko->stanowisko }}</option>
+                                <option value="{{ $stanowisko->stanowisko }}">{{ $stanowisko->stanowisko }}</option>
                             @endforeach
                         </select>
                     </div>

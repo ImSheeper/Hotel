@@ -35,3 +35,4 @@ Route::post('/magazynPostDodaj', [MagazynController::class, 'add'])->name('magaz
 Route::post('/magazynPostDelete', [MagazynController::class, 'delete'])->name('magazynPostDeleteRoute');
 
 Route::get('/grafikWhole/{month}/{year}', [GrafikWholeController::class, 'select'])->name('grafikRoute');
+Route::post('/grafikWholePost/{month}/{year}', [GrafikWholeController::class, 'selectGrafik'])->name('grafikRoutePost');
