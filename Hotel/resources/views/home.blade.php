@@ -3,6 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+
   <title>Strona główna</title>
   @vite('resources/css/app.css')
   @vite('resources/js/home.js')
@@ -166,119 +168,18 @@
                                     <div class="font-bold text-2xl px-2">Grafik na {{ $currentMonth }} {{ $year }}</div>
                                 </div>
                                 
+                                <div class="flex group mb-5">
+                                    <select class='select border-2 rounded-lg p-1 text-sm'> 
+                                        @foreach ($stanowiska as $stanowisko)
+                                            <option> {{ $stanowisko->stanowisko }} </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
                                 <hr class="border-t border-gray-600 mb-5">
 
-                                <div class="grid grid-cols-7 z-10 justify-items-center">
-                                    @isset($grafik)
-                                        @php 
-                                            $file = $grafik[0]['data'][0]['nazwa dnia'];
-                                        @endphp
-                                    @else
-                                        @php
-                                            $file = $dayNames[1];
-                                        @endphp
-                                    @endisset
-            
-                                    @php
-                                        $dni = array(
-                                            1 => "Poniedziałek",
-                                            2 => "Wtorek",
-                                            3 => "Środa",
-                                            4 => "Czwartek",
-                                            5 => "Piątek",
-                                            6 => "Sobota",
-                                            7 => "Niedziela",
-                                        );
-                                    @endphp
-                                    
-                                    @foreach ($dni as $dzien)
-                                        <div class="document-animation font-bold mx-2 my-2 text-center text-sm select-none">{{ $dzien }}</div>
-                                    @endforeach
-            
-                                    @if($file != "Poniedziałek")
-                                        @php
-                                            foreach($dni as $klucz => $dzien) {
-                                                if($file == $dzien) $currentDay = $klucz;
-                                            }
-
-                                            $fieldsToAdd = 0;
-                                            for($currentDay; $currentDay > 1; $currentDay--) {
-                                                $fieldsToAdd++;
-                                            }
-                                        @endphp
-            
-                                        @for ($i = 1; $i <= $fieldsToAdd; $i++)
-                                        <div class="json flex flex-col bg-gray-300 h-20 shadow-md w-20 rounded-3xl mx-2 my-2 pointer-events-none">
-                                            <div class="document-animation font-bold"></div>
-                                        </div>                           
-                                        @endfor
-            
-                                    @endif
-            
-                                    @isset($grafik)
-                                        @foreach ($grafik[0]['data'] as $graf)
-                                        @if (($userStanowisko === 'Właściciel Hotelu' && in_array($graf['dzisiejszy dzien'], $uniqueData)) || ($userStanowisko !== 'Właściciel Hotelu' && $graf["status"] === "1. zmiana" || ($userStanowisko !== 'Właściciel Hotelu' && $graf["status"] === "2. zmiana")))
-                                            @if (($userStanowisko === 'Właściciel Hotelu'))     
-                                                <div class="json overflow-hidden select-none flex flex-col bg-green-400 h-20 shadow-md w-20 rounded-full mx-2 my-2 justify-center items-center">
-                                            @else
-                                                <div class="json overflow-hidden select-none flex flex-col bg-red-400 h-20 shadow-md w-20 rounded-full mx-2 my-2 justify-center items-center">
-                                            @endif
-                                                <div class="document font-bold hidden">{{ $graf["rok"] }}</div>
-                                                <div class="document font-bold hidden">{{ $graf["numer dni"] }}</div>
-                                                <div class="document font-bold hidden">{{ $graf["miesiąc"] }}</div>
-                                                <div class="document text-xl">{{ $graf["dzisiejszy dzien"] }}</div>
-                                                <div class="document font-bold hidden">{{ $graf["nazwa dnia"] }}</div>
-                                                <div class="flex flex-col overflow-hidden text-xs">
-                                                    @if (($userStanowisko === 'Właściciel Hotelu'))  
-                                                        @foreach ($status as $stat)
-                                                            @if ($graf['dzisiejszy dzien'] == $stat['dzien'])
-                                                                <div class="document" title="{{ $stat["login"] }} : {{ $stat["stanowisko"] }}">{{ $stat["status"] }}</div>
-                                                            @endif
-                                                        @endforeach
-                                                    @else
-                                                        {{ $graf["status"] }}
-                                                    @endif
-                                                </div>                                               
-                                            </div>
-                                                @else
-                                                    @if (($userStanowisko === 'Właściciel Hotelu'))     
-                                                        <div class="json overflow-hidden select-none flex flex-col bg-red-400 h-20 shadow-md w-20 rounded-full mx-2 my-2 justify-center items-center">
-                                                    @else
-                                                        <div class="json overflow-hidden select-none flex flex-col bg-green-400 h-20 shadow-md w-20 rounded-full mx-2 my-2 justify-center items-center">
-                                                    @endif                                                        
-                                                            <div class="document font-bold hidden">{{ $graf["rok"] }}</div>
-                                                            <div class="document font-bold hidden">{{ $graf["numer dni"] }}</div>
-                                                            <div class="document font-bold hidden">{{ $graf["miesiąc"] }}</div>
-                                                            <div class="document text-xl">{{ $graf["dzisiejszy dzien"] }}</div>
-                                                            <div class="document font-bold hidden">{{ $graf["nazwa dnia"] }}</div>
-                                                        <div class="flex overflow-hidden">
-                                                            <div class="document text-sm">
-                                                                @if ($userStanowisko === 'Właściciel Hotelu')
-                                                                    Brak
-                                                                @else
-                                                                    {{ $graf["status"] }}
-                                                                @endif
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                @endif
-                                        @endforeach
-                                
-                                        @else
-                                        @for ($i = 1; $i <= $days; $i++)
-                                            <div class="json overflow-hidden select-none flex flex-col bg-gray-200 h-2 shadow-md w-200 rounded-full mx-2 my-2 justify-center items-center">
-                                                <div class="document font-bold hidden">{{ $year }}</div>
-                                                <div class="document font-bold hidden">{{ $days }}</div>
-                                                <div class="document font-bold hidden">{{ $month }}</div>
-            
-                                                <div class="document text-xl">{{ $i }}</div>
-                                                <div class="document font-bold hidden">{{ $dayNames[$i] }}</div>
-                                                <div class="flex overflow-hidden">
-                                                    <div class="document visible text-sm">Status</div>
-                                                </div>
-                                            </div>
-                                        @endfor
-                                    @endisset
+                                <div id="grafik" class="grid grid-cols-7 z-10">
+                                    @include('Templates.grafikTemplateHome', ['grafik' => $grafik])
                                 </div>
                             </div>
                         </div>
