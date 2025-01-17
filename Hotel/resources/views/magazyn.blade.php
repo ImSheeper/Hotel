@@ -57,6 +57,7 @@
                                 <div class="magazyn">{{ $item->ilosc }} </div>
                                 <div class="magazyn">{{ $item->data_waznosci }} </div>
                                 <div class="magazyn">{{ $item->rodzaj }} </div>
+                                <div class="magazyn hidden">{{ $item->produkt->ilosc_alert }} </div>
                             </div>
                             @endforeach
                         </div>

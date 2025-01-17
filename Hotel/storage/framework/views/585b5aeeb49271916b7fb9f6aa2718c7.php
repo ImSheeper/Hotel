@@ -57,6 +57,7 @@
                                 <div class="magazyn"><?php echo e($item->ilosc); ?> </div>
                                 <div class="magazyn"><?php echo e($item->data_waznosci); ?> </div>
                                 <div class="magazyn"><?php echo e($item->rodzaj); ?> </div>
+                                <div class="magazyn hidden"><?php echo e($item->produkt->ilosc_alert); ?> </div>
                             </div>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </div>

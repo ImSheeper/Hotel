@@ -2,7 +2,17 @@ import { animate, glide } from "motion"
 
 var selectedData = {};
 
+function checkAlert() {
+    $('.magazynContainer').find('.tableClass').each(function(index) {
+        if (parseInt($(this).find('.magazyn').eq(1).text()) <= parseInt($(this).find('.magazyn').eq(4).text())) {
+            $(this).addClass('font-bold text-red-500')
+        }
+    });
+}
+
 $(document).ready(function() {
+    checkAlert();
+
     // Delegacja zdarzenia contextmenu na dynamicznie dodane elementy .tableClass
     $(".magazynContainer").on("contextmenu", ".tableClass", function(event) {
         event.preventDefault();
@@ -140,8 +150,9 @@ $('.sendAjax').on('click', function() {
             console.log("Sukces: ", result);
             console.log(result.pokoje);
             // window.location.replace('/pokoje');
-
+            
             refresh(result);
+            checkAlert();
         },
         error: function(xhr, status, error) {
             console.error("Wystąpił błąd:");
@@ -150,6 +161,7 @@ $('.sendAjax').on('click', function() {
             console.error("Odpowiedź serwera: ", xhr.responseText);
         }
     });
+
 });
 
 $(document).ready(function() {
@@ -232,7 +244,7 @@ function refresh(result) {
     }, 200);
 
 
-        // edit
+    // edit
     animate(
         $('.popUzupelnij'),
         { opacity: 0 },
@@ -255,10 +267,14 @@ function refresh(result) {
 
     console.log('magazyn', result.magazyn);
     console.log('produkt', result.produkt);
+    var ilosc_alert = 0;
 
     result.magazyn.forEach((mag, index) => {
         result.produkt.forEach(prod => {
-            if(prod.id == mag.nazwa_produktu) mag.nazwa_produktu = prod.nazwa;
+            if(prod.id == mag.nazwa_produktu) {
+                mag.nazwa_produktu = prod.nazwa;
+                ilosc_alert = prod.ilosc_alert;
+            }
         });
 
         console.log(mag.rodzaj);
@@ -269,6 +285,7 @@ function refresh(result) {
                 <div class="magazyn">${mag.ilosc} </div>
                 <div class="magazyn">${mag.data_waznosci} </div>
                 <div class="magazyn">${mag.rodzaj} </div>
+                <div class="magazyn hidden"> ${ilosc_alert} </div>
             </div>
         `;
         magazynContainer.append(magHTML);
