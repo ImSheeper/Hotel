@@ -83,12 +83,14 @@ class PokojeController extends Controller
         }
 
         $pokoje = Pokoje::get();
+        $rodzaj_pokoj = Pokoje_rodzaj::get();
 
         return response()->json([
             'message' => 'Dane przetworzone poprawnie!',
             'data' => $request->all(),
             'pokoj' => $pokoj,
-            'pokoje' => $pokoje
+            'pokoje' => $pokoje,
+            'rodzaj_pokoj' => $rodzaj_pokoj
         ]);
     }
 
@@ -101,12 +103,14 @@ class PokojeController extends Controller
         }
 
         $pokoje = Pokoje::get();
-
+        $rodzaj_pokoj = Pokoje_rodzaj::get();
+        
         return response()->json([
             'message' => 'Dane przetworzone poprawnie!',
             'data' => $request->all(),
             'pokoj' => $pokoj,
-            'pokoje' => $pokoje
+            'pokoje' => $pokoje,
+            'rodzaj_pokoj' => $rodzaj_pokoj
         ]);
     }
 }

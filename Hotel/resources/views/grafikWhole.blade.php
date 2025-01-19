@@ -66,12 +66,12 @@
                     </div>
 
                     <div class="flex flex-col z-10 w-full">
-                        <div class="flex items-center group justify-start mx-48">
+                        <div class="flex items-center group justify-start mx-[18%]">
                             <img src={{ url('icons/calendar.svg') }} class="h-12 ml-2">
                             <input value="{{ $year }}-{{ $month }}" class="date text-5xl h-24 font-bold ml-2 leading-loose capitalize group border-none outline-none"></input>
                         </div>
 
-                        <div class="flex items-center group justify-start mx-48">
+                        <div class="flex items-center group justify-start mx-[19%]">
                             <select class='select border-2 rounded-lg p-1'> 
                                 @foreach ($stanowiska as $stanowisko)
                                     <option> {{ $stanowisko->stanowisko }} </option>

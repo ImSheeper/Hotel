@@ -11,6 +11,26 @@ function checkAlert() {
 }
 
 $(document).ready(function() {
+    if($('.dataDodaj').eq(4).val() === 'Hotel') {
+        $('.dataDodaj').eq(3).parent().addClass('hidden');
+    }
+
+    $('.dataDodaj').eq(4).on('change', function() {
+        if($('.dataDodaj').eq(4).val() === 'Hotel') {
+            $('.dataDodaj').eq(3).parent().addClass('hidden');
+        } else {
+            $('.dataDodaj').eq(3).parent().removeClass('hidden');
+        }
+    });
+
+    $('.dataProdukt').eq(0).on('change', function() {
+        if($('.dataProdukt').eq(0).val() == '0') { 
+            $('.dataProdukt').eq(4).parent().addClass('hidden');
+        } else {
+            $('.dataProdukt').eq(4).parent().removeClass('hidden');
+        }
+    })
+
     checkAlert();
 
     // Delegacja zdarzenia contextmenu na dynamicznie dodane elementy .tableClass
@@ -294,6 +314,7 @@ function refresh(result) {
 
 $('.Dodaj').on('click', function() {
     manageCustomMenu('.popDodaj', '.pop2Dodaj', '.menuElement');
+    $('.dodajText').text('Dodaj produkt');
 });
 
 $('.AjaxDodaj').on('click', function() {

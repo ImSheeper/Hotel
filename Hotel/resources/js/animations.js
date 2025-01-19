@@ -120,12 +120,12 @@ $('.svg-flex').last().on('mouseenter', function() {
         31: 4
     }
 
-    var calendarLen = $('.document').eq(-3).text();
+    var calendarLen = $('.document').eq(-5).text();
     let blockedLen = $('.bg-gray-300').length;
-    console.log(length);    
+    console.log('len', length);    
 
     minus = cases[calendarLen];
-    console.log(minus);
+    console.log('minus', minus);
 
     for(var i = $('.json').length; i > 0; i--) {
         animate(

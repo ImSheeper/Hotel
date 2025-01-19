@@ -43,24 +43,22 @@
                             <div class="font-bold text-2xl px-2">Pokoje</div>
                         </div>
                         <hr class="border-t border-gray-600 mb-5">
-                        <div class="grid grid-cols-6 font-bold px-2 py-1">
+                        <div class="grid grid-cols-5 font-bold px-2 py-1">
                             <div class="name">Pokój</div>
                             <div class="name">Piętro</div>
                             <div class="name">Rodzaj</div>
                             <div class="name">Status</div>
                             <div class="name">Czysty</div>
-                            <div class="name">Wykluczony</div>
                         </div>
                         <div class="roomsContainer">
                             @foreach ($rooms as $room)
                                 @if($room->wykluczone === 0)
-                                    <a class="tableClass cursor-pointer grid grid-cols-6 transition-all duration-300 hover:bg-[#dbd5ff] px-2 py-1 rounded-md">
+                                    <a class="tableClass cursor-pointer grid grid-cols-5 transition-all duration-300 hover:bg-[#dbd5ff] px-2 py-1 rounded-md">
                                     <div class="pokoje"> {{ $room->id }} </div>
                                     <div class="pokoje"> {{ $room->pietro }} </div>
                                     <div class="pokoje"> {{ $room->rodzaj->rodzaj }} </div>
                                     <div class="pokoje"> {{ $room->status ? 'Zajęte' : 'Wolne' }} </div>
                                     <div class="pokoje"> {{ $room->czyste ? 'Czysty' : 'Brudny' }} </div>
-                                    <div class="pokoje"> {{ $room->wykluczone ? 'Wykluczony' : 'Aktywny' }} </div>
                                     </a>
                                 @endif
                             @endforeach
@@ -72,29 +70,27 @@
                     <div class="flex min-h-max w-full justify-center animate-fade-down animate-delay-[1s] animate-ease-out my-5">
                         <div class="flex flex-col cursor-default min-w-max max-w-[1000px] grow max-h-96 bg-[#F4F2FF] rounded-2xl pl-10 pr-10 pt-5 pb-5 overflow-auto shadow-lg">
                             <div class="flex items-center mb-5">
-                                {{-- <img src={{ url('/icons/Pokoje.svg') }} class="z-10 transition duration-500 opacity-100 group-hover:opacity-0 h-6"> --}}
+                                <img src={{ url('/icons/Blocked.svg') }} class="z-10 transition duration-500 opacity-100 group-hover:opacity-0 h-6">
                                 <div class="font-bold text-2xl px-2">Wykluczone pokoje</div>
                             </div>
                             <hr class="border-t border-gray-600 mb-5">
-                            <div class="grid grid-cols-7 font-bold px-2 py-1">
+                            <div class="grid grid-cols-6 font-bold px-2 py-1">
                                 <div class="name">Pokój</div>
                                 <div class="name">Piętro</div>
                                 <div class="name">Rodzaj</div>
                                 <div class="name">Status</div>
                                 <div class="name">Czysty</div>
-                                <div class="name">Wykluczony</div>
                                 <div class="name">Powód wykluczenia</div>
                             </div>
                             <div class="roomsContainerBlocked">
                                 @foreach ($rooms as $room)
                                     @if($room->wykluczone === 1)
-                                        <a class="tableClassBlocked cursor-pointer grid grid-cols-7 transition-all duration-300 hover:bg-[#dbd5ff] px-2 py-1 rounded-md" title="{{ $room->powod_wykluczenia }}">
+                                        <a class="tableClassBlocked cursor-pointer grid grid-cols-6 transition-all duration-300 hover:bg-[#dbd5ff] px-2 py-1 rounded-md" title="{{ $room->powod_wykluczenia }}">
                                         <div class="pokoje"> {{ $room->id }} </div>
                                         <div class="pokoje"> {{ $room->pietro }} </div>
                                         <div class="pokoje"> {{ $room->rodzaj->rodzaj }} </div>
                                         <div class="pokoje"> {{ $room->status ? 'Zajęte' : 'Wolne' }} </div>
                                         <div class="pokoje"> {{ $room->czyste ? 'Czysty' : 'Brudny' }} </div>
-                                        <div class="pokoje"> {{ $room->wykluczone ? 'Wykluczony' : 'Aktywny' }} </div>
                                         <div class="pokoje w-36 overflow-hidden whitespace-nowrap text-ellipsis"> {{ $room->powod_wykluczenia }} </div>
                                         </a>
                                     @endif
@@ -214,7 +210,7 @@
             <div class="pop2Delete flex flex-col bg-white w-[500px] min-h-max rounded-lg justify-center p-5">
 
                 <div class="popTextDelete text-2xl font-bold text-center">Wykluczyć pokój [nazwa]?</div>
-                <textarea type="text" placeholder="Powód" class="dataWyklucz border-2 rounded-lg p-1 bg-white mt-5"> </textarea> 
+                <textarea type="text" placeholder="Powód wykluczenia" class="dataWyklucz border-2 rounded-lg p-1 bg-white mt-5"></textarea> 
 
                 <div class="flex items-center justify-evenly px-10 w-full">
                     <div class="flex relative group rounded-2xl mb-4 mt-6">

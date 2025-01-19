@@ -37,7 +37,7 @@
     ?>
 
     <?php for($i = 1; $i <= $fieldsToAdd; $i++): ?>
-    <div class="json flex flex-col bg-gray-300 h-32 shadow-md w-32 rounded-3xl mx-2 my-2 pointer-events-none">
+    <div class="json flex flex-col bg-gray-300 h-28 shadow-md w-28 rounded-full mx-2 my-2 pointer-events-none">
         <div class="document-animation font-bold"></div>
     </div>                           
     <?php endfor; ?>
@@ -51,9 +51,9 @@
 
 <?php if(($userStanowisko === 'Właściciel Hotelu' && in_array($graf['dzisiejszy dzien'], $uniqueData)) || ($userStanowisko !== 'Właściciel Hotelu' && $graf["status"] === "1. zmiana" || ($userStanowisko !== 'Właściciel Hotelu' && $graf["status"] === "2. zmiana"))): ?>
     <?php if(($userStanowisko === 'Właściciel Hotelu')): ?>     
-        <div class="json overflow-hidden select-none flex flex-col bg-green-400 h-32 shadow-md w-32 rounded-full mx-2 my-2 justify-center items-center">
+        <div class="json overflow-hidden select-none flex flex-col bg-green-400 h-28 shadow-md w-28 rounded-full mx-2 my-2 justify-center items-center">
     <?php else: ?>
-        <div class="json overflow-hidden select-none flex flex-col bg-red-400 h-32 shadow-md w-32 rounded-full mx-2 my-2 justify-center items-center">
+        <div class="json overflow-hidden select-none flex flex-col bg-red-400 h-28 shadow-md w-28 rounded-full mx-2 my-2 justify-center items-center">
     <?php endif; ?>
         <div class="document font-bold hidden"><?php echo e($graf["rok"]); ?></div>
         <div class="document font-bold hidden"><?php echo e($graf["numer dni"]); ?></div>
@@ -64,7 +64,7 @@
             <?php if(($userStanowisko === 'Właściciel Hotelu')): ?>  
                 <?php $__currentLoopData = $status; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $stat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <?php if($graf['dzisiejszy dzien'] == $stat['dzien']): ?>
-                        <div class="document" title="<?php echo e($stat["login"]); ?> : <?php echo e($stat["stanowisko"]); ?>"><?php echo e($stat["status"]); ?></div>
+                        <div class="document" title="<?php echo e($stat["login"]); ?> : <?php echo e($stat["status"]); ?>"><?php echo e($stat["status"]); ?></div>
                     <?php endif; ?>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             <?php else: ?>
@@ -75,9 +75,9 @@
     </div>
         <?php else: ?>
             <?php if(($userStanowisko === 'Właściciel Hotelu')): ?>     
-                <div class="json overflow-hidden select-none flex flex-col bg-red-400 h-32 shadow-md w-32 rounded-full mx-2 my-2 justify-center items-center">
+                <div class="json overflow-hidden select-none flex flex-col bg-red-400 h-28 shadow-md w-28 rounded-full mx-2 my-2 justify-center items-center">
             <?php else: ?>
-                <div class="json overflow-hidden select-none flex flex-col bg-green-400 h-32 shadow-md w-32 rounded-full mx-2 my-2 justify-center items-center">
+                <div class="json overflow-hidden select-none flex flex-col bg-green-400 h-28 shadow-md w-28 rounded-full mx-2 my-2 justify-center items-center">
             <?php endif; ?>                                                        
                     <div class="document font-bold hidden"><?php echo e($graf["rok"]); ?></div>
                     <div class="document font-bold hidden"><?php echo e($graf["numer dni"]); ?></div>
@@ -100,7 +100,7 @@
 
     <?php else: ?>
     <?php for($i = 1; $i <= $days; $i++): ?>
-        <div class="json overflow-hidden select-none flex flex-col bg-gray-200 h-32 shadow-md w-32 rounded-full mx-2 my-2 justify-center items-center">
+        <div class="json overflow-hidden select-none flex flex-col bg-gray-200 h-28 shadow-md w-28 rounded-full mx-2 my-2 justify-center items-center">
             <div class="document font-bold hidden"><?php echo e($year); ?></div>
             <div class="document font-bold hidden"><?php echo e($days); ?></div>
             <div class="document font-bold hidden"><?php echo e($month); ?></div>

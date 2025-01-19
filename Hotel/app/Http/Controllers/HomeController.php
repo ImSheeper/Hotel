@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use DateTime;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Hotel;
 use App\Models\Pokoje;
 use App\Models\Magazyn;
+use App\Models\Produkt;
 use App\Models\Stanowiska;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
-use DateTime;
 
 
 class HomeController extends Controller
@@ -47,13 +48,13 @@ class HomeController extends Controller
         for($j = 0; $j < count($personel); $j++) {
             $jsonData = Storage::disk('public')->get('grafik/'.$personel[$j]->login.'/'.'-'.$personel[$j]->login.'-'.$month.'.'.$year.'.json'); // Zakładamy, że plik jest w storage/app/public
             $json = json_decode(json: $jsonData, associative: true);
-            
+
             if($jsonData != null) {
                 $statuses[$personel[$j]->imie] = $json["data"][$day - 1]["status"];
 
                 $timeOfWork[$personel[$j]->imie] = 0;
                 for($i = 0; $i < count($json["data"]); $i++) {
-                    if($json["data"][$i]["status"] === "Pracuje") $timeOfWork[$personel[$j]->imie] += $zmiana;  //$timeOfWork[$j] += $zmiana;
+                    if($json["data"][$i]["status"] === "1. zmiana" || $json["data"][$i]["status"] === "2. zmiana") $timeOfWork[$personel[$j]->imie] += $zmiana;  //$timeOfWork[$j] += $zmiana;
                 }
             } else {
                 $statuses[$personel[$j]->imie] = 'Brak grafiku';
@@ -65,7 +66,7 @@ class HomeController extends Controller
         // Liczenie na kafelkach
         $statusesCount = 0;
         foreach($statuses as $status) {
-            if($status === 'Pracuje') $statusesCount++;
+            if($status === '1. zmiana' || $status === '2. zmiana') $statusesCount++;
         }
 
         // Liczenie na pokojach
@@ -188,6 +189,25 @@ class HomeController extends Controller
         }
         
         $userStanowisko = app('App\Http\Controllers\GetUserRoles')->select($request);
+
+        if($userStanowisko === 'Menedżer Kuchni') {
+            $type = 'Kuchnia';
+        } else if ($userStanowisko === 'Menedżer Hotelu') {
+            $type = 'Hotel';
+        } else {
+            $type = '';
+        }
+
+        
+        $magazyn = Magazyn::select('data_waznosci', DB::raw('nazwa_produktu, data_waznosci, rodzaj, SUM(ilosc) as ilosc'))
+        ->groupBy('data_waznosci')
+        ->groupBy('nazwa_produktu');
+        
+        if($type != '') $magazyn->where('rodzaj', $type);
+        $magazyn = $magazyn->get();
+        
+        if($type != '') $produkt = Produkt::where('rodzaj', $type)->get();
+        else $produkt = Produkt::get();
 
         return view('home', [
             'hotelInfos' => $hotelInfos,

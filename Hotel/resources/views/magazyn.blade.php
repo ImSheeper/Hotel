@@ -35,7 +35,7 @@
             {{-- Main screen --}}
             <div class="flex flex-col bg-white grow mx-1 my-1 mr-2 mb-2 min-w-fit rounded-md overflow-auto items-center">
 
-                <div class="flex min-h-max w-full justify-center animate-fade-down animate-delay-[1s] animate-ease-out my-5">
+                <div class="flex min-h-max w-full justify-center animate-fade-down animate-delay-[1s] animate-ease-out mt-5">
                     <div class="flex flex-col cursor-default min-w-max max-w-[1000px] grow max-h-[768px] bg-[#F4F2FF] rounded-2xl pl-10 pr-10 pt-5 pb-5 overflow-auto shadow-lg">
                         <div class="flex items-center mb-5">
                             <img src={{ url('/icons/Magazyn.svg') }} class="z-10 transition duration-500 opacity-100 group-hover:opacity-0 h-5">
@@ -52,10 +52,14 @@
                         </div>
                         <div class="magazynContainer">
                             @foreach ($magazyn as $item)
-                            <div class="tableClass cursor-pointer grid grid-cols-4 transition-all duration-300 hover:bg-gray-300 px-2 py-1 rounded-md">
+                            <div class="tableClass cursor-pointer grid grid-cols-4 transition-all duration-300 hover:bg-[#dbd5ff] px-2 py-1 rounded-md">
                                 <div class="magazyn">{{ $item->produkt->nazwa }} </div>
                                 <div class="magazyn">{{ $item->ilosc }} </div>
-                                <div class="magazyn">{{ $item->data_waznosci }} </div>
+                                @if ($item->rodzaj === 'Kuchnia')
+                                    <div class="magazyn">{{ $item->data_waznosci }} </div>
+                                @else
+                                <div class="magazyn"></div>
+                                @endif
                                 <div class="magazyn">{{ $item->rodzaj }} </div>
                                 <div class="magazyn hidden">{{ $item->produkt->ilosc_alert }} </div>
                             </div>
@@ -65,10 +69,10 @@
                 </div>
 
                 <div class="Dodaj font-bold shadow-lg mx-10 bg-[#F4F2FF] h-16 w-48 rounded-2xl overflow-hidden content-center text-center my-5 animate-fade-down animate-delay-[0.2s] animate-ease-out">
-                    <div class="text-xl select-none">Dodaj produkt</div>
+                    <div class="dodajText text-xl select-none">Dodaj produkt</div>
                 </div>
                 
-                <div class="addZapas font-bold shadow-lg mx-10 bg-[#F4F2FF] h-16 w-48 rounded-2xl overflow-hidden content-center text-center my-5 animate-fade-down animate-delay-[0.2s] animate-ease-out">
+                <div class="addZapas font-bold shadow-lg mx-10 bg-[#F4F2FF] h-16 w-48 rounded-2xl overflow-hidden content-center text-center animate-fade-down animate-delay-[0.2s] animate-ease-out">
                     <div class="text-xl select-none">Edytuj produkty</div>
                 </div>
 
@@ -169,6 +173,13 @@
                         </select>
                     </div>
                 </div>
+                
+                <div class="flex justify-between w-full mt-2">
+                    <div class="flex justify-center flex-col w-[100%] p-2">
+                        <div class="mb-1 text-gray-700">Alert ilości</div>
+                        <input type="number" placeholder="Alert ilości" class="dataProdukt border-2 rounded-lg p-1" title="Liczba, po której przekroczeniu dojdzie do podkreślenia braku produktu">
+                    </div>
+                </div>
 
                 <div class="flex flex-col items-center justify-center w-full">
                     <div class="flex relative group rounded-2xl mb-4 mt-6">
@@ -186,9 +197,9 @@
             <div class="pop2Dodaj flex flex-col bg-white w-[800px] min-h-max rounded-lg justify-center p-5">
                 <div class="popText text-2xl font-bold text-center">Dodaj produkt</div>
 
-                <div class="flex justify-between w-full mt-2">
+                <div class="flex justify-evenly w-full mt-2">
 
-                    <div class="flex justify-center flex-col w-[25%] p-2">
+                    <div class="flex justify-center flex-col w-[50%] p-2">
                         <div class="mb-1 text-gray-700">Produkt</div>
                         <select name="Produkt3" id="Produkt3" class="dataDodaj border-2 rounded-lg p-1 w-full bg-white">
                             @foreach ($produkt as $item)
@@ -197,17 +208,20 @@
                         </select>
                     </div>
 
-                    <div class="flex justify-center flex-col w-[25%] p-2">
+                    <div class="flex justify-center flex-col w-[50%] p-2">
                         <div class="mb-1 text-gray-700">Ilość</div>
                         <input type="number" placeholder="Ilość" class="dataDodaj border-2 rounded-lg p-1">
                     </div>
+                </div>
 
-                    <div class="flex justify-center flex-col w-[25%] p-2">
+                <div class="flex justify-evenly w-full mt-2">
+
+                    <div class="flex justify-center flex-col w-[50%] p-2">
                         <div class="mb-1 text-gray-700">Data ważności do</div>
                         <input type="date" placeholder="Data ważności" class="dataDodaj border-2 rounded-lg p-1">
                     </div>
 
-                    <div class="flex justify-center flex-col w-[25%] p-2">
+                    <div class="flex justify-center flex-col w-[50%] p-2">
                         <div class="mb-1 text-gray-700">Magazyn</div>
                         @if (str_contains($userStanowisko, 'Menedżer'))
                             <select name="Status" id="Status" class="dataDodaj border-2 rounded-lg p-1 w-full bg-gray-200" disabled>    
@@ -225,6 +239,11 @@
                         @endif
                         
                         </select>
+                    </div>
+
+                    <div class="flex justify-center flex-col w-[50%] p-2">
+                        <div class="mb-1 text-gray-700">Alert ilości</div>
+                        <input type="number" placeholder="Alert ilości" class="dataDodaj border-2 rounded-lg p-1" title="Liczba, po której przekroczeniu dojdzie do podkreślenia braku produktu">
                     </div>
                 </div>
 

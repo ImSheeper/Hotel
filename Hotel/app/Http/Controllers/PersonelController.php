@@ -29,16 +29,20 @@ class PersonelController extends Controller
 
         $day = Carbon::now('Europe/Warsaw')->day;
 
+        if($month[0] == '0') {
+            $month = $month[1];
+        }
+
         for($j = 0; $j < count($personel); $j++) {
             $jsonData = Storage::disk('public')->get('grafik/'.$personel[$j]->login.'/'.'-'.$personel[$j]->login.'-'.$month.'.'.$year.'.json'); // Zakładamy, że plik jest w storage/app/public
             $json = json_decode(json: $jsonData, associative: true);
-            
+
             if($jsonData != null) {
                 $statuses[$personel[$j]->imie] = $json["data"][$day - 1]["status"];
 
                 $timeOfWork[$personel[$j]->imie] = 0;
                 for($i = 0; $i < count($json["data"]); $i++) {
-                    if($json["data"][$i]["status"] === "Pracuje") $timeOfWork[$personel[$j]->imie] += $zmiana;  //$timeOfWork[$j] += $zmiana;
+                    if($json["data"][$i]["status"] === "1. zmiana" || $json["data"][$i]["status"] === "2. zmiana") $timeOfWork[$personel[$j]->imie] += $zmiana;  //$timeOfWork[$j] += $zmiana;
                 }
             } else {
                 $statuses[$personel[$j]->imie] = 'Brak grafiku';

@@ -66,12 +66,12 @@
                     </div>
 
                     <div class="flex flex-col z-10 w-full">
-                        <div class="flex items-center group justify-start mx-48">
+                        <div class="flex items-center group justify-start mx-[18%]">
                             <img src=<?php echo e(url('icons/calendar.svg')); ?> class="h-12 ml-2">
                             <input value="<?php echo e($year); ?>-<?php echo e($month); ?>" class="date text-5xl h-24 font-bold ml-2 leading-loose capitalize group border-none outline-none"></input>
                         </div>
 
-                        <div class="flex items-center group justify-start mx-48">
+                        <div class="flex items-center group justify-start mx-[19%]">
                             <select class='select border-2 rounded-lg p-1'> 
                                 <?php $__currentLoopData = $stanowiska; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $stanowisko): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <option> <?php echo e($stanowisko->stanowisko); ?> </option>

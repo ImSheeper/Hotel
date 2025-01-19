@@ -37,7 +37,7 @@
                                         ?>
             
                                         <?php for($i = 1; $i <= $fieldsToAdd; $i++): ?>
-                                        <div class="json flex flex-col bg-gray-300 h-20 shadow-md w-20 rounded-3xl mx-2 my-2 pointer-events-none">
+                                        <div class="json flex flex-col bg-gray-300 h-20 shadow-md w-20 rounded-full mx-2 my-2 pointer-events-none">
                                             <div class="document-animation font-bold"></div>
                                         </div>                           
                                         <?php endfor; ?>

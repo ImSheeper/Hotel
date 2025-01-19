@@ -1,6 +1,27 @@
 import { animate, glide } from "motion"
 
+function refreshColors() {
+    $('.roomsContainer').find('.tableClass').each(function(index) {
+        if ($(this).find('.pokoje').eq(3).text().trim() === 'Zajęte') {
+            $(this).addClass('font-bold text-orange-500');
+        }
+        
+        if ($(this).find('.pokoje').eq(4).text().trim() === 'Brudny') {
+            $(this).addClass('font-bold text-red-500').removeClass('text-orange-500');
+        }
+    });
+}
+
 $(document).ready(function() {
+
+    // odświeżanie kolorów pokoi
+    refreshColors();
+
+    // Zmiana tekstu dla dodawania pokoju
+    $('.addPokoj').on('click', function() {
+        $('.popText').text(`Dodaj pokój`);
+    });
+
     // Delegacja zdarzenia contextmenu na dynamicznie dodane elementy .tableClass
     $(".roomsContainer").on("contextmenu", ".tableClass", function(event) {
         event.preventDefault();
@@ -17,7 +38,9 @@ $(document).ready(function() {
         $('.data').eq(0).prop('disabled', true).addClass('bg-gray-200');
         
         $('.popText').text(`Edytuj pokój ${data[0]}`);
+
         $('.popTextDelete').text(`Wykluczyć pokój ${data[0]}?`);
+
         $('.popTextDeleteRoom').text(`Czy na pewno usunąć pokój ${data[0]}?`);
         console.log('event', $(this).text());
 
@@ -114,7 +137,8 @@ $(document).ready(function() {
     });
 
     $('.menuElementBlocked').eq(1).on('click', function() {
-        manageCustomMenu('.popDelete', '.pop2Delete', '.menuElementBlocked', '.menuElement');    
+        manageCustomMenu('.popDelete', '.pop2Delete', '.menuElementBlocked', '.menuElement');
+        $('.popTextDelete').text(`Przywrócić pokój?`);
     });
 
     $('.menuElementBlocked').eq(2).on('click', function() {
@@ -219,6 +243,7 @@ $('.sendAjax').on('click', function() {
             // window.location.replace('/pokoje');
 
             refreshPokoje(result);
+            refreshColors();
         },
         error: function(xhr, status, error) {
             console.error("Wystąpił błąd:");
@@ -251,6 +276,7 @@ $('.butYes').on('click', function() {
             //window.location.replace('/pokoje');
 
             refreshPokoje(result);
+            refreshColors();
         },
         error: function(xhr, status, error) {
             console.error("Wystąpił błąd:");
@@ -281,6 +307,7 @@ $('.butYesDelete').on('click', function() {
             //window.location.replace('/pokoje');
 
             refreshPokoje(result);
+            refreshColors();
         },
         error: function(xhr, status, error) {
             console.error("Wystąpił błąd:");
@@ -310,7 +337,7 @@ function refreshPokoje(result) {
 
         if (room.wykluczone === 0) { // Tylko aktywne pokoje
             const roomHTML = `
-                <a class="tableClass cursor-pointer grid grid-cols-6 transition-all duration-300 hover:bg-gray-300 px-2 py-1 rounded-md">
+                <a class="tableClass cursor-pointer grid grid-cols-5 transition-all duration-300 hover:bg-gray-300 px-2 py-1 rounded-md">
                     <div class="pokoje">${room.id} </div>
                     <div class="pokoje">${room.pietro} </div>
                     <div class="pokoje">${rodzaj} </div>
@@ -328,7 +355,7 @@ function refreshPokoje(result) {
             }
 
             const roomHTML = `
-                <a class="tableClassBlocked cursor-pointer grid grid-cols-7 transition-all duration-300 hover:bg-gray-300 px-2 py-1 rounded-md" title="${room.powod_wykluczenia}">
+                <a class="tableClassBlocked cursor-pointer grid grid-cols-6 transition-all duration-300 hover:bg-gray-300 px-2 py-1 rounded-md" title="${room.powod_wykluczenia}">
                     <div class="pokoje">${room.id} </div>
                     <div class="pokoje">${room.pietro} </div>
                     <div class="pokoje">${rodzaj} </div>

@@ -26,6 +26,12 @@ class LoginController extends Controller
 
         $isBlocked = User::where('login', $credentials['login'])->first();
 
+        if($isBlocked === null) {
+            return back()->withErrors([
+                'error' => 'Użytkownik nie istnieje.'
+            ]);
+        }
+
         if($isBlocked->zablokowany === 1) {
             return back()->withErrors([
                 'error' => 'Użytkownik jest zablokowany.'

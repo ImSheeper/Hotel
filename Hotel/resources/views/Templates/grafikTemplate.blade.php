@@ -37,7 +37,7 @@
     @endphp
 
     @for ($i = 1; $i <= $fieldsToAdd; $i++)
-    <div class="json flex flex-col bg-gray-300 h-32 shadow-md w-32 rounded-3xl mx-2 my-2 pointer-events-none">
+    <div class="json flex flex-col bg-gray-300 h-28 shadow-md w-28 rounded-full mx-2 my-2 pointer-events-none">
         <div class="document-animation font-bold"></div>
     </div>                           
     @endfor
@@ -51,9 +51,9 @@
 
 @if (($userStanowisko === 'Właściciel Hotelu' && in_array($graf['dzisiejszy dzien'], $uniqueData)) || ($userStanowisko !== 'Właściciel Hotelu' && $graf["status"] === "1. zmiana" || ($userStanowisko !== 'Właściciel Hotelu' && $graf["status"] === "2. zmiana")))
     @if (($userStanowisko === 'Właściciel Hotelu'))     
-        <div class="json overflow-hidden select-none flex flex-col bg-green-400 h-32 shadow-md w-32 rounded-full mx-2 my-2 justify-center items-center">
+        <div class="json overflow-hidden select-none flex flex-col bg-green-400 h-28 shadow-md w-28 rounded-full mx-2 my-2 justify-center items-center">
     @else
-        <div class="json overflow-hidden select-none flex flex-col bg-red-400 h-32 shadow-md w-32 rounded-full mx-2 my-2 justify-center items-center">
+        <div class="json overflow-hidden select-none flex flex-col bg-red-400 h-28 shadow-md w-28 rounded-full mx-2 my-2 justify-center items-center">
     @endif
         <div class="document font-bold hidden">{{ $graf["rok"] }}</div>
         <div class="document font-bold hidden">{{ $graf["numer dni"] }}</div>
@@ -64,7 +64,7 @@
             @if (($userStanowisko === 'Właściciel Hotelu'))  
                 @foreach ($status as $stat)
                     @if ($graf['dzisiejszy dzien'] == $stat['dzien'])
-                        <div class="document" title="{{ $stat["login"] }} : {{ $stat["stanowisko"] }}">{{ $stat["status"] }}</div>
+                        <div class="document" title="{{ $stat["login"] }} : {{ $stat["status"] }}">{{ $stat["status"] }}</div>
                     @endif
                 @endforeach
             @else
@@ -74,9 +74,9 @@
     </div>
         @else
             @if (($userStanowisko === 'Właściciel Hotelu'))     
-                <div class="json overflow-hidden select-none flex flex-col bg-red-400 h-32 shadow-md w-32 rounded-full mx-2 my-2 justify-center items-center">
+                <div class="json overflow-hidden select-none flex flex-col bg-red-400 h-28 shadow-md w-28 rounded-full mx-2 my-2 justify-center items-center">
             @else
-                <div class="json overflow-hidden select-none flex flex-col bg-green-400 h-32 shadow-md w-32 rounded-full mx-2 my-2 justify-center items-center">
+                <div class="json overflow-hidden select-none flex flex-col bg-green-400 h-28 shadow-md w-28 rounded-full mx-2 my-2 justify-center items-center">
             @endif                                                        
                     <div class="document font-bold hidden">{{ $graf["rok"] }}</div>
                     <div class="document font-bold hidden">{{ $graf["numer dni"] }}</div>
@@ -98,7 +98,7 @@
 
     @else
     @for ($i = 1; $i <= $days; $i++)
-        <div class="json overflow-hidden select-none flex flex-col bg-gray-200 h-32 shadow-md w-32 rounded-full mx-2 my-2 justify-center items-center">
+        <div class="json overflow-hidden select-none flex flex-col bg-gray-200 h-28 shadow-md w-28 rounded-full mx-2 my-2 justify-center items-center">
             <div class="document font-bold hidden">{{ $year }}</div>
             <div class="document font-bold hidden">{{ $days }}</div>
             <div class="document font-bold hidden">{{ $month }}</div>

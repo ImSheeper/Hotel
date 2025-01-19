@@ -64,16 +64,18 @@
                                 </div>
                                 
                                 <hr class="border-t border-gray-600 mb-5">
-                                <div class="grid grid-cols-2 font-bold px-2 py-1 text-sm">
+                                <div class="grid grid-cols-3 font-bold px-2 py-1 text-sm">
                                     <div class="name">Imię i nazwisko</div>
                                     <div class="name">Stanowisko</div>
+                                    <div class="name">Zmiana</div>
                                 </div>
                                 @foreach ($personels as $personel)
-                                    @if ($statuses[$personel->imie] === 'Pracuje')
-                                        <div class="tableClass grid grid-cols-2 transition-all duration-300 px-2 py-1 rounded-md text-sm">
+                                    @if ($statuses[$personel->imie] === '1. zmiana' || $statuses[$personel->imie] === '2. zmiana')
+                                        <div class="tableClass grid grid-cols-3 transition-all duration-300 px-2 py-1 rounded-md text-sm">
                                             <div class="className hidden"> {{ $personel->login }} </div>
                                             <div class="class"> {{ $personel->imie }}  {{ $personel->nazwisko }} </div>
                                             <div class="class"> {{ $personel->stanowiska->stanowisko }} </div>
+                                            <div class="class"> {{ $statuses[$personel->imie] }} </div>
                                         </div>
                                     @endif
                                 @endforeach
@@ -178,7 +180,7 @@
 
                                 <hr class="border-t border-gray-600 mb-5">
 
-                                <div id="grafik" class="grid grid-cols-7 z-10">
+                                <div id="grafik" class="grid grid-cols-7 z-10 place-items-center">
                                     @include('Templates.grafikTemplateHome', ['grafik' => $grafik])
                                 </div>
                             </div>
