@@ -33,7 +33,7 @@
             <?php echo $__env->make('Templates.topMenuTemplate', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
             
-            <div class="flex flex-col bg-white grow mx-1 my-1 mr-2 mb-2 min-w-fit rounded-md overflow-auto">
+            <div class="flex flex-col bg-white grow lg:ml-1 ml-2 my-1 mr-2 mb-2 min-w-fit rounded-md overflow-auto">
                 
                 
                 <div class="flex flex-col grow h-full w-full">
@@ -59,7 +59,7 @@
                         <div class="flex flex-col w-2/6 h-full basis-[400px] grow">
                             <div class="bg-[#F4F2FF] rounded-md shadow-lg overflow-auto p-5 h-full">
                                 <div class="flex items-center mb-5">
-                                    <img src=<?php echo e(url('/icons/Personel.svg')); ?> class="z-10 transition duration-500 opacity-100 group-hover:opacity-0 h-6">
+                                    <img src=<?php echo e(url('/icons/Personel.svg')); ?> class="transition duration-500 opacity-100 group-hover:opacity-0 h-6">
                                     <div class="font-bold text-2xl px-2">Pracowników dzisiaj (<?php echo e($statusesCount); ?>)</div>
                                 </div>
                                 
@@ -86,12 +86,12 @@
                         <div class="flex flex-col w-1/6 h-full basis-[200px] grow">
                             <div class="flex flex-col bg-[#F4F2FF] shadow-lg rounded-md grow p-5 overflow-auto">
                                 <div class="flex items-center mb-5">
-                                    <img src=<?php echo e(url('/icons/Account.svg')); ?> class="z-10 transition duration-500 opacity-100 group-hover:opacity-0 h-6">
+                                    <img src=<?php echo e(url('/icons/Account.svg')); ?> class="transition duration-500 opacity-100 group-hover:opacity-0 h-6">
                                     <div class="font-bold text-2xl px-2">Moje konto</div>
                                 </div>
                                 <hr class="border-t border-gray-600 mb-5 h-1">
 
-                                <img src=<?php echo e(url('/icons/Account.svg')); ?> class="z-10 transition duration-500 opacity-100 group-hover:opacity-0 h-20 mb-5">
+                                <img src=<?php echo e(url('/icons/Account.svg')); ?> class="transition duration-500 opacity-100 group-hover:opacity-0 h-20 mb-5">
                                 <div class="span text-sm"><b>Imię:</b> <?php echo e($currentUser->imie); ?></div>
                                 <div class="span text-sm"><b>Nazwisko:</b> <?php echo e($currentUser->nazwisko); ?></div>
                                 <div class="span text-sm"><b>Login:</b> <?php echo e($login); ?></div>
@@ -105,7 +105,7 @@
                             <div class="flex flex-col w-2/6 h-full  basis-[300px] grow">
                                 <div class="bg-[#F4F2FF] rounded-md shadow-lg overflow-auto p-5 h-full">
                                     <div class="flex items-center mb-5">
-                                        <img src=<?php echo e(url('/icons/Magazyn.svg')); ?> class="z-10 transition duration-500 opacity-100 group-hover:opacity-0 h-5">
+                                        <img src=<?php echo e(url('/icons/Magazyn.svg')); ?> class="transition duration-500 opacity-100 group-hover:opacity-0 h-5">
                                         <div class="font-bold text-2xl px-2">Magazyn</div>
                                     </div>
                                     
@@ -135,7 +135,7 @@
                             <div class="flex flex-col h-full  w-1/2 basis-[600px] grow">
                                 <div class="bg-[#F4F2FF] rounded-md shadow-lg overflow-auto p-5 h-full">
                                     <div class="flex items-center mb-5">
-                                        <img src=<?php echo e(url('/icons/Pokoje.svg')); ?> class="z-10 transition duration-500 opacity-100 group-hover:opacity-0 h-6">
+                                        <img src=<?php echo e(url('/icons/Pokoje.svg')); ?> class="transition duration-500 opacity-100 group-hover:opacity-0 h-6">
                                         <div class="font-bold text-2xl px-2">Pokoje</div>
                                     </div>
                                     
@@ -166,7 +166,7 @@
                         <div class="flex flex-col w-1/2 h-full  basis-[600px] grow">
                             <div class="bg-[#F4F2FF] rounded-md shadow-lg overflow-auto p-5 h-full">
                                 <div class="flex items-center mb-5">
-                                    <img src=<?php echo e(url('/icons/calendar.svg')); ?> class="z-10 transition duration-500 opacity-100 group-hover:opacity-0 h-5">
+                                    <img src=<?php echo e(url('/icons/calendar.svg')); ?> class="transition duration-500 opacity-100 group-hover:opacity-0 h-5">
                                     <div class="font-bold text-2xl px-2">Grafik na <?php echo e($currentMonth); ?> <?php echo e($year); ?></div>
                                 </div>
                                 

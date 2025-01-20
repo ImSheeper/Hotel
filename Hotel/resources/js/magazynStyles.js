@@ -11,15 +11,18 @@ function checkAlert() {
 }
 
 $(document).ready(function() {
-    if($('.dataDodaj').eq(4).val() === 'Hotel') {
-        $('.dataDodaj').eq(3).parent().addClass('hidden');
+    if($('.dataDodaj').eq(3).val() === 'Hotel') {
+        $('.dataDodaj').eq(2).parent().addClass('hidden');
+        $('.dataDodaj').eq(3).parent().addClass('w-full');
     }
 
-    $('.dataDodaj').eq(4).on('change', function() {
-        if($('.dataDodaj').eq(4).val() === 'Hotel') {
-            $('.dataDodaj').eq(3).parent().addClass('hidden');
+    $('.dataDodaj').eq(3).on('change', function() {
+        if($('.dataDodaj').eq(3).val() === 'Hotel') {
+            $('.dataDodaj').eq(2).parent().addClass('hidden');
+            $('.dataDodaj').eq(3).parent().addClass('w-full');
         } else {
-            $('.dataDodaj').eq(3).parent().removeClass('hidden');
+            $('.dataDodaj').eq(2).parent().removeClass('hidden');
+            $('.dataDodaj').eq(3).parent().removeClass('w-full');
         }
     });
 
@@ -206,7 +209,8 @@ $('.sendAjaxProdukt').on('click', function() {
         'nazwaAdd' : $('.dataProdukt').eq(1).val(),
         'nazwaDelete' : $('.dataProdukt').eq(2).val(),
         'akcja' : $('.dataProdukt').eq(0).val(),
-        'magazyn' : $('.dataProdukt').eq(3).val()
+        'magazyn' : $('.dataProdukt').eq(3).val(),
+        'alertIlosci' : $('.dataProdukt').eq(4).val()
     };
     
     $.ajax({
@@ -224,6 +228,7 @@ $('.sendAjaxProdukt').on('click', function() {
             // window.location.replace('/pokoje');
 
             refresh(result);
+            checkAlert();
 
             // console.log('magazyn', magazyn);
             // let selectElement = $('#Produkt');

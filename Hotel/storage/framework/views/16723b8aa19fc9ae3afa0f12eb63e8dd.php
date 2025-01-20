@@ -2,7 +2,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>    
 <?php echo app('Illuminate\Foundation\Vite')('resources/js/sidebarStyle.js'); ?>
     
-<div class="hidden flex-col h-full w-[300px] md:flex overflow-hidden min-w-max">
+<div class="hidden flex-col h-full w-[300px] lg:flex overflow-hidden min-w-max">
     <div class="flex h-20 shrink-0">
         <div class="flex bg-white grow ml-2 mt-2 m-1 mb-0 rounded-t-md items-center justify-center overflow-hidden">
             <img src=<?php echo e(url('/icons/Logo.svg')); ?> class="h-10 mt-2 animate-fade-right animate-delay-[0.1s] animate-ease-out">

@@ -122,6 +122,7 @@ class MagazynController extends Controller
         $nazwaAdd = $request->data['nazwaAdd'];
         $nazwaDelete = $request->data['nazwaDelete'];
         $magazynAdd = $request->data['magazyn'];
+        $alertIlosci = $request->data['alertIlosci'];
 
         switch($action) {
             case 0:
@@ -136,6 +137,7 @@ class MagazynController extends Controller
                     $produkt = new Produkt();
                     $produkt->nazwa = $nazwaAdd;
                     $produkt->rodzaj = $magazynAdd;
+                    $produkt->ilosc_alert = $alertIlosci;
                     $produkt->save();
                 }
                 break;

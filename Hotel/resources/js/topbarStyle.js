@@ -1,3 +1,5 @@
+import { animate, glide } from "motion"
+
 $(document).ready(function() {
     var path = location.pathname;
     var name = '';
@@ -17,4 +19,31 @@ $(document).ready(function() {
 
 
     $('.nameTopbar').text(name);
+});
+
+$(document).on('click', function( event ) {
+    var target = $(event.target);
+
+    if (target.is('.burgerMenu') || target.closest('.burgerMenu').length) {
+
+        $('.menuClass').removeClass('hidden');
+
+        animate(
+            $('.menuClass'),
+            { x: [-400, 0] },
+            { easing: "ease-out", duration: 0.3 }
+        );
+    } else if (target.is('.menuClass') || target.closest('.menuClass').length) {
+        return;
+    }
+    else {
+        animate(
+            $('.menuClass'),
+            { x: [0, -400] },
+            { easing: "ease-out", duration: 0.3 },
+            function() {
+                $('.menuClass').addClass('hidden');
+            }
+        );
+    }
 });

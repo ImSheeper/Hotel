@@ -194,7 +194,7 @@
 
         {{-- Dodaj do magazynu --}}
         <div class="popDodaj bg-black bg-opacity-20 backdrop-blur-sm flex absolute invisible h-full w-full justify-center items-center opacity-0">
-            <div class="pop2Dodaj flex flex-col bg-white w-[800px] min-h-max rounded-lg justify-center p-5">
+            <div class="pop2Dodaj flex flex-col bg-white w-[500px] min-h-max rounded-lg justify-center p-5">
                 <div class="popText text-2xl font-bold text-center">Dodaj produkt</div>
 
                 <div class="flex justify-evenly w-full mt-2">
@@ -241,10 +241,10 @@
                         </select>
                     </div>
 
-                    <div class="flex justify-center flex-col w-[50%] p-2">
+                    {{-- <div class="flex justify-center flex-col w-[50%] p-2">
                         <div class="mb-1 text-gray-700">Alert ilości</div>
                         <input type="number" placeholder="Alert ilości" class="dataDodaj border-2 rounded-lg p-1" title="Liczba, po której przekroczeniu dojdzie do podkreślenia braku produktu">
-                    </div>
+                    </div> --}}
                 </div>
 
                 <div class="flex flex-col items-center justify-center w-full">
