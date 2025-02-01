@@ -7,7 +7,7 @@ $(document).ready(function() {
         //$('.warnUser').removeClass('invisible').addClass("visible animate-jump");
 
         //Separator danych. Liczba 6 to liczba danych w JSON
-        var dataSeparator = 6;
+        var dataSeparator = 8;
 
         //Rozpoczęcie pobierania danych do AJAX
         var data = [];
@@ -22,7 +22,9 @@ $(document).ready(function() {
                     "miesiąc" : child[i + 2].innerText,
                     "dzisiejszy dzien" : child[i + 3].innerText,
                     "nazwa dnia" : child[i + 4].innerText,
-                    "status" : child[i + 5].innerText,
+                    "stanowisko" : child[i + 5].innerText,
+                    "login" : child[i + 6].innerText,
+                    "status" : child[i + 7].innerText,
                 }
             if(child[i + 5].innerText == "") {
                 alert("Proszę uzupełnić wszystkie pola!");
@@ -94,4 +96,48 @@ $(document).ready(function() {
     var options = { year: 'numeric', month: 'long' };
     var formattedDate = date.toLocaleDateString('pl-PL', options);
     $('.date').val(formattedDate);
+
+
+    $('.select').change(function() {
+        var url = $(location).attr('href');
+        var string = url.split('/');
+        var currentMonth = string[string.length - 2];
+        var currentYear = string[string.length - 1];
+
+        console.log(currentMonth);
+        console.log(currentYear);
+
+        var stanowisko = $('.select').val();
+
+        const grafikContainer = document.getElementById('grafik');
+        grafikContainer.innerHTML = ''
+        
+        var data = {
+            'stanowisko' : stanowisko
+        };
+
+        console.log(data);
+
+        // Dynamiczny grafik
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url : "/grafikWholePost" + "/" + currentMonth + '/' + currentYear,
+            data : {
+                data
+            },
+            method : 'POST',
+            success : function(result){
+                console.log("Sukces: ", result);
+                $('#grafik').html(result.html);
+            },
+            error: function(xhr, status, error) {
+                console.error("Wystąpił błąd:");
+                console.error("Status: ", status);
+                console.error("Błąd: ", error);
+                console.error("Odpowiedź serwera: ", xhr.responseText);
+            }
+        });
+    })
 });
