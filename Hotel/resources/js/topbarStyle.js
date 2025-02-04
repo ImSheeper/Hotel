@@ -19,6 +19,10 @@ $(document).ready(function() {
 
 
     $('.nameTopbar').text(name);
+
+    $('.logOut').on('click', function() {
+        location.href = '/';
+    });
 });
 
 $(document).on('click', function( event ) {
