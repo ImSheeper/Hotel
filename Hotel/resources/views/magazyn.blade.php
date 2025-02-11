@@ -68,12 +68,12 @@
                     </div>
                 </div>
 
-                <div class="Dodaj font-bold shadow-lg mx-10 bg-[#F4F2FF] h-16 w-48 rounded-2xl overflow-hidden content-center text-center my-5 animate-fade-down animate-delay-[0.2s] animate-ease-out">
-                    <div class="dodajText text-xl select-none">Dodaj produkt</div>
+                <div class="Dodaj font-bold shadow-lg mx-10 bg-[#F4F2FF] h-16 w-48 rounded-2xl overflow-hidden content-center text-center my-5 animate-fade-down animate-delay-[0.2s] animate-ease-out cursor-pointer">
+                    <div class="Dodaj text-xl select-none">Dodaj pozycję magazynową</div>
                 </div>
                 
                 <div class="addZapas font-bold shadow-lg mx-10 bg-[#F4F2FF] h-16 w-48 rounded-2xl overflow-hidden content-center text-center animate-fade-down animate-delay-[0.2s] animate-ease-out">
-                    <div class="text-xl select-none">Edytuj produkty</div>
+                    <div class="addZapas text-xl select-none">Edytuj produkty</div>
                 </div>
 
                 
@@ -195,7 +195,7 @@
         {{-- Dodaj do magazynu --}}
         <div class="popDodaj bg-black bg-opacity-20 backdrop-blur-sm flex absolute invisible h-full w-full justify-center items-center opacity-0">
             <div class="pop2Dodaj flex flex-col bg-white w-[500px] min-h-max rounded-lg justify-center p-5">
-                <div class="popText text-2xl font-bold text-center">Dodaj produkt</div>
+                <div class="popText text-2xl font-bold text-center">Dodaj pozycję magazynową</div>
 
                 <div class="flex justify-evenly w-full mt-2">
 

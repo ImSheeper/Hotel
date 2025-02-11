@@ -126,6 +126,7 @@ $(document).ready(function() {
 
     $('.menuElement').eq(1).on('click', function() {
         manageCustomMenu('.popDelete', '.pop2Delete', '.menuElement', '.menuElementBlocked');
+        $('.dataWyklucz').removeClass('hidden');
     });
 
     $('.menuElement').eq(2).on('click', function() {
@@ -139,6 +140,7 @@ $(document).ready(function() {
     $('.menuElementBlocked').eq(1).on('click', function() {
         manageCustomMenu('.popDelete', '.pop2Delete', '.menuElementBlocked', '.menuElement');
         $('.popTextDelete').text(`Przywrócić pokój?`);
+        $('.dataWyklucz').addClass('hidden');
     });
 
     $('.menuElementBlocked').eq(2).on('click', function() {

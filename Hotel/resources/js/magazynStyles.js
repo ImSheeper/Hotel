@@ -319,7 +319,7 @@ function refresh(result) {
 
 $('.Dodaj').on('click', function() {
     manageCustomMenu('.popDodaj', '.pop2Dodaj', '.menuElement');
-    $('.dodajText').text('Dodaj produkt');
+    // $('.dodajText').text('Dodaj pozycję magazynową');
 });
 
 $('.AjaxDodaj').on('click', function() {
